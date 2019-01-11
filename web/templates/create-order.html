@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <title>Bootstrap Admin Template </title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/font-icon-style.css">
+    <link rel="stylesheet" href="/static/css/style.default.css" id="theme-stylesheet">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link href="/static/css/city-picker.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/main.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<!--====================================================
+                     头部栏
+======================================================-->
+<header class="header">
+    <!--引入侧边栏;传入参数-->
+    <div th:replace="topbar::#topbar"></div>
+</header>
+
+<!--====================================================
+                    页面
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+
+    <!--***** 左侧导航栏 *****-->
+    <!-- 用户栏 -->
+    <!--引入侧边栏;传入参数-->
+    <div th:replace="sidebar::#sidebar"></div>
+
+        <div class="content-inner chart-cont">
+
+            <!--***** FORM LAYOUTS *****-->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!--***** USER INFO *****-->
+                    <div class="card form" id="form1">
+                        <div class="card-header">
+                            <h3><i class="fa fa-archive"></i>创建订单</h3>
+                        </div>
+                        <br>
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="sender-name">寄件人姓名</label>
+                                        <input type="text" class="form-control" id="sender-name" aria-describedby="emailHelp"
+                                            placeholder="寄件人姓名">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sender-tel">联系电话</label>
+                                        <input type="text" class="form-control" id="sender-tel" aria-describedby="emailHelp"
+                                            placeholder="寄件人电话">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sender-tel">寄件地址</label>
+                                        <input id="city-picker1" class="form-control" readonly type="text" value="河南省/郑州市/金水区"
+                                            data-toggle="city-picker">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sender-tel">街道</label>
+                                        <input type="text" class="form-control" id="sender-street" aria-describedby="emailHelp"
+                                            placeholder="填写详细地址">
+                                    </div>
+
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="receiver-name">收件人姓名</label>
+                                        <input type="text" class="form-control" id="receiver-name" aria-describedby="emailHelp"
+                                            placeholder="寄件人姓名">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="receiver-tel">联系电话</label>
+                                        <input type="text" class="form-control" id="receiver-tel" aria-describedby="emailHelp"
+                                            placeholder="寄件人电话">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="receiver-tel">收件地址</label>
+                                        <input id="city-picker2" class="form-control" readonly type="text" value="河南省/郑州市/金水区"
+                                            data-toggle="city-picker">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="receiver-tel">街道</label>
+                                        <input type="text" class="form-control" id="receiver-street" aria-describedby="emailHelp"
+                                            placeholder="填写详细地址">
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <h4 style="border-bottom: 1px solid #ddd;">货物信息</h4>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleSelect1">选择货物类型</label>
+                                        <!-- 文件 日用品 家具 家电 数码 食品 配件 服装 -->
+                                        <select class="form-control" id="exampleSelect1">
+                                            <option value="AU">日用品</option>
+                                            <option value="AR">文件</option>
+                                            <option value="AT">家具</option>
+                                            <option value="BY">家电</option>
+                                            <option value="BE">数码</option>
+                                            <option value="BA">食品</option>
+                                            <option value="BR">配件</option>
+                                            <option value="BG">服装</option>
+                                            <option value="other">其他</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="city">重量(Kg)</label>
+                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                                            placeholder="请输入重量" value="1">
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="city">体积(立方米)</label>
+                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                                            placeholder="请输入体积">
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row mt-3 baojia" hidden="hidden">
+                                <div class="col-md-12">
+                                    <h4 style="border-bottom: 1px solid #ddd;">产品服务</h4>
+                                </div>
+                            </div>
+                            <div class="row mt-4 baojia" hidden="hidden">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="city">货物保价</label>
+                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                                            placeholder="(0-1000000)元">
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <div class="form-group">
+                                <label class="custom-control custom-checkbox">
+                                    <input id="baojia" type="checkbox" class="custom-control-input" required>
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">货物保价</span>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-general btn-blue mr-2">提交</button>
+                            <button type="reset" class="btn btn-general btn-white">清空</button>
+                        </form>
+                    </div>
+
+                    <!--***** PRODUCT INFO *****-->
+                    <!-- <div class="card form" id="form1">
+                        <div class="card-header">
+                            <h3><i class="fa fa-archive"></i> Product Info</h3>
+                        </div>
+                        <br>
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name">Product Name</label>
+                                        <input type="text" class="form-control" id="name" aria-describedby="emailHelp"
+                                            placeholder="Enter Product Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pro-qu">Product Quantity</label>
+                                        <input type="text" class="form-control" id="pro-qu" aria-describedby="emailHelp"
+                                            placeholder="Enter Quantity">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group has-success">
+                                        <label for="description">Description</label>
+                                        <textarea name="description" class="form-control" id="description" cols="30"
+                                            rows="4"></textarea>
+                                        <div class="valid-feedback">
+                                            Please provide a valid email.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-general btn-blue mr-2">Submit</button>
+                            <button type="reset" class="btn btn-general btn-white">Cancel</button>
+                        </form>
+                    </div> -->
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--Global Javascript -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper/popper.min.js"></script>
+    <script src="/static/js/tether.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
+    <script src="/static/js/jquery.validate.min.js"></script>
+    <script src="/static/js/chart.min.js"></script>
+    <script src="/static/js/front.js"></script>
+    <script src="/static/js/city-picker.data.js"></script>
+    <script src="/static/js/city-picker.js"></script>
+    <script src="/static/js/main.js"></script>
+
+
+    <!--Core Javascript -->
+    <script src="/static/js/mychart.js"></script>
+</body>
+<script>
+    $("#baojia").on("click", function () {
+        if ($(this).prop("checked")) {
+            $(".baojia").prop("hidden", false)
+        } else {
+            $(".baojia").prop("hidden", "hidden")
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <title>Bootstrap Admin Template </title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/font-icon-style.css">
+    <link rel="stylesheet" href="/static/css/style.default.css" id="theme-stylesheet">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/css/ui-elements/card.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<nav id="sidebar" class="side-navbar">
+    <div class="sidebar-header d-flex align-items-center">
+        <div class="avatar"><img src="/static/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+        <div class="title">
+            <h1 class="h4">郑州中转站</h1>
+            <h5 class="h4" th:text="${session.admin.account}"></h5>
+        </div>
+    </div>
+    <hr>
+    <!-- 菜单栏-->
+    <ul class="list-unstyled">
+        <li class="active "> <a href="index.html"><i class="icon-home"></i>首页</a></li>
+        <li class="active "> <a href="consignment.html"><i class="icon-paper-airplane"></i>发货</a></li>
+        <li class="active mb-2"> <a href="putin.html"><i class="icon-check"></i>入库</a></li>
+
+        <li><a href="#order" aria-expanded="false" data-toggle="collapse"> <i class="icon-list"></i>订单管理
+        </a>
+            <ul id="order" class="collapse list-unstyled">
+                <li><a href="create-order.html">创建订单</a></li>
+                <li><a href="batch-create.html">批量下单</a></li>
+                <li><a href="check-order.html">订单审核</a></li>
+                <li><a href="edit-order.html">订单修改</a></li>
+            </ul>
+        </li>
+        <li><a href="#deliver" aria-expanded="false" data-toggle="collapse"> <i class="icon-paper-airplane"></i>订单发货
+        </a>
+            <ul id="deliver" class="collapse list-unstyled">
+                <li><a href="waited-order.html">待发订单查询</a></li>
+                <li><a href="email.html">加开班次申请</a></li>
+                <!-- <li><a href="media.html">交接单生成</a></li>
+                <li><a href="invoice.html">交接单绑定</a></li> -->
+                <li><a href="media.html">紧急订单提醒</a></li>
+                <li><a href="invoice.html">班次查询</a></li>
+            </ul>
+        </li>
+        <li><a href="#receive" aria-expanded="false" data-toggle="collapse"> <i class="icon-check"></i>订单收货
+        </a>
+            <ul id="receive" class="collapse list-unstyled">
+                <li><a href="calendar.html">交接单确认</a></li>
+                <li><a href="email.html">交接单修改</a></li>
+                <li><a href="media.html">班次查询</a></li>
+            </ul>
+        </li>
+        <li><a href="#exception-orders" aria-expanded="false" data-toggle="collapse"> <i class="icon-padnote"></i>订单异常处理
+            <span class="badge badge-pill badge-danger">3</span></a>
+            <ul id="exception-orders" class="collapse list-unstyled">
+                <li><a href="calendar.html">订单异常处理登记</a></li>
+                <li><a href="email.html">订单异常处理查询<span class="badge badge-pill badge-danger">3</span></a></li>
+            </ul>
+        </li>
+
+        <li><a href="#equipment-receipt" aria-expanded="false" data-toggle="collapse"> <i class="icon-bill"></i>交接单管理
+        </a>
+            <ul id="equipment-receipt" class="collapse list-unstyled">
+                <li><a href="equipment-receipt.html">交接单确认</a></li>
+                <li><a href="edit-equipment-receipt.html">交接单修改</a></li>
+            </ul>
+        </li>
+
+        <li><a href="#distribution" aria-expanded="false" data-toggle="collapse"> <i class="icon-list-1"></i>货物配送
+        </a>
+            <ul id="distribution" class="collapse list-unstyled">
+                <li><a href="repertory.html">库存订单查询</a></li>
+                <li><a href="email.html">订单确认</a></li>
+            </ul>
+        </li>
+        <li><a href="#local-info" aria-expanded="false" data-toggle="collapse"> <i class="icon-user"></i>本地信息设置
+        </a>
+            <ul id="local-info" class="collapse list-unstyled">
+                <li><a href="calendar.html">中转线路选择</a></li>
+                <li><a href="email.html">配送价格申报</a></li>
+            </ul>
+        </li>
+
+    </ul>
+</nav>
+</body>
+</html>
