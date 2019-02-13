@@ -16,6 +16,15 @@ public class EquipmentReceipt implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public EquipmentReceipt() {
+    }
+
+    public EquipmentReceipt(String carLicenseNumber, Integer status, Date createDate) {
+        this.carLicenseNumber = carLicenseNumber;
+        this.status = status;
+        this.createDate = createDate;
+    }
+
     public Integer getId() {
         return id;
     }

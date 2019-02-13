@@ -1,6 +1,9 @@
 package com.zoo.logistics.mapper;
 
+import com.zoo.logistics.entity.Station;
 import com.zoo.logistics.entity.Status;
+
+import java.util.List;
 
 public interface StatusMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,6 @@ public interface StatusMapper {
     int updateByPrimaryKeySelective(Status record);
 
     int updateByPrimaryKey(Status record);
+
+
 }

@@ -27,6 +27,11 @@ public class LoginController {
         return "login";
     }
 
+    @RequestMapping("/index")
+    public String toIndex(){
+        return "index";
+    }
+
     /**
      * 表单提交，用户登录
      * @param admin 管理员账号实体类
@@ -36,11 +41,11 @@ public class LoginController {
      */
     @RequestMapping("/toLogin")
     public String login(Admin admin, HttpServletRequest request){
-        boolean result = adminService.checkAccountAndPassword(admin);
-        if(result){
-            request.getSession().setAttribute("admin",admin);
+        Admin result = adminService.checkAccountAndPassword(admin);
+        if(result!=null){
+            request.getSession().setAttribute("admin",result);
             //在spring-servlet.xml中配置了Thymeleaf视图解析器，Thymeleaf会将返回的字符串拼接上解析器中的前缀和后缀
-            return "index";//会被解析成 /templates/index.html
+            return "redirect:/index";
         }else {
             return "login";//会被解析成 /templates/login.html
         }

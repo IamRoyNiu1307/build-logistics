@@ -5,6 +5,8 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="start_station_id" property="startStationId" jdbcType="INTEGER" />
     <result column="end_station_id" property="endStationId" jdbcType="INTEGER" />
+    <association property="startStation" column="start_station_id" select="com.zoo.logistics.mapper.StationMapper.selectByPrimaryKey"></association>
+    <association property="endStation" column="end_station_id" select="com.zoo.logistics.mapper.StationMapper.selectByPrimaryKey"></association>
   </resultMap>
   <sql id="Base_Column_List" >
     id, start_station_id, end_station_id

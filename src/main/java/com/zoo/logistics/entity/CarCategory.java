@@ -7,9 +7,9 @@ public class CarCategory implements Serializable {
 
     private String name;
 
-    private Integer capacity;
+    private Float capacity;
 
-    private Integer loadBearing;
+    private Float loadBearing;
 
     private static final long serialVersionUID = 1L;
 
@@ -29,19 +29,19 @@ public class CarCategory implements Serializable {
         this.name = name == null ? null : name.trim();
     }
 
-    public Integer getCapacity() {
+    public Float getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(Integer capacity) {
+    public void setCapacity(Float capacity) {
         this.capacity = capacity;
     }
 
-    public Integer getLoadBearing() {
+    public Float getLoadBearing() {
         return loadBearing;
     }
 
-    public void setLoadBearing(Integer loadBearing) {
+    public void setLoadBearing(Float loadBearing) {
         this.loadBearing = loadBearing;
     }
 }

@@ -2,6 +2,8 @@ package com.zoo.logistics.mapper;
 
 import com.zoo.logistics.entity.Station;
 
+import java.util.List;
+
 public interface StationMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface StationMapper {
     int updateByPrimaryKeySelective(Station record);
 
     int updateByPrimaryKey(Station record);
+
+    List<Station> selectByCityName(String cityName);
 }

@@ -7,15 +7,38 @@
     <result column="route_id" property="routeId" jdbcType="INTEGER" />
     <result column="car_status" property="carStatus" jdbcType="INTEGER" />
     <result column="car_category_id" property="carCategoryId" jdbcType="INTEGER" />
+    <association property="carCategory" column="car_category_id" select="com.zoo.logistics.mapper.CarCategoryMapper.selectByPrimaryKey"></association>
+    <association property="route" column="route_id" select="com.zoo.logistics.mapper.RouteMapper.selectByPrimaryKey"></association>
   </resultMap>
   <sql id="Base_Column_List" >
     id, license_number, route_id, car_status, car_category_id
+  </sql>
+  <sql id="Car_List" >
+    car.id, car.license_number, route_id, car_status, car_category_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from car
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByEquipmentReceiptId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Car_List" />
+    from equipment_receipt,car
+    where car.license_number = equipment_receipt.car_license_number and equipment_receipt.id = #{equipmentReceiptId}
+  </select>
+  <select id="selectByLicenseNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from car
+    where license_number = #{licenseNumber}
+  </select>
+  <select id="getAllCarInCurrentStation" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Car_List" />
+    from car,route
+    where car.route_id=route.id and car.car_status = 1 and start_station_id = #{stationId} or car.route_id=route.id and car.car_status = 3 and end_station_id = #{stationId}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from car
@@ -90,4 +113,5 @@
       car_category_id = #{carCategoryId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 </mapper>

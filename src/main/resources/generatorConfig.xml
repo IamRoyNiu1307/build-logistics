@@ -57,7 +57,7 @@
                <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
             <!--<property name="useActualColumnNames" value="false"/>-->
         <!--</table>-->
-        <table tableName="%"
+        <table tableName="station"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"

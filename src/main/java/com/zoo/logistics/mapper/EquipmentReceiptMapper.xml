@@ -17,6 +17,12 @@
     from equipment_receipt
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByCarLicenseNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from equipment_receipt
+    where car_license_number = #{carLicenseNumber}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from equipment_receipt
     where id = #{id,jdbcType=INTEGER}
@@ -27,7 +33,7 @@
     values (#{id,jdbcType=INTEGER}, #{carLicenseNumber,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{createDate,jdbcType=TIMESTAMP}, #{finishDate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.zoo.logistics.entity.EquipmentReceipt" >
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.zoo.logistics.entity.EquipmentReceipt" >
     insert into equipment_receipt
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

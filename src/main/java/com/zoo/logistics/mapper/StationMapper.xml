@@ -3,15 +3,17 @@
 <mapper namespace="com.zoo.logistics.mapper.StationMapper" >
   <resultMap id="BaseResultMap" type="com.zoo.logistics.entity.Station" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="station_name" property="stationName" jdbcType="VARCHAR" />
     <result column="station_cityid" property="stationCityid" jdbcType="CHAR" />
     <result column="pos_lng" property="posLng" jdbcType="DECIMAL" />
     <result column="pos_lat" property="posLat" jdbcType="DECIMAL" />
     <result column="level" property="level" jdbcType="INTEGER" />
     <result column="superior" property="superior" jdbcType="INTEGER" />
     <result column="warehouse_capacity" property="warehouseCapacity" jdbcType="INTEGER" />
+
   </resultMap>
   <sql id="Base_Column_List" >
-    id, station_cityid, pos_lng, pos_lat, level, superior, warehouse_capacity
+    station.id, station_name, station_cityid, pos_lng, pos_lat, level, superior, warehouse_capacity
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -19,23 +21,32 @@
     from station
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByCityName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from station,cities
+    where station.station_cityid = cities.cityid and cities.city = #{cityName}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from station
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zoo.logistics.entity.Station" >
-    insert into station (id, station_cityid, pos_lng, 
-      pos_lat, level, superior, 
-      warehouse_capacity)
-    values (#{id,jdbcType=INTEGER}, #{stationCityid,jdbcType=CHAR}, #{posLng,jdbcType=DECIMAL}, 
-      #{posLat,jdbcType=DECIMAL}, #{level,jdbcType=INTEGER}, #{superior,jdbcType=INTEGER}, 
-      #{warehouseCapacity,jdbcType=INTEGER})
+    insert into station (id, station_name, station_cityid, 
+      pos_lng, pos_lat, level, 
+      superior, warehouse_capacity)
+    values (#{id,jdbcType=INTEGER}, #{stationName,jdbcType=VARCHAR}, #{stationCityid,jdbcType=CHAR}, 
+      #{posLng,jdbcType=DECIMAL}, #{posLat,jdbcType=DECIMAL}, #{level,jdbcType=INTEGER}, 
+      #{superior,jdbcType=INTEGER}, #{warehouseCapacity,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zoo.logistics.entity.Station" >
     insert into station
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="stationName != null" >
+        station_name,
       </if>
       <if test="stationCityid != null" >
         station_cityid,
@@ -60,6 +71,9 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="stationName != null" >
+        #{stationName,jdbcType=VARCHAR},
+      </if>
       <if test="stationCityid != null" >
         #{stationCityid,jdbcType=CHAR},
       </if>
@@ -83,6 +97,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zoo.logistics.entity.Station" >
     update station
     <set >
+      <if test="stationName != null" >
+        station_name = #{stationName,jdbcType=VARCHAR},
+      </if>
       <if test="stationCityid != null" >
         station_cityid = #{stationCityid,jdbcType=CHAR},
       </if>
@@ -106,7 +123,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zoo.logistics.entity.Station" >
     update station
-    set station_cityid = #{stationCityid,jdbcType=CHAR},
+    set station_name = #{stationName,jdbcType=VARCHAR},
+      station_cityid = #{stationCityid,jdbcType=CHAR},
       pos_lng = #{posLng,jdbcType=DECIMAL},
       pos_lat = #{posLat,jdbcType=DECIMAL},
       level = #{level,jdbcType=INTEGER},

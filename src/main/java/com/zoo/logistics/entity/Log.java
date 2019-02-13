@@ -45,4 +45,13 @@ public class Log implements Serializable {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+
+    public Log() {
+    }
+
+    public Log(String orderid, Date updateDate, String content) {
+        this.orderid = orderid;
+        this.updateDate = updateDate;
+        this.content = content;
+    }
 }

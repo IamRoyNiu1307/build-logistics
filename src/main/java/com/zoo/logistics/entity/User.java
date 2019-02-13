@@ -9,6 +9,8 @@ public class User implements Serializable {
 
     private String password;
 
+    private String openid;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -33,5 +35,13 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid;
     }
 }

@@ -56,7 +56,7 @@
                 <div class="col-md-12">
 
                     <!--***** USER INFO *****-->
-                    <div class="card form" id="form1">
+                    <div class="card form" id="form1" style="min-height: 800px;">
                         <div class="card-header">
                             <h3><i class="fa fa-archive"></i>订单发货</h3>
                         </div>
@@ -97,215 +97,59 @@
                             <table class="table table-light table-responsive" style="min-height: 200px;">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">全选</span>
-                                            </label>
-                                        </th>
+
                                         <th>车牌号</th>
                                         <th>车辆型号</th>
+                                        <th>路线</th>
                                         <th>空间(立方米)</th>
                                         <th>承重(吨)</th>
-                                        <th>装载量</th>
                                         <th>操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>豫A1599</th>
-                                        <th>中型货车</th>
-                                        <th>275</th>
-                                        <th>10</th>
-                                        <th>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                                                    role="progressbar" style="width: 75%;" aria-valuenow="75"
-                                                    aria-valuemin="0" aria-valuemax="100">空间</div>
-                                            </div>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                                                    role="progressbar" style="width: 85%;" aria-valuenow="85"
-                                                    aria-valuemin="0" aria-valuemax="100">载重</div>
-                                            </div>
-                                        </th>
+                                    <tr th:if="${carList!=null}" th:each="car:${carList}">
 
-                                        <th>
-                                            <button name="" id="" class="btn btn-primary btn-sm" type="button"
+                                        <td th:text="${car.licenseNumber}">豫A1599</td>
+                                        <td th:text="${car.carCategory.name}">中型货车</td>
+                                        <td th:if="${car.route.startStationId} == ${session.admin.stationId}" th:text="${car.route.startStation.stationName}+' ---> '+${car.route.endStation.stationName}"></td>
+                                        <td th:if="${car.route.endStationId} == ${session.admin.stationId}" th:text="${car.route.endStation.stationName}+' ---> '+${car.route.startStation.stationName}"></td>
+                                        <td th:text="${car.carCategory.capacity}">275</td>
+                                        <td th:text="${car.carCategory.loadBearing}">10</td>
+                                        <td>
+                                            <button th:id="${car.licenseNumber}" class="btn btn-primary btn-sm zhuangche" type="button"
                                                 data-toggle="modal" data-target="#editModal">装货</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>豫A1599</th>
-                                        <th>中型货车</th>
-                                        <th>275</th>
-                                        <th>10</th>
-                                        <th>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                                                    role="progressbar" style="width: 75%;" aria-valuenow="75"
-                                                    aria-valuemin="0" aria-valuemax="100">空间</div>
-                                            </div>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                                                    role="progressbar" style="width: 85%;" aria-valuenow="85"
-                                                    aria-valuemin="0" aria-valuemax="100">载重</div>
-                                            </div>
-                                        </th>
-
-                                        <th>
-                                            <button name="" id="" class="btn btn-primary btn-sm" type="button"
-                                                data-toggle="modal" data-target="#editModal">装货</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>豫A1599</th>
-                                        <th>中型货车</th>
-                                        <th>275</th>
-                                        <th>10</th>
-                                        <th>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                                                    role="progressbar" style="width: 75%;" aria-valuenow="75"
-                                                    aria-valuemin="0" aria-valuemax="100">空间</div>
-                                            </div>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                                                    role="progressbar" style="width: 85%;" aria-valuenow="85"
-                                                    aria-valuemin="0" aria-valuemax="100">载重</div>
-                                            </div>
-                                        </th>
-
-                                        <th>
-                                            <button name="" id="" class="btn btn-primary btn-sm" type="button"
-                                                data-toggle="modal" data-target="#editModal">装货</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>豫A1599</th>
-                                        <th>中型货车</th>
-                                        <th>275</th>
-                                        <th>10</th>
-                                        <th>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                                                    role="progressbar" style="width: 75%;" aria-valuenow="75"
-                                                    aria-valuemin="0" aria-valuemax="100">空间</div>
-                                            </div>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                                                    role="progressbar" style="width: 85%;" aria-valuenow="85"
-                                                    aria-valuemin="0" aria-valuemax="100">载重</div>
-                                            </div>
-                                        </th>
-
-                                        <th>
-                                            <button name="" id="" class="btn btn-primary btn-sm" type="button"
-                                                data-toggle="modal" data-target="#editModal">装货</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>豫A1599</th>
-                                        <th>中型货车</th>
-                                        <th>275</th>
-                                        <th>10</th>
-                                        <th>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                                                    role="progressbar" style="width: 75%;" aria-valuenow="75"
-                                                    aria-valuemin="0" aria-valuemax="100">空间</div>
-                                            </div>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                                                    role="progressbar" style="width: 85%;" aria-valuenow="85"
-                                                    aria-valuemin="0" aria-valuemax="100">载重</div>
-                                            </div>
-                                        </th>
-
-                                        <th>
-                                            <button name="" id="" class="btn btn-primary btn-sm" type="button"
-                                                data-toggle="modal" data-target="#editModal">装货</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>豫A1599</th>
-                                        <th>中型货车</th>
-                                        <th>275</th>
-                                        <th>10</th>
-                                        <th>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
-                                                    role="progressbar" style="width: 75%;" aria-valuenow="75"
-                                                    aria-valuemin="0" aria-valuemax="100">空间</div>
-                                            </div>
-                                            <div class="progress mb-2">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
-                                                    role="progressbar" style="width: 85%;" aria-valuenow="85"
-                                                    aria-valuemin="0" aria-valuemax="100">载重</div>
-                                            </div>
-                                        </th>
-
-                                        <th>
-                                            <button name="" id="" class="btn btn-primary btn-sm" type="button"
-                                                data-toggle="modal" data-target="#editModal">装货</button>
-                                        </th>
+                                        </td>
                                     </tr>
 
                                 </tbody>
                             </table>
                         </div>
-
+                        <div class="row" style="position: absolute;bottom: 0px">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item" th:class="${prePage==0?'page-item disabled':'page-item'}">
+                                        <a class="page-link"
+                                           th:href="'/consignment/page/'+${prePage}" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">上一页</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item" th:if="${curPage>2}"><a class="page-link" href="#" th:href="'/consignment/page/'+(${curPage}-2)">[[${curPage-2}]]</a></li>
+                                    <li class="page-item" th:if="${curPage>1}"><a class="page-link" href="#" th:href="'/consignment/page/'+(${curPage}-1)">[[${curPage-1}]]</a></li>
+                                    <li class="page-item disabled"><a class="page-link" href="#">[[${curPage}]]</a></li>
+                                    <li class="page-item" th:if="${curPage<lastPage}"><a class="page-link" href="#" th:href="'/consignment/page/'+(${curPage}+1)">[[${curPage+1}]]</a></li>
+                                    <li class="page-item" th:if="${curPage+1<lastPage}"><a class="page-link" href="#" th:href="'/consignment/page/'+(${curPage}+2)">[[${curPage+2}]]</a></li>
+                                    <li class="page-item" th:class="${nextPage==0?'page-item disabled':'page-item'}">
+                                        <a class="page-link"
+                                           th:href="'/consignment/page/'+${nextPage}" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">下一页</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
 
 
                     </div>
@@ -314,12 +158,13 @@
                 </div>
 
             </div>
+
         </div>
 
     </div>
 
     <!-- 模态框（Modal） -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10000">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -332,148 +177,33 @@
                 <div class="modal-body pre-scrollable" style="max-height:600px">
                     <div class="row mt-3">
                         <div class="col-md-12">
-                            <h4 style="border-bottom: 1px solid #ddd;">车辆信息</h4>
+                            <h4 id="licenseNumber" style="border-bottom: 1px solid #ddd;">车辆信息</h4>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="sender-name">订单编号</label>
-                                <input type="text" class="form-control" id="sender-name" aria-describedby="emailHelp"
+                                <input type="text" class="form-control" id="orderId" aria-describedby="emailHelp"
                                     placeholder="请输入订单编号">
                             </div>
 
                         </div>
-                        <div><a class="search-btn">搜索</a> </div>
+                        <!--<div><a class="search-btn">搜索</a> </div>-->
 
-                    </div>
-                    <div class="row">
-                        <button class="btn btn-danger ml-2 mb-2">批量删除</button>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <table class="table table-light table-responsive" style="min-height: 200px;">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">全选</span>
-                                            </label>
-                                        </th>
                                         <th>订单编号</th>
-                                        <th>目的地</th>
+                                        <th>包裹类型</th>
                                         <th>重量</th>
                                         <th>体积</th>
-                                        <th>操作</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>2018654412365</th>
-                                        <th>山东省/青岛市</th>
-                                        <th>3</th>
-                                        <th>8</th>
-                                        <th>
-                                            <button name="" id="" class="btn btn-danger btn-sm" type="button">删除</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>2018654412365</th>
-                                        <th>山东省/青岛市</th>
-                                        <th>3</th>
-                                        <th>8</th>
-                                        <th>
-                                            <button name="" id="" class="btn btn-danger btn-sm" type="button">删除</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>2018654412365</th>
-                                        <th>山东省/青岛市</th>
-                                        <th>3</th>
-                                        <th>8</th>
-                                        <th>
-                                            <button name="" id="" class="btn btn-danger btn-sm" type="button">删除</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>2018654412365</th>
-                                        <th>山东省/青岛市</th>
-                                        <th>3</th>
-                                        <th>8</th>
-                                        <th>
-                                            <button name="" id="" class="btn btn-danger btn-sm" type="button">删除</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>2018654412365</th>
-                                        <th>山东省/青岛市</th>
-                                        <th>3</th>
-                                        <th>8</th>
-                                        <th>
-                                            <button name="" id="" class="btn btn-danger btn-sm" type="button">删除</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>2018654412365</th>
-                                        <th>山东省/青岛市</th>
-                                        <th>3</th>
-                                        <th>8</th>
-                                        <th>
-                                            <button name="" id="" class="btn btn-danger btn-sm" type="button">删除</button>
-                                        </th>
-                                    </tr>
+                                <tbody id="orderList">
 
                                 </tbody>
                             </table>
@@ -510,12 +240,87 @@
     <script src="/static/js/mychart.js"></script>
 </body>
 <script>
-    $("#baojia").on("click", function () {
-        if ($(this).prop("checked")) {
-            $(".baojia").prop("hidden", false)
-        } else {
-            $(".baojia").prop("hidden", "hidden")
+
+    var licenseNumber = "";
+    var destination = "";
+
+    $("body").on("click",".zhuangche",function () {
+        licenseNumber = $(this)[0].id
+        var route = $(this).parents("tr").children("td:eq(2)").html()
+        destination = route.substring(route.indexOf(';')+1,route.length);
+        $("#licenseNumber").html(licenseNumber)
+        $("#orderList").html("")
+    })
+
+
+    $("#orderId").keypress(function (e) {
+        if (e.which == 13) {
+            var datas = {
+                "orderId":$("#orderId").val(),
+                "todo":"zhuangche"
+            }
+
+            //ajax
+            $.ajax({
+                url:"/order/searchOrder",
+                type:"post",
+                data:JSON.stringify(datas),
+                contentType: "application/json;charset=UTF-8",
+                // contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                success:function (map) {
+                    if(map.status==1){
+                        $("#orderList").append("<tr>\n" +
+                            "                      <td class='selectOrder'>"+map.order.orderId+"</td>\n" +
+                            "                      <td>"+map.order.orderCategory.name+"</td>\n" +
+                            "                      <td>"+map.order.volume+"</td>\n" +
+                            "                      <td>"+map.order.weight+"</td>\n" +
+                            "                      </tr>")
+                    }else{
+                        alert(map.msg)
+                    }
+                },
+                error:function (map) {
+                    alert(JSON.stringify(map))
+                }
+            })
+
+            $("#orderId").val("")
         }
+    })
+
+    $("#toedit").click(function () {
+        var orderIdList =""
+        $(".selectOrder").each(function () {
+            var id = $(this).html()
+            if(orderIdList!="")
+                orderIdList=orderIdList+","
+            orderIdList=orderIdList+id
+        })
+        var datas = {
+            "licenseNumber":licenseNumber,
+            "destination":destination,
+            "orderIdList":orderIdList
+        }
+        //ajax
+        $.ajax({
+            url:"/order/consignment",
+            type:"post",
+            data:JSON.stringify(datas),
+            contentType: "application/json;charset=UTF-8",
+            success:function (map) {
+                if(map.status==1){
+                    alert(map.msg)
+                    location.reload()
+                }else {
+                    alert(map.msg)
+                }
+            },
+            error:function (map) {
+                alert(JSON.stringify(map))
+            }
+        })
+
+
     })
 </script>
 

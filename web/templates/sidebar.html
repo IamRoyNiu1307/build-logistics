@@ -28,21 +28,21 @@
     <div class="sidebar-header d-flex align-items-center">
         <div class="avatar"><img src="/static/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
         <div class="title">
-            <h1 class="h4">郑州中转站</h1>
+            <h1 class="h4" th:text="${session.admin.station.stationName}">郑州中转站</h1>
             <h5 class="h4" th:text="${session.admin.account}"></h5>
         </div>
     </div>
     <hr>
     <!-- 菜单栏-->
     <ul class="list-unstyled">
-        <li class="active "> <a href="index.html"><i class="icon-home"></i>首页</a></li>
-        <li class="active "> <a href="consignment.html"><i class="icon-paper-airplane"></i>发货</a></li>
-        <li class="active mb-2"> <a href="putin.html"><i class="icon-check"></i>入库</a></li>
+        <li class="active "> <a href="/index"><i class="icon-home"></i>首页</a></li>
+        <li class="active "> <a href="/consignment/page/1"><i class="icon-paper-airplane"></i>发货</a></li>
+        <li class="active mb-2"> <a href="/order/putin"><i class="icon-check"></i>入库</a></li>
 
         <li><a href="#order" aria-expanded="false" data-toggle="collapse"> <i class="icon-list"></i>订单管理
         </a>
             <ul id="order" class="collapse list-unstyled">
-                <li><a href="create-order.html">创建订单</a></li>
+                <li><a href="/order/createOrder">创建订单</a></li>
                 <li><a href="batch-create.html">批量下单</a></li>
                 <li><a href="check-order.html">订单审核</a></li>
                 <li><a href="edit-order.html">订单修改</a></li>
@@ -53,8 +53,6 @@
             <ul id="deliver" class="collapse list-unstyled">
                 <li><a href="waited-order.html">待发订单查询</a></li>
                 <li><a href="email.html">加开班次申请</a></li>
-                <!-- <li><a href="media.html">交接单生成</a></li>
-                <li><a href="invoice.html">交接单绑定</a></li> -->
                 <li><a href="media.html">紧急订单提醒</a></li>
                 <li><a href="invoice.html">班次查询</a></li>
             </ul>
@@ -62,7 +60,7 @@
         <li><a href="#receive" aria-expanded="false" data-toggle="collapse"> <i class="icon-check"></i>订单收货
         </a>
             <ul id="receive" class="collapse list-unstyled">
-                <li><a href="calendar.html">交接单确认</a></li>
+                <li><a href="/equipmentReceipt/page">交接单确认</a></li>
                 <li><a href="email.html">交接单修改</a></li>
                 <li><a href="media.html">班次查询</a></li>
             </ul>
@@ -78,7 +76,7 @@
         <li><a href="#equipment-receipt" aria-expanded="false" data-toggle="collapse"> <i class="icon-bill"></i>交接单管理
         </a>
             <ul id="equipment-receipt" class="collapse list-unstyled">
-                <li><a href="equipment-receipt.html">交接单确认</a></li>
+                <li><a href="/equipmentReceipt/page">交接单确认</a></li>
                 <li><a href="edit-equipment-receipt.html">交接单修改</a></li>
             </ul>
         </li>

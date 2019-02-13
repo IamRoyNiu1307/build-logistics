@@ -9,6 +9,10 @@ public class Route implements Serializable {
 
     private Integer endStationId;
 
+    private Station startStation;
+
+    private Station endStation;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -33,5 +37,21 @@ public class Route implements Serializable {
 
     public void setEndStationId(Integer endStationId) {
         this.endStationId = endStationId;
+    }
+
+    public Station getStartStation() {
+        return startStation;
+    }
+
+    public void setStartStation(Station startStation) {
+        this.startStation = startStation;
+    }
+
+    public Station getEndStation() {
+        return endStation;
+    }
+
+    public void setEndStation(Station endStation) {
+        this.endStation = endStation;
     }
 }

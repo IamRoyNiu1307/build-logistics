@@ -13,6 +13,10 @@ public class Car implements Serializable {
 
     private Integer carCategoryId;
 
+    private CarCategory carCategory;
+
+    private Route route;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -54,4 +58,40 @@ public class Car implements Serializable {
     public void setCarCategoryId(Integer carCategoryId) {
         this.carCategoryId = carCategoryId;
     }
+
+    public CarCategory getCarCategory() {
+        return carCategory;
+    }
+
+    public void setCarCategory(CarCategory carCategory) {
+        this.carCategory = carCategory;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
+    public Car() {
+    }
+
+    public Car(Integer id, String licenseNumber, Integer routeId, Integer carStatus, Integer carCategoryId) {
+        this.id = id;
+        this.licenseNumber = licenseNumber;
+        this.routeId = routeId;
+        this.carStatus = carStatus;
+        this.carCategoryId = carCategoryId;
+    }
+
+    public Car(String licenseNumber, Integer routeId, Integer carStatus, Integer carCategoryId) {
+        this.licenseNumber = licenseNumber;
+        this.routeId = routeId;
+        this.carStatus = carStatus;
+        this.carCategoryId = carCategoryId;
+    }
+
+
 }

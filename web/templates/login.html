@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     
@@ -45,6 +45,7 @@
                       <input class="form-control" name="password" type="password" value="hunter2" id="example-password-input">
                     </div>   
                     <input type="submit" class="btn btn-general btn-blue" role="button" value="登录">
+                      <label th:if="${msg!=null}" th:text="${msg}" style="color:red"></label>
                   </form>
                 </div>
             </div>

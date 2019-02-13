@@ -3,8 +3,10 @@ package com.zoo.logistics.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Station implements Serializable {
+public class Station implements Serializable,Comparable<Station> {
     private Integer id;
+
+    private String stationName;
 
     private String stationCityid;
 
@@ -18,6 +20,8 @@ public class Station implements Serializable {
 
     private Integer warehouseCapacity;
 
+    private int index;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -26,6 +30,14 @@ public class Station implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getStationName() {
+        return stationName;
+    }
+
+    public void setStationName(String stationName) {
+        this.stationName = stationName == null ? null : stationName.trim();
     }
 
     public String getStationCityid() {
@@ -76,16 +88,31 @@ public class Station implements Serializable {
         this.warehouseCapacity = warehouseCapacity;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
     @Override
     public String toString() {
         return "Station{" +
                 "id=" + id +
+                ", stationName='" + stationName + '\'' +
                 ", stationCityid='" + stationCityid + '\'' +
                 ", posLng=" + posLng +
                 ", posLat=" + posLat +
                 ", level=" + level +
                 ", superior=" + superior +
                 ", warehouseCapacity=" + warehouseCapacity +
+                ", index=" + index +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Station o) {
+        return this.index-o.getIndex();
     }
 }

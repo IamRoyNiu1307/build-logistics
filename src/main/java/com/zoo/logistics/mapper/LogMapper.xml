@@ -16,6 +16,21 @@
     from log
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectLastLogByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from log
+    where orderid = #{orderId}
+    ORDER BY log.update_date desc
+    limit 1
+  </select>
+  <select id="selectByOrderIdDesc" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from log
+    where orderid = #{orderId}
+    ORDER BY log.update_date desc
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from log
     where id = #{id,jdbcType=INTEGER}

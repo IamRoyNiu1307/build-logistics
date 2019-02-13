@@ -3,7 +3,7 @@
 
 <head>
 
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -58,27 +58,28 @@
                             <h3><i class="fa fa-archive"></i>创建订单</h3>
                         </div>
                         <br>
-                        <form>
+                        <form id="orderForm" action="/order/createOrder/submitOrder" method="post" accept-charset="UTF-8">
+                            <input type="hidden" id="creater-account" name="createrAccount" th:value="${session.admin.account}">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="sender-name">寄件人姓名</label>
-                                        <input type="text" class="form-control" id="sender-name" aria-describedby="emailHelp"
+                                        <input type="text" class="form-control" id="sender-name" name="senderName" aria-describedby="emailHelp"
                                             placeholder="寄件人姓名">
                                     </div>
                                     <div class="form-group">
                                         <label for="sender-tel">联系电话</label>
-                                        <input type="text" class="form-control" id="sender-tel" aria-describedby="emailHelp"
+                                        <input type="text" class="form-control" id="sender-tel" name="senderTel" aria-describedby="emailHelp"
                                             placeholder="寄件人电话">
                                     </div>
                                     <div class="form-group">
-                                        <label for="sender-tel">寄件地址</label>
-                                        <input id="city-picker1" class="form-control" readonly type="text" value="河南省/郑州市/金水区"
+                                        <label for="sender-area">寄件地址</label>
+                                        <input id="sender-area" name="senderArea" class="form-control" readonly type="text" value="河南省/郑州市/金水区"
                                             data-toggle="city-picker">
                                     </div>
                                     <div class="form-group">
-                                        <label for="sender-tel">街道</label>
-                                        <input type="text" class="form-control" id="sender-street" aria-describedby="emailHelp"
+                                        <label for="sender-street">街道</label>
+                                        <input type="text" class="form-control" id="sender-street" name="senderStreet" aria-describedby="emailHelp"
                                             placeholder="填写详细地址">
                                     </div>
 
@@ -87,22 +88,22 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="receiver-name">收件人姓名</label>
-                                        <input type="text" class="form-control" id="receiver-name" aria-describedby="emailHelp"
+                                        <input type="text" class="form-control" id="receiver-name" name="receiverName" aria-describedby="emailHelp"
                                             placeholder="寄件人姓名">
                                     </div>
                                     <div class="form-group">
                                         <label for="receiver-tel">联系电话</label>
-                                        <input type="text" class="form-control" id="receiver-tel" aria-describedby="emailHelp"
+                                        <input type="text" class="form-control" id="receiver-tel" name="receiverTel" aria-describedby="emailHelp"
                                             placeholder="寄件人电话">
                                     </div>
                                     <div class="form-group">
-                                        <label for="receiver-tel">收件地址</label>
-                                        <input id="city-picker2" class="form-control" readonly type="text" value="河南省/郑州市/金水区"
+                                        <label for="receiver-area">收件地址</label>
+                                        <input id="receiver-area" name="receiverArea" class="form-control" readonly type="text" value="河南省/郑州市/金水区"
                                             data-toggle="city-picker">
                                     </div>
                                     <div class="form-group">
-                                        <label for="receiver-tel">街道</label>
-                                        <input type="text" class="form-control" id="receiver-street" aria-describedby="emailHelp"
+                                        <label for="receiver-street">街道</label>
+                                        <input type="text" class="form-control" id="receiver-street" name="receiverStreet" aria-describedby="emailHelp"
                                             placeholder="填写详细地址">
                                     </div>
 
@@ -117,63 +118,64 @@
                             <div class="row mt-4">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="exampleSelect1">选择货物类型</label>
+                                        <label for="order-category">选择货物类型</label>
                                         <!-- 文件 日用品 家具 家电 数码 食品 配件 服装 -->
-                                        <select class="form-control" id="exampleSelect1">
-                                            <option value="AU">日用品</option>
-                                            <option value="AR">文件</option>
-                                            <option value="AT">家具</option>
-                                            <option value="BY">家电</option>
-                                            <option value="BE">数码</option>
-                                            <option value="BA">食品</option>
-                                            <option value="BR">配件</option>
-                                            <option value="BG">服装</option>
-                                            <option value="other">其他</option>
+                                        <select class="form-control" id="order-category" name="categoryId">
+                                            <option value="1">日用品</option>
+                                            <option value="2">文件</option>
+                                            <option value="3">家具</option>
+                                            <option value="4">家电</option>
+                                            <option value="5">数码</option>
+                                            <option value="6">食品</option>
+                                            <option value="7">配件</option>
+                                            <option value="8">服装</option>
+                                            <option value="9">其他</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="city">重量(Kg)</label>
-                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                                        <label for="weight">重量(Kg)</label>
+                                        <input type="text" class="form-control" id="weight" name="weight"
                                             placeholder="请输入重量" value="1">
                                     </div>
 
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="city">体积(立方米)</label>
-                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                                        <label for="volume">体积(立方米)</label>
+                                        <input type="text" class="form-control" id="volume" name="volume"
                                             placeholder="请输入体积">
                                     </div>
 
                                 </div>
                             </div>
-                            <div class="row mt-3 baojia" hidden="hidden">
-                                <div class="col-md-12">
-                                    <h4 style="border-bottom: 1px solid #ddd;">产品服务</h4>
-                                </div>
-                            </div>
-                            <div class="row mt-4 baojia" hidden="hidden">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="city">货物保价</label>
-                                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-                                            placeholder="(0-1000000)元">
-                                    </div>
+                            <!--<div class="row mt-3 baojia" hidden="hidden">-->
+                                <!--<div class="col-md-12">-->
+                                    <!--<h4 style="border-bottom: 1px solid #ddd;">产品服务</h4>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="row mt-4 baojia" hidden="hidden">-->
+                                <!--<div class="col-md-4">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label for="baojia">货物保价</label>-->
+                                        <!--<input type="text" class="form-control" id="baojiaInput" aria-describedby="emailHelp"-->
+                                            <!--placeholder="(0-1000000)元">-->
+                                    <!--</div>-->
 
-                                </div>
+                                <!--</div>-->
 
 
-                            </div>
-                            <div class="form-group">
-                                <label class="custom-control custom-checkbox">
-                                    <input id="baojia" type="checkbox" class="custom-control-input" required>
-                                    <span class="custom-control-indicator"></span>
-                                    <span class="custom-control-description">货物保价</span>
-                                </label>
-                            </div>
-                            <button type="submit" class="btn btn-general btn-blue mr-2">提交</button>
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="custom-control custom-checkbox">-->
+                                    <!--<input id="baojia" type="checkbox" class="custom-control-input" required>-->
+                                    <!--<span class="custom-control-indicator"></span>-->
+                                    <!--<span class="custom-control-description">货物保价</span>-->
+                                <!--</label>-->
+                            <!--</div>-->
+                            <button type="button" onclick="orderSubmit()" class="btn btn-general btn-blue mr-2">提交</button>
+                            <!--<input type="submit" class="btn btn-general btn-blue mr-2">提交</input>-->
                             <button type="reset" class="btn btn-general btn-white">清空</button>
                         </form>
                     </div>
@@ -240,13 +242,116 @@
     <script src="/static/js/mychart.js"></script>
 </body>
 <script>
-    $("#baojia").on("click", function () {
-        if ($(this).prop("checked")) {
-            $(".baojia").prop("hidden", false)
-        } else {
-            $(".baojia").prop("hidden", "hidden")
+
+    var TEL_REGEXP = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
+    var NAME_REGEXP = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/
+    var BAOJIA_REGEXP = /^\d{1,6}$/
+    
+    
+    // $("#baojia").on("click", function () {
+    //     if ($(this).prop("checked")) {
+    //         $(".baojia").prop("hidden", false)
+    //         //保价输入框 失焦 验证
+    //         $("#baojiaInput").on("blue",function () {
+    //             var value = $(this).val()
+    //             var result = BAOJIA_REGEXP.test(value)
+    //             if(!result){
+    //                 $(this).attr("style","border-color:#FF5252")
+    //             }else{
+    //                 $(this).attr("style","")
+    //             }
+    //         })
+    //     } else {
+    //         $(".baojia").prop("hidden", "hidden")
+    //     }
+    // })
+
+    //姓名输入框 失焦 验证
+    $("#sender-name,#receiver-name").on("blur",function () {
+        var value = $(this).val()
+        var result = NAME_REGEXP.test(value)
+        if(!result){
+            $(this).attr("style","border-color:#FF5252")
+        }else{
+            $(this).attr("style","")
         }
     })
+
+    //电话输入框 失焦 验证
+    $("#sender-tel,#receiver-tel").on("blur",function () {
+        var value = $(this).val()
+        var result = TEL_REGEXP.test(value)
+        if(!result){
+            $(this).attr("style","border-color:#FF5252")
+        }else{
+            $(this).attr("style","")
+        }
+    })
+
+    //街道输入框 失焦 验证
+    $("#sender-street,#receiver-street,#volume,#weight").on("blur",function () {
+        var value = $(this).val()
+
+        if(value==""){
+            $(this).attr("style","border-color:#FF5252")
+        }else{
+            $(this).attr("style","")
+        }
+    })
+
+    //表单提交
+    function orderSubmit() {
+        //设置标记
+        var flag = true
+        //验证表单中所有的input是否有空值
+        $("#orderForm input").each(function () {
+            if ($(this).val()=="") {
+                //如果有，flag=false 并且将边框设为红色
+                flag=false
+                $(this).attr("style","border-color:#FF5252")
+            }
+        })
+        if(flag){
+            //***********通过表单的方式提交************
+            // $("#orderForm").submit()
+
+            //***********通过ajax的方式提交************
+
+            var order = {
+                "senderName":$("#sender-name").val(),
+                "senderTel":$("#sender-tel").val(),
+                "senderArea":$("#sender-area").val(),
+                "senderStreet":$("#sender-street").val(),
+                "receiverName":$("#receiver-name").val(),
+                "receiverTel":$("#receiver-tel").val(),
+                "receiverArea":$("#receiver-area").val(),
+                "receiverStreet":$("#receiver-street").val(),
+                "categoryId":$("#order-category").val(),
+                "volume":$("#volume").val(),
+                "weight":$("#weight").val(),
+                "createrAccount":$("#creater-account").val()
+            }
+            var datas = JSON.stringify(order)
+            $.ajax({
+                url:"/order/createOrder/submitOrderByClient",
+                type:"post",
+                dataType:"json",
+                data:datas,
+                contentType: "application/json;charset=UTF-8",
+                // contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                success:function (map) {
+                    if(map.status==1){
+                        $("#orderForm")[0].reset()
+                    }
+                    alert(map.msg)
+                },
+                error:function (map) {
+                    alert(JSON.stringify(map))
+                }
+            })
+        }
+
+    }
 </script>
 
 </html>

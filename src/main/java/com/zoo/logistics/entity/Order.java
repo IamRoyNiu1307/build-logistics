@@ -3,18 +3,26 @@ package com.zoo.logistics.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Order extends OrderKey implements Serializable {
+public class Order implements Serializable {
+    private Integer id;
+
+    private String orderId;
+
     private String senderName;
+
+    private String senderTel;
 
     private String senderArea;
 
-    private String senderDetail;
+    private String senderStreet;
 
     private String receiverName;
 
+    private String receiverTel;
+
     private String receiverArea;
 
-    private String receiverDetail;
+    private String receiverStreet;
 
     private Integer statusId;
 
@@ -28,15 +36,63 @@ public class Order extends OrderKey implements Serializable {
 
     private Integer startStation;
 
+    private Integer endStation;
+
     private Integer currentStation;
 
     private String createrAccount;
 
-    private Date createDate;
+//    private Date createDate;
 
     private Date finishDate;
 
+    private OrderCategory orderCategory;
+
+    private Status status;
+
+    private Log lastLog;
+
     private static final long serialVersionUID = 1L;
+
+    public Log getLastLog() {
+        return lastLog;
+    }
+
+    public void setLastLog(Log lastLog) {
+        this.lastLog = lastLog;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public OrderCategory getOrderCategory() {
+        return orderCategory;
+    }
+
+    public void setOrderCategory(OrderCategory orderCategory) {
+        this.orderCategory = orderCategory;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId == null ? null : orderId.trim();
+    }
 
     public String getSenderName() {
         return senderName;
@@ -44,6 +100,14 @@ public class Order extends OrderKey implements Serializable {
 
     public void setSenderName(String senderName) {
         this.senderName = senderName == null ? null : senderName.trim();
+    }
+
+    public String getSenderTel() {
+        return senderTel;
+    }
+
+    public void setSenderTel(String senderTel) {
+        this.senderTel = senderTel == null ? null : senderTel.trim();
     }
 
     public String getSenderArea() {
@@ -54,12 +118,12 @@ public class Order extends OrderKey implements Serializable {
         this.senderArea = senderArea == null ? null : senderArea.trim();
     }
 
-    public String getSenderDetail() {
-        return senderDetail;
+    public String getSenderStreet() {
+        return senderStreet;
     }
 
-    public void setSenderDetail(String senderDetail) {
-        this.senderDetail = senderDetail == null ? null : senderDetail.trim();
+    public void setSenderStreet(String senderStreet) {
+        this.senderStreet = senderStreet == null ? null : senderStreet.trim();
     }
 
     public String getReceiverName() {
@@ -70,6 +134,14 @@ public class Order extends OrderKey implements Serializable {
         this.receiverName = receiverName == null ? null : receiverName.trim();
     }
 
+    public String getReceiverTel() {
+        return receiverTel;
+    }
+
+    public void setReceiverTel(String receiverTel) {
+        this.receiverTel = receiverTel == null ? null : receiverTel.trim();
+    }
+
     public String getReceiverArea() {
         return receiverArea;
     }
@@ -78,12 +150,12 @@ public class Order extends OrderKey implements Serializable {
         this.receiverArea = receiverArea == null ? null : receiverArea.trim();
     }
 
-    public String getReceiverDetail() {
-        return receiverDetail;
+    public String getReceiverStreet() {
+        return receiverStreet;
     }
 
-    public void setReceiverDetail(String receiverDetail) {
-        this.receiverDetail = receiverDetail == null ? null : receiverDetail.trim();
+    public void setReceiverStreet(String receiverStreet) {
+        this.receiverStreet = receiverStreet == null ? null : receiverStreet.trim();
     }
 
     public Integer getStatusId() {
@@ -134,6 +206,14 @@ public class Order extends OrderKey implements Serializable {
         this.startStation = startStation;
     }
 
+    public Integer getEndStation() {
+        return endStation;
+    }
+
+    public void setEndStation(Integer endStation) {
+        this.endStation = endStation;
+    }
+
     public Integer getCurrentStation() {
         return currentStation;
     }
@@ -150,13 +230,13 @@ public class Order extends OrderKey implements Serializable {
         this.createrAccount = createrAccount == null ? null : createrAccount.trim();
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+//    public Date getCreateDate() {
+//        return createDate;
+//    }
+//
+//    public void setCreateDate(Date createDate) {
+//        this.createDate = createDate;
+//    }
 
     public Date getFinishDate() {
         return finishDate;
@@ -164,5 +244,32 @@ public class Order extends OrderKey implements Serializable {
 
     public void setFinishDate(Date finishDate) {
         this.finishDate = finishDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", orderId='" + orderId + '\'' +
+                ", senderName='" + senderName + '\'' +
+                ", senderTel='" + senderTel + '\'' +
+                ", senderArea='" + senderArea + '\'' +
+                ", senderStreet='" + senderStreet + '\'' +
+                ", receiverName='" + receiverName + '\'' +
+                ", receiverTel='" + receiverTel + '\'' +
+                ", receiverArea='" + receiverArea + '\'' +
+                ", receiverStreet='" + receiverStreet + '\'' +
+                ", statusId=" + statusId +
+                ", equipmentReceiptId=" + equipmentReceiptId +
+                ", categoryId=" + categoryId +
+                ", volume=" + volume +
+                ", weight=" + weight +
+                ", startStation=" + startStation +
+                ", endStation=" + endStation +
+                ", currentStation=" + currentStation +
+                ", createrAccount='" + createrAccount + '\'' +
+//                ", createDate=" + createDate +
+                ", finishDate=" + finishDate +
+                '}';
     }
 }

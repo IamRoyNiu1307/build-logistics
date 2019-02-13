@@ -2,6 +2,8 @@ package com.zoo.logistics.mapper;
 
 import com.zoo.logistics.entity.EquipmentReceipt;
 
+import java.util.List;
+
 public interface EquipmentReceiptMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface EquipmentReceiptMapper {
     int updateByPrimaryKeySelective(EquipmentReceipt record);
 
     int updateByPrimaryKey(EquipmentReceipt record);
+
+    EquipmentReceipt selectByCarLicenseNumber(String carLicenseNuber);
 }

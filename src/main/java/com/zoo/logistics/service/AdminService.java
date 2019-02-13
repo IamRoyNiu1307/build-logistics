@@ -11,15 +11,9 @@ public class AdminService {
     @Autowired
     private AdminMapper adminMapper;
 
-    public boolean checkAccountAndPassword(Admin admin){
+    public Admin checkAccountAndPassword(Admin admin){
         //实际开发的写法
         Admin result = adminMapper.checkAccount(admin);
-        if(result!=null){
-            //说明账号密码正确
-            System.out.println(result.toString());
-
-            return true;
-        }
-        return false;
+        return result;
     }
 }
