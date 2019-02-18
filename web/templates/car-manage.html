@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <title>Zoo物流 河南管理中心-车辆管理</title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/font-icon-style.css">
+    <link rel="stylesheet" href="/static/css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="/static/css/form.css">
+
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/css/ui-elements/card.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-datetimepicker.css"
+          media="screen">
+    <link rel="stylesheet" href="/static/css/ui-elements/button.css">
+
+
+</head>
+<body>
+
+<!--====================================================
+                         头部栏
+======================================================-->
+<header class="header">
+    <!--引入头部栏;传入参数-->
+    <div th:replace="topbar::#topbar"></div>
+</header>
+
+<div class="page-content d-flex align-items-stretch">
+
+    <!--***** 左侧导航栏 *****-->
+    <!-- 用户栏 -->
+    <!--引入侧边栏;传入参数-->
+    <div th:replace="sidebar::#master-sidebar"></div>
+
+    <!-- 页面主体 -->
+    <div class="content-inner">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--*****	车辆信息	 *****-->
+                <div class="card form" id="form1">
+                    <div class="card-header">
+                        <h3>
+                            <i class="icon icon-bill"></i>&nbsp;&nbsp;车辆管理中心
+                        </h3>
+                    </div>
+                    <br>
+                    <!--<form class="form-inline" action="/selectCar" method="post">-->
+                    <form action="/selectCar" method="post" class="form-inline">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="license-plate-number">车牌号：</label> <input
+                                    type="text" class="form-control w-100"
+                                    id="license-plate-number" placeholder="请输入要查询的车牌号" name="licenseNumber">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="car-type">车辆类型:</label>
+                                <!-- 所属单位地点 -->
+                                <select class="form-control w-100" id="car-type"
+                                        style="width: 200px;" name="carCategory">
+                                    <option value="haha">请选择</option>
+                                    <option value="BC">大型货车</option>
+                                    <option value="MC">中型货车</option>
+                                    <option value="LC">小型货车</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="car-state-type">车辆状态:</label>
+                                <!-- 所属单位地点 -->
+                                <select class="form-control w-100" id="car-state-type"
+                                        style="width: 200px;" name="carStatus">
+                                    <option value="haha">请选择</option>
+                                    <option value="free">空闲</option>
+                                    <option value="work">工作</option>
+                                    <option value="service">维修</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-boxs btn-2"
+                                        style="margin-bottom: -10px; width: 100px; height: 50px; padding-top: 3px; text-align: center;"
+                                >
+                                    <b>查&nbsp;&nbsp;询</b>
+                                </button>
+                                <!--<a href="/selectCar" class="btn btn-boxs btn-2"-->
+                                <!--style="margin-bottom: -10px; width: 100px; height: 50px; padding-top: 3px; text-align: center;"-->
+                                <!--type="submit"><b>查&nbsp;&nbsp;询</b></a>-->
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-1">
+                            <div class="form-group"></div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <!--<button class="btn btn-boxs btn-4" style="margin-bottom: -10px;width: 100px; height: 50px; padding-top: 3px;" data-toggle="modal" data-target="#add-car"><b>添加车辆</b></button>-->
+                                <a href="#add-car" class="btn btn-boxs btn-4"
+                                   style="margin-bottom: -10px; width: 100px; height: 50px; padding-top: 3px; text-align: center;"
+                                   data-toggle="modal"><b>添加车辆</b></a>
+                            </div>
+                        </div>
+                    </form>
+                    <br/> <br/> <br/>
+                    <!--<br /> <br /> <br />-->
+
+                    <div class="col-md-12">
+                        <h4 style="border-bottom: 1px solid #ddd;">车辆信息</h4>
+                    </div>
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr class="bg-info text-white">
+                                <th>车辆编号</th>
+                                <th>车牌号</th>
+                                <th>车辆类型</th>
+                                <th>当前状态</th>
+                                <th>淘汰车辆</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="car :${cars}">
+                                <td th:text="${car.id}"></td>
+                                <td th:text="${car.licenseNumber}"></td>
+
+                                <td th:if="${car.carCategoryId==1}">大型车</td>
+                                <td th:if="${car.carCategoryId==2}">中型车</td>
+                                <td th:if="${car.carCategoryId==3}">小型车</td>
+
+                                <td th:if="${car.carStatus==1||car.carStatus==3}">空闲</td>
+                                <td th:if="${car.carStatus==2||car.carStatus==4}">工作中</td>
+                                <td th:if="${car.carStatus==9}">维修中</td>
+
+                                <td style="padding-top: 5px;padding-bottom: 5px">
+                                    <a th:href="@{deleteCar(id=${car.id})}" onclick="return deleteCar()"
+                                       class="deleteCar btn btn-default btn-xs"
+                                       style="text-align:left;margin-right: 0px;margin-bottom: 0px;height: 25px;padding-top: 0px;margin-top: -10px ">delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                            <script>
+
+                                function deleteCar() {
+                                    var flag = confirm("确定要删除此车辆的信息吗?");
+
+                                    return flag;
+                                }
+
+                                // if (flag == true){
+                                //     $(this).attr("href"," @{deleteCar(id=${car.id})}")
+                                // }
+
+
+                            </script>
+
+
+                        </table>
+                    </div>
+
+                    <div class="col-md-12" align="center">
+                        <!--<a href="/carManage?start=0" class="btn btn-outline-info"-->
+                        <!--style="width: 110px; height: 55px; margin-right: 0px;">首页</a>-->
+                        <a th:href="@{${carindex}(licenseNumber=${licenseNumber},carCategory=${carCategory},carStatus=${carStatus},start=0)}"
+                           class="btn btn-outline-info"
+                           style="width: 110px; height: 55px; margin-right: 0px;">首页</a>
+                        <a th:href="@{${carindex}(licenseNumber=${licenseNumber},carCategory=${carCategory},carStatus=${carStatus},start=${pre})}"
+                           class="btn btn-outline-info"
+                           style="width: 110px; height: 55px; margin-right: 0px;">上一页</a>
+                        <a th:href="@{${carindex}(licenseNumber=${licenseNumber},carCategory=${carCategory},carStatus=${carStatus},start=${next})}"
+                           class="btn btn-outline-info"
+                           style="width: 110px; height: 55px; margin-right: 0px;">下一页</a>
+                        <a th:href="@{${carindex}(licenseNumber=${licenseNumber},carCategory=${carCategory},carStatus=${carStatus},start=${total})}"
+                           class="btn btn-outline-info"
+                           style="width: 110px; height: 55px;">尾页</a>
+                    </div>
+
+
+                    <!--模态窗 - add-car -->
+                    <div class="modal fade" id="add-car" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel" aria-hidden="true"
+                         style="z-index: 10000;">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        <i class="icon" data-icon="g"></i>&nbsp;&nbsp;新增车辆登记
+                                    </h4>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <!--*****	车辆信息	 *****-->
+                                    <div class="card form" id="form2">
+
+                                        <form action="/AddCar" id="addCarForm">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="License-plate-registration">车牌号</label>
+                                                        <label id="testNum"></label>
+                                                        <input type="text" class="form-control w-100"
+                                                               id="License-plate-registration"
+                                                               aria-describedby="emailHelp"
+                                                               placeholder="车牌号" name="licenseNum"
+                                                               onkeyup="checkLicenseNum()">
+                                                        <!--style="border: 1px solid red"-->
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-group">
+                                                        <label for="motorcycle-type">车型</label>
+                                                        <!--<input type="text" class="form-control w-100"-->
+                                                        <!--id="motorcycle-type" aria-describedby="emailHelp"-->
+                                                        <!--placeholder="车型">-->
+                                                        <!-- 所属单位地点 -->
+                                                        <select class="form-control w-100" id="motorcycle-type"
+                                                                name="CarType">
+                                                            <option value="haha">请选择</option>
+                                                            <option value="1">大型货车</option>
+                                                            <option value="2">中型货车</option>
+                                                            <option value="3">小型货车</option>
+                                                        </select>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-group">
+                                                        <label for="cargo">载货量</label> <input type="text"
+                                                                                              class="form-control w-100"
+                                                                                              id="cargo"
+                                                                                              aria-describedby="emailHelp"
+                                                                                              placeholder="载货量（KG）"
+                                                                                              readonly="readonly">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+
+                                                    <div class="form-group">
+                                                        <label for="path-check">线路选择：</label>
+                                                        <!--<input-->
+                                                        <!--type="text" class="form-control w-100"-->
+                                                        <!--id="path-check" aria-describedby="emailHelp"-->
+                                                        <!--placeholder="营运证号" name="pathnum">-->
+                                                        <select class="form-control w-100" id="path-check"
+                                                                name="pathNum">
+                                                            <option value="haha">请选择</option>
+                                                            <option value="1">郑州-上海</option>
+                                                            <option value="2">郑州-北京</option>
+                                                            <option value="3">郑州-西宁</option>
+                                                        </select>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-group">
+                                                        <label for="volume">容积</label> <input type="text"
+                                                                                              class="form-control w-100"
+                                                                                              id="volume"
+                                                                                              aria-describedby="emailHelp"
+                                                                                              placeholder="容积（m³）"
+                                                                                              readonly="readonly">
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-group" style="margin-bottom: 0px;">
+
+                                                        <label for="dtp_input2">购买日期</label>
+                                                        <div class="input-group date form_date w-100"
+                                                             data-date="" data-date-format="dd MM yyyy"
+                                                             data-link-field="dtp_input2"
+                                                             data-link-format="yyyy-mm-dd">
+                                                            <input class="form-control" size="16" type="text"
+                                                                   value="" readonly id="buy-date2" name="BuyTime">
+                                                            <span
+                                                                    class="input-group-addon"><i
+                                                                    class="icon icon-interface-windows"></i><span
+                                                                    class="glyphicon glyphicon-calendar"
+                                                                    style="width: 0px;"></span></span> <span
+                                                                class="input-group-addon"><i
+                                                                class="icon icon-close" id="close2"></i></span>
+
+                                                        </div>
+                                                        <input type="hidden" id="dtp_input2" value=""/><br/>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <br/>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="affiliated-unit">所属单位</label>
+                                                        <!-- 所属单位地点 -->
+                                                        <select class="form-control w-100" id="affiliated-unit"
+                                                                name="province">
+                                                            <option value="AU">河南</option>
+                                                            <option value="AR">北京</option>
+                                                            <option value="AT">上海</option>
+                                                            <option value="BY">河北</option>
+                                                            <option value="BE">天津</option>
+                                                            <option value="BA">香港</option>
+                                                            <option value="BR">山东</option>
+                                                            <option value="BG">青海</option>
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <br/>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+
+                                                    <div class="form-group">
+                                                        <label for="remark">备注</label>
+                                                        <textarea class="form-control w-100" rows="3"
+                                                                  id="remark" name="remark"></textarea>
+                                                    </div>
+                                                    <!--<button type="submit" class="btn btn-general btn-blue mr-2">提交</button>
+                                                        <button type="reset" class="btn btn-general btn-white">清空</button>-->
+
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="reset" class="btn btn-info" id="clearModel">清空</button>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <button type="button" class="btn btn-default"
+                                                        data-dismiss="modal" id="closeModel">关闭
+                                                </button>
+                                                <button type="submit" class="btn btn-primary" id="submitInfo">确认提交
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal -->
+                    </div>
+
+                    <!--</form>-->
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!--Global Javascript -->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/popper/popper.min.js"></script>
+<script src="/static/js/tether.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.cookie.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/chart.min.js"></script>
+<script src="/static/js/front.js"></script>
+
+<!--Core Javascript -->
+<!--<script src="/static/js/mychart.js"></script>-->
+
+<script type="text/javascript"
+        src="/static/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript"
+        src="/static/datetimepicker/js/locales/bootstrap-datetimepicker.fr.js"
+        charset="UTF-8"></script>
+<script>
+    $('.form_date').datetimepicker({
+        language: 'fr',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+
+    //点击关闭按钮，将购买日期中的内容清空（在更新模态窗中）
+    $("#close1").click(function () {
+        $("#buy-date1").val("");
+    });
+    //点击关闭按钮，将购买日期中的内容清空（再添加模态窗中）
+    $("#close2").click(function () {
+        $("#buy-date2").val("");
+    });
+</script>
+
+
+<script>
+
+
+    $(function () {
+
+            //车辆类型选择改变的时候，自动改变承重和容量
+            $("#motorcycle-type").change(function () {
+                if ($(this).val() == "1") {
+                    $("#cargo").val("100 T");
+                    $("#volume").val("100 m³");
+                } else if ($(this).val() == "2") {
+                    $("#cargo").val("80 T");
+                    $("#volume").val("80 m³");
+                } else if ($(this).val() == "3") {
+                    $("#cargo").val("50 T");
+                    $("#volume").val("50 m³");
+                } else {
+                    $("#cargo").val("");
+                    $("#volume").val("");
+                }
+
+            });
+
+
+        //表单提交前验证
+        $("#form2").submit(function () {
+
+             // alert("表单提交前验证!");
+            //设置跳转属性
+            var flag = true;
+            // alert($("#testNum").html());
+
+            //车牌号验证
+            if ($("#License-plate-registration").val() == "") {
+                // alert("车牌号为空");
+                $("#License-plate-registration").attr("style", "border-color:#FF5252");
+                flag = false;
+            }
+
+            if ($("#testNum").html() != "<font color=\"green\" size=\"3px\">验证通过！</font>") {
+                // alert("车牌号错误");
+                $("#License-plate-registration").attr("style", "border-color:#FF5252");
+                flag = false;
+            }
+
+            //线路选择的非空验证
+            if ($("#path-check").val() == "haha") {
+                // alert("线路为空");
+                $("#path-check").attr("style", "border-color:#FF5252");
+                flag = false;
+            }
+
+
+            //车型选择非空验证
+            if ($("#motorcycle-type").val() == "haha") {
+                // alert("车型选择为空");
+                $("#motorcycle-type").attr("style", "border-color:#FF5252");
+                flag = false;
+            }
+
+            //购买日期的非空验证
+            if ($("#buy-date2").val() == "") {
+                // alert("购买日期为空");
+                $("#buy-date2").attr("style", "border-color:#FF5252");
+                flag = false;
+            }
+
+
+            // alert(flag);
+            return flag;
+        });
+
+
+        //验证表单中的信息
+        $("#path-check").focusout(function () {
+
+            if ($(this).val() == "haha") {
+                $(this).attr("style", "border-color:#FF5252");
+            } else {
+                $(this).attr("style", "border-color:lime");
+            }
+
+        });
+        $("#motorcycle-type").focusout(function () {
+            if ($(this).val() == "haha") {
+                $(this).attr("style", "border-color:#FF5252");
+            } else {
+                $(this).attr("style", "border-color:lime");
+            }
+        });
+        $("#buy-date2").focusout(function () {
+            if ($(this).val() == "") {
+                $(this).attr("style", "border-color:#FF5252");
+            } else {
+                $(this).attr("style", "border-color:lime");
+            }
+        });
+
+
+        //关闭按钮清除所有的表单信息
+        $("#closeModel").click(function () {
+
+            //表单清空
+            $("#License-plate-registration").val("");
+            $("#path-check").val("haha");
+            $("#motorcycle-type").val("haha");
+            $("#buy-date2").val("");
+            $("#remark").val("");
+
+            $("#cargo").val("");
+            $("#volume").val("");
+            $("#testNum").html("");
+
+
+            //样式去除
+            $("#License-plate-registration").attr("style", "1px solid rgba(0,0,0,.15)");
+            $("#path-check").attr("style", "1px solid rgba(0,0,0,.15)");
+            $("#motorcycle-type").attr("style", "1px solid rgba(0,0,0,.15)");
+            $("#buy-date2").attr("style", "1px solid rgba(0,0,0,.15)");
+
+
+        });
+        //清除按钮清除所有的表单信息
+        $("#clearModel").click(function () {
+
+            //表单清空
+            $("#testNum").html("");
+
+
+            //样式去除
+            $("#License-plate-registration").attr("style", "1px solid rgba(0,0,0,.15)");
+            $("#path-check").attr("style", "1px solid rgba(0,0,0,.15)");
+            $("#motorcycle-type").attr("style", "1px solid rgba(0,0,0,.15)");
+            $("#buy-date2").attr("style", "1px solid rgba(0,0,0,.15)");
+
+        });
+
+        // //车牌号码失焦时进行判断
+        // $("#License-plate-registration").focusout(function () {
+        //
+        //     //alert("进行格式验证！")
+        //     var vehicleNumber = $(this).val();
+        //
+        //     var result=isVehicleNumber(vehicleNumber);
+        //
+        //     if (result ==false){
+        //         $("#testNum").html("<font color=\"red\" size=\"3px\">格式错误！</font>");
+        //         $("#License-plate-registration").attr("style","border-color:#FF5252");
+        //
+        //     }else {
+        //         $("#testNum").html("<font color=\"green\" size=\"3px\">验证通过！</font>");
+        //         $("#License-plate-registration").attr("style","border-color:lime");
+        //     }
+        //
+        //
+        // });
+        //
+        // //车牌号码的正则表达式验证
+        // function isVehicleNumber(vehicleNumber) {
+        //     var result = false;
+        //
+        //     if (vehicleNumber.length == 7){
+        //         var express = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$/;
+        //         result = express.test(vehicleNumber);
+        //     }
+        //     return result;
+        // }
+
+
+    });
+
+    //ajax验证车牌号的唯一性
+    function checkLicenseNum() {
+
+
+        var text = $("#License-plate-registration").val();
+        var url = "/checkLicenseNum";
+        var args = {"context": text};
+
+        $("#testNum").load(url, args);
+
+        if ($("#testNum").html() != "<font color=\"green\" size=\"3px\">验证通过！</font>") {
+            $("#License-plate-registration").attr("style", "border-color:#FF5252");
+        }else {
+            $("#License-plate-registration").attr("style", "border-color:lime");
+        }
+    }
+
+
+</script>
+</body>
+</html>

@@ -1,68 +1,147 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zoo.logistics.mapper.RouteMapper" >
-  <resultMap id="BaseResultMap" type="com.zoo.logistics.entity.Route" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="start_station_id" property="startStationId" jdbcType="INTEGER" />
-    <result column="end_station_id" property="endStationId" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.zoo.logistics.mapper.RouteMapper">
+    <resultMap id="BaseResultMap" type="com.zoo.logistics.entity.Route">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="start_station_id" property="startStationId" jdbcType="INTEGER"/>
+        <result column="end_station_id" property="endStationId" jdbcType="INTEGER"/>
+        <association property="startstation" column="start_station_id"
+                     select="com.zoo.logistics.mapper.StationMapper.selectByPrimaryKey">
+
+        </association>
+        <association property="endstation" column="end_station_id"
+                     select="com.zoo.logistics.mapper.StationMapper.selectByPrimaryKey">
+
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
     id, start_station_id, end_station_id
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from route
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+
+    <!--查询表中数量-->
+    <select id="RouteCount" resultType="int">
+        select count(1) from route
+    </select>
+
+
+    <!--全表查询-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from route
+    </select>
+
+    <!--主键查询-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from route
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--起始地查询-->
+    <select id="selectByStartArea" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from route
+        where start_station_id in
+        <foreach item="startStationId" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{startStationId}
+        </foreach>
+    </select>
+
+
+    <!--目的地查询-->
+    <select id="selectByEndArea" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from route
+        where end_station_id in
+        <foreach item="endStationId" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{endStationId}
+        </foreach>
+    </select>
+
+    <!--起始地目的地查询-->
+    <select id="selectByRoute" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from route
+        where
+        start_station_id in
+        <foreach item="startStationId" index="index" collection="startStationId"
+                 open="(" separator="," close=")">
+            #{startStationId.id}
+        </foreach>
+        and
+        end_station_id in
+        <foreach item="endStationId" index="index" collection="endStationId"
+                 open="(" separator="," close=")">
+            #{endStationId.id}
+        </foreach>
+    </select>
+
+    <!--路线是否存在查询-->
+    <select id="isexist" resultMap="BaseResultMap" parameterType="com.zoo.logistics.entity.Route">
+        select
+        <include refid="Base_Column_List"/>
+        from route
+        where end_station_id = #{endStationId,jdbcType=INTEGER}
+        and start_station_id = #{startStationId,jdbcType=INTEGER}
+    </select>
+
+    <!--主键删除操作-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from route
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zoo.logistics.entity.Route" >
+    <insert id="insert" parameterType="com.zoo.logistics.entity.Route">
     insert into route (id, start_station_id, end_station_id
       )
     values (#{id,jdbcType=INTEGER}, #{startStationId,jdbcType=INTEGER}, #{endStationId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zoo.logistics.entity.Route" >
-    insert into route
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="startStationId != null" >
-        start_station_id,
-      </if>
-      <if test="endStationId != null" >
-        end_station_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="startStationId != null" >
-        #{startStationId,jdbcType=INTEGER},
-      </if>
-      <if test="endStationId != null" >
-        #{endStationId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zoo.logistics.entity.Route" >
-    update route
-    <set >
-      <if test="startStationId != null" >
-        start_station_id = #{startStationId,jdbcType=INTEGER},
-      </if>
-      <if test="endStationId != null" >
-        end_station_id = #{endStationId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.zoo.logistics.entity.Route" >
+    <insert id="insertSelective" parameterType="com.zoo.logistics.entity.Route">
+        insert into route
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="startStationId != null">
+                start_station_id,
+            </if>
+            <if test="endStationId != null">
+                end_station_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="startStationId != null">
+                #{startStationId,jdbcType=INTEGER},
+            </if>
+            <if test="endStationId != null">
+                #{endStationId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zoo.logistics.entity.Route">
+        update route
+        <set>
+            <if test="startStationId != null">
+                start_station_id = #{startStationId,jdbcType=INTEGER},
+            </if>
+            <if test="endStationId != null">
+                end_station_id = #{endStationId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zoo.logistics.entity.Route">
     update route
     set start_station_id = #{startStationId,jdbcType=INTEGER},
       end_station_id = #{endStationId,jdbcType=INTEGER}

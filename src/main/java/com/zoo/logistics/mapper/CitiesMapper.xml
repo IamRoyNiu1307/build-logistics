@@ -10,12 +10,25 @@
   <sql id="Base_Column_List" >
     id, cityid, city, provinceid
   </sql>
+
+  <!--主键查询-->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from cities
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!--城市名称查询-->
+  <select id="selectByCityName" resultMap="BaseResultMap" parameterType="com.zoo.logistics.entity.Cities" >
+    select
+    <include refid="Base_Column_List" />
+    from cities
+    where city = #{city,jdbcType=VARCHAR}
+  </select>
+
+
+  <!--主键删除-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from cities
     where id = #{id,jdbcType=INTEGER}

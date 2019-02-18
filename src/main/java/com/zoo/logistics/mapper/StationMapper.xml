@@ -1,117 +1,166 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zoo.logistics.mapper.StationMapper" >
-  <resultMap id="BaseResultMap" type="com.zoo.logistics.entity.Station" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="station_cityid" property="stationCityid" jdbcType="CHAR" />
-    <result column="pos_lng" property="posLng" jdbcType="DECIMAL" />
-    <result column="pos_lat" property="posLat" jdbcType="DECIMAL" />
-    <result column="level" property="level" jdbcType="INTEGER" />
-    <result column="superior" property="superior" jdbcType="INTEGER" />
-    <result column="warehouse_capacity" property="warehouseCapacity" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, station_cityid, pos_lng, pos_lat, level, superior, warehouse_capacity
+<mapper namespace="com.zoo.logistics.mapper.StationMapper">
+    <resultMap id="BaseResultMap" type="com.zoo.logistics.entity.Station">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="station_name" property="stationName" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="station_cityid" property="stationCityid" jdbcType="CHAR"/>
+        <result column="pos_lng" property="posLng" jdbcType="DECIMAL"/>
+        <result column="pos_lat" property="posLat" jdbcType="DECIMAL"/>
+        <result column="level" property="level" jdbcType="INTEGER"/>
+        <result column="superior" property="superior" jdbcType="INTEGER"/>
+        <result column="warehouse_capacity" property="warehouseCapacity" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, station_name, station_cityid, tel, pos_lng, pos_lat, level, superior, warehouse_capacity
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from station
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+
+    <!--根据主键查询-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from station
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--查询所有-->
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from station
+    </select>
+
+
+    <!--根据城市id查询-->
+    <select id="selectByCityId" resultMap="BaseResultMap" parameterType="com.zoo.logistics.entity.Station">
+        select
+        <include refid="Base_Column_List"/>
+        from station
+        where station_cityid = #{stationCityid,jdbcType=CHAR}
+    </select>
+
+    <!--根据名字模糊查询-->
+    <select id="selectByStationName" resultMap="BaseResultMap" parameterType="com.zoo.logistics.entity.Station">
+        select
+        <include refid="Base_Column_List"/>
+        from station
+        where station_name like concat('%',#{stationName,jdbcType=VARCHAR},'%')
+    </select>
+
+    <!--根据主键删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from station
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zoo.logistics.entity.Station" >
+
+    <!--插入-->
+    <insert id="insert" parameterType="com.zoo.logistics.entity.Station">
     insert into station (id, station_cityid, pos_lng, 
       pos_lat, level, superior, 
-      warehouse_capacity)
+      warehouse_capacity,tel)
     values (#{id,jdbcType=INTEGER}, #{stationCityid,jdbcType=CHAR}, #{posLng,jdbcType=DECIMAL}, 
       #{posLat,jdbcType=DECIMAL}, #{level,jdbcType=INTEGER}, #{superior,jdbcType=INTEGER}, 
-      #{warehouseCapacity,jdbcType=INTEGER})
+      #{warehouseCapacity,jdbcType=INTEGER},#{tel,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zoo.logistics.entity.Station" >
-    insert into station
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="stationCityid != null" >
-        station_cityid,
-      </if>
-      <if test="posLng != null" >
-        pos_lng,
-      </if>
-      <if test="posLat != null" >
-        pos_lat,
-      </if>
-      <if test="level != null" >
-        level,
-      </if>
-      <if test="superior != null" >
-        superior,
-      </if>
-      <if test="warehouseCapacity != null" >
-        warehouse_capacity,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="stationCityid != null" >
-        #{stationCityid,jdbcType=CHAR},
-      </if>
-      <if test="posLng != null" >
-        #{posLng,jdbcType=DECIMAL},
-      </if>
-      <if test="posLat != null" >
-        #{posLat,jdbcType=DECIMAL},
-      </if>
-      <if test="level != null" >
-        #{level,jdbcType=INTEGER},
-      </if>
-      <if test="superior != null" >
-        #{superior,jdbcType=INTEGER},
-      </if>
-      <if test="warehouseCapacity != null" >
-        #{warehouseCapacity,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zoo.logistics.entity.Station" >
-    update station
-    <set >
-      <if test="stationCityid != null" >
-        station_cityid = #{stationCityid,jdbcType=CHAR},
-      </if>
-      <if test="posLng != null" >
-        pos_lng = #{posLng,jdbcType=DECIMAL},
-      </if>
-      <if test="posLat != null" >
-        pos_lat = #{posLat,jdbcType=DECIMAL},
-      </if>
-      <if test="level != null" >
-        level = #{level,jdbcType=INTEGER},
-      </if>
-      <if test="superior != null" >
-        superior = #{superior,jdbcType=INTEGER},
-      </if>
-      <if test="warehouseCapacity != null" >
-        warehouse_capacity = #{warehouseCapacity,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.zoo.logistics.entity.Station" >
+
+    <!--插入检测-->
+    <insert id="insertSelective" parameterType="com.zoo.logistics.entity.Station">
+        insert into station
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="stationCityid != null">
+                station_cityid,
+            </if>
+            <if test="posLng != null">
+                pos_lng,
+            </if>
+            <if test="posLat != null">
+                pos_lat,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="superior != null">
+                superior,
+            </if>
+            <if test="warehouseCapacity != null">
+                warehouse_capacity,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="stationCityid != null">
+                #{stationCityid,jdbcType=CHAR},
+            </if>
+            <if test="posLng != null">
+                #{posLng,jdbcType=DECIMAL},
+            </if>
+            <if test="posLat != null">
+                #{posLat,jdbcType=DECIMAL},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=INTEGER},
+            </if>
+            <if test="superior != null">
+                #{superior,jdbcType=INTEGER},
+            </if>
+            <if test="warehouseCapacity != null">
+                #{warehouseCapacity,jdbcType=INTEGER},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--更新（检测）-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.zoo.logistics.entity.Station">
+        update station
+        <set>
+            <if test="stationCityid != null">
+                station_cityid = #{stationCityid,jdbcType=CHAR},
+            </if>
+            <if test="posLng != null">
+                pos_lng = #{posLng,jdbcType=DECIMAL},
+            </if>
+            <if test="posLat != null">
+                pos_lat = #{posLat,jdbcType=DECIMAL},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=INTEGER},
+            </if>
+            <if test="superior != null">
+                superior = #{superior,jdbcType=INTEGER},
+            </if>
+            <if test="warehouseCapacity != null">
+                warehouse_capacity = #{warehouseCapacity,jdbcType=INTEGER},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--更新-->
+    <update id="updateByPrimaryKey" parameterType="com.zoo.logistics.entity.Station">
     update station
     set station_cityid = #{stationCityid,jdbcType=CHAR},
       pos_lng = #{posLng,jdbcType=DECIMAL},
       pos_lat = #{posLat,jdbcType=DECIMAL},
       level = #{level,jdbcType=INTEGER},
       superior = #{superior,jdbcType=INTEGER},
-      warehouse_capacity = #{warehouseCapacity,jdbcType=INTEGER}
+      warehouse_capacity = #{warehouseCapacity,jdbcType=INTEGER},
+      tel = #{tel,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -4,18 +4,30 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class Station implements Serializable {
+    //编号
     private Integer id;
 
+    //站点名称
+    private String stationName;
+
+    //站点城市id
     private String stationCityid;
 
+    //站点联系电话
+    private String tel;
+
+    //站点经纬度
     private BigDecimal posLng;
 
     private BigDecimal posLat;
 
+    //站点级别
     private Integer level;
 
+    //站点上级id
     private Integer superior;
 
+    //仓库容量
     private Integer warehouseCapacity;
 
     private static final long serialVersionUID = 1L;
@@ -26,6 +38,22 @@ public class Station implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getStationName() {
+        return stationName;
+    }
+
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     public String getStationCityid() {
@@ -80,7 +108,9 @@ public class Station implements Serializable {
     public String toString() {
         return "Station{" +
                 "id=" + id +
+                ", stationName='" + stationName + '\'' +
                 ", stationCityid='" + stationCityid + '\'' +
+                ", tel='" + tel + '\'' +
                 ", posLng=" + posLng +
                 ", posLat=" + posLat +
                 ", level=" + level +
