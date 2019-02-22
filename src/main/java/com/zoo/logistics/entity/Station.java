@@ -6,18 +6,27 @@ import java.math.BigDecimal;
 public class Station implements Serializable,Comparable<Station> {
     private Integer id;
 
+    //站点名称
     private String stationName;
 
+    //站点城市id
     private String stationCityid;
 
+    //站点联系电话
+    private String tel;
+
+    //站点经纬度
     private BigDecimal posLng;
 
     private BigDecimal posLat;
 
+    //站点级别
     private Integer level;
 
+    //站点上级id
     private Integer superior;
 
+    //仓库容量
     private Integer warehouseCapacity;
 
     private int index;
@@ -37,7 +46,15 @@ public class Station implements Serializable,Comparable<Station> {
     }
 
     public void setStationName(String stationName) {
-        this.stationName = stationName == null ? null : stationName.trim();
+        this.stationName = stationName;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     public String getStationCityid() {
@@ -102,6 +119,7 @@ public class Station implements Serializable,Comparable<Station> {
                 "id=" + id +
                 ", stationName='" + stationName + '\'' +
                 ", stationCityid='" + stationCityid + '\'' +
+                ", tel='" + tel + '\'' +
                 ", posLng=" + posLng +
                 ", posLat=" + posLat +
                 ", level=" + level +

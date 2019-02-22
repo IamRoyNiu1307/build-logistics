@@ -54,4 +54,15 @@ public class Route implements Serializable {
     public void setEndStation(Station endStation) {
         this.endStation = endStation;
     }
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "id=" + id +
+                ", startStationId=" + startStationId +
+                ", endStationId=" + endStationId +
+                ", startstation=" + startStation +
+                ", endstation=" + endStation +
+                '}';
+    }
 }

@@ -15,6 +15,12 @@ public class CarApplication implements Serializable {
 
     private Integer carCount;
 
+    private Station station;
+
+    private CarCategory carCategory;
+
+    private Route route;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -63,5 +69,44 @@ public class CarApplication implements Serializable {
 
     public void setCarCount(Integer carCount) {
         this.carCount = carCount;
+    }
+
+    public Station getStation() {
+        return station;
+    }
+
+    public void setStation(Station station) {
+        this.station = station;
+    }
+
+    public CarCategory getCarCategory() {
+        return carCategory;
+    }
+
+    public void setCarCategory(CarCategory carCategory) {
+        this.carCategory = carCategory;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
+    }
+
+    @Override
+    public String toString() {
+        return "CarApplication{" +
+                "id=" + id +
+                ", stationId=" + stationId +
+                ", routeId=" + routeId +
+                ", status=" + status +
+                ", carCategoryId=" + carCategoryId +
+                ", carCount=" + carCount +
+                ", station=" + station +
+                ", carCategory=" + carCategory +
+                ", route=" + route +
+                '}';
     }
 }

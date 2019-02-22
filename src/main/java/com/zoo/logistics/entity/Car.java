@@ -3,14 +3,23 @@ package com.zoo.logistics.entity;
 import java.io.Serializable;
 
 public class Car implements Serializable {
+
+    //车辆id
     private Integer id;
 
+    //车牌号码
     private String licenseNumber;
 
+    //线路id
     private Integer routeId;
 
+    //路线详情
+    private String pathdetails;
+
+    //车辆状态id
     private Integer carStatus;
 
+    //车辆种类id
     private Integer carCategoryId;
 
     private CarCategory carCategory;
@@ -73,6 +82,27 @@ public class Car implements Serializable {
 
     public void setRoute(Route route) {
         this.route = route;
+    }
+
+    public String getPathdetails() {
+        return pathdetails;
+    }
+
+    public void setPathdetails(String pathdetails) {
+        this.pathdetails = pathdetails;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", licenseNumber='" + licenseNumber + '\'' +
+                ", routeId=" + routeId +
+                ", pathdetails='" + pathdetails + '\'' +
+                ", carStatus=" + carStatus +
+                ", carCategoryId=" + carCategoryId +
+                ", carCategory=" + carCategory +
+                '}';
     }
 
     public Car() {

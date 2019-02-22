@@ -8,20 +8,76 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="car_category_id" property="carCategoryId" jdbcType="INTEGER" />
     <result column="car_count" property="carCount" jdbcType="INTEGER" />
+
+    <association property="station" column="station_id"
+                 select="com.zoo.logistics.mapper.StationMapper.selectByPrimaryKey">
+
+    </association>
+
+    <association property="carCategory" column="car_category_id"
+                 select="com.zoo.logistics.mapper.CarCategoryMapper.selectByPrimaryKey">
+
+    </association>
+
+    <association property="route" column="route_id"
+                 select="com.zoo.logistics.mapper.RouteMapper.selectByPrimaryKey">
+
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
     id, station_id, route_id, status, car_category_id, car_count
   </sql>
+
+  <!--查询表中数量-->
+  <select id="Count" resultType="int">
+        select count(1) from car_application
+    </select>
+
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from car_application
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from car_application
+    where status = 0
+  </select>
+
+  <!--根据站点的ID查询-->
+  <select id="selectByStationId" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select
+    <include refid="Base_Column_List" />
+    from car_application
+    where station_id in
+    <foreach item="stationId" index="index" collection="list"
+             open="(" separator="," close=")">
+      #{stationId}
+    </foreach>
+    and status = 0;
+  </select>
+
+  <!--根据申请状态查询-->
+  <select id="selectByClassStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from car_application
+    where status = #{status,jdbcType=INTEGER}
+  </select>
+
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from car_application
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+
   <insert id="insert" parameterType="com.zoo.logistics.entity.CarApplication" >
     insert into car_application (id, station_id, route_id, 
       status, car_category_id, car_count
@@ -30,6 +86,8 @@
       #{status,jdbcType=INTEGER}, #{carCategoryId,jdbcType=INTEGER}, #{carCount,jdbcType=INTEGER}
       )
   </insert>
+
+
   <insert id="insertSelective" parameterType="com.zoo.logistics.entity.CarApplication" >
     insert into car_application
     <trim prefix="(" suffix=")" suffixOverrides="," >

@@ -11,13 +11,83 @@
   <sql id="Base_Column_List" >
     id, start_station_id, end_station_id
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from route
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+
+    <!--查询表中数量-->
+    <select id="RouteCount" resultType="int">
+        select count(1) from route
+    </select>
+
+
+    <!--全表查询-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from route
+    </select>
+
+    <!--主键查询-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from route
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--起始地查询-->
+    <select id="selectByStartArea" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from route
+        where start_station_id in
+        <foreach item="startStationId" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{startStationId}
+        </foreach>
+    </select>
+
+
+    <!--目的地查询-->
+    <select id="selectByEndArea" resultMap="BaseResultMap" parameterType="java.util.List">
+        select
+        <include refid="Base_Column_List"/>
+        from route
+        where end_station_id in
+        <foreach item="endStationId" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{endStationId}
+        </foreach>
+    </select>
+
+    <!--起始地目的地查询-->
+    <select id="selectByRoute" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from route
+        where
+        start_station_id in
+        <foreach item="startStationId" index="index" collection="startStationId"
+                 open="(" separator="," close=")">
+            #{startStationId.id}
+        </foreach>
+        and
+        end_station_id in
+        <foreach item="endStationId" index="index" collection="endStationId"
+                 open="(" separator="," close=")">
+            #{endStationId.id}
+        </foreach>
+    </select>
+
+    <!--路线是否存在查询-->
+    <select id="isexist" resultMap="BaseResultMap" parameterType="com.zoo.logistics.entity.Route">
+        select
+        <include refid="Base_Column_List"/>
+        from route
+        where end_station_id = #{endStationId,jdbcType=INTEGER}
+        and start_station_id = #{startStationId,jdbcType=INTEGER}
+    </select>
+
+    <!--主键删除操作-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from route
     where id = #{id,jdbcType=INTEGER}
   </delete>

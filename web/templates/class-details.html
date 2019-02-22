@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <title>Title</title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <link rel="stylesheet" href="/static/css/city-picker.css">
+
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/font-icon-style.css">
+    <link rel="stylesheet" href="/static/css/style.default.css"
+          id="theme-stylesheet">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/css/ui-elements/card.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-datetimepicker.css"
+          media="screen">
+    <link rel="stylesheet" href="/static/css/ui-elements/button.css">
+
+</head>
+<body>
+
+<!--====================================================
+                         头部栏
+======================================================-->
+<header class="header">
+    <!--引入头部栏;传入参数-->
+    <div th:replace="topbar::#topbar"></div>
+</header>
+
+<div class="page-content d-flex align-items-stretch">
+
+    <!--***** 左侧导航栏 *****-->
+    <!-- 用户栏 -->
+    <!--引入侧边栏;传入参数-->
+    <div th:replace="sidebar::#master-sidebar"></div>
+
+
+    <div class="content-inner">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--*****	站点信息	 *****-->
+                <div class="card form" id="form1">
+                    <div class="card-header">
+                        <h3>
+                            <i class="icon icon-bill"></i>&nbsp;&nbsp;站点配车
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <font color="red" size="3">状态： <label th:text="${status}"></label></font>
+                        </h3>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                    </div>
+                    <br>
+                    <form class="form-inline">
+
+                        <div class="col-md-4">
+                            <br>
+                            <div class="form-group">
+                                <label for="stationName">申请站点名称</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input id="stationName" class="form-control w-100" type="text"
+                                       name="stationName" th:value="${stationName}" readonly>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="applyCarcategory">申请车型</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input id="applyCarcategory" class="form-control w-100" type="text"
+                                       name="applyCarcategory" th:value="${applyCarcategory}" readonly>
+                            </div>
+                            <br>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="pathdetails">申请路线详情</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input id="pathdetails" class="form-control w-100" type="text"
+                                       name="pathdetails" th:value="${pathdetails}" readonly>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="applyCount">所需辆数</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input id="applyCount" class="form-control w-100" type="text"
+                                       name="applyCount" th:value="${applyCount}" readonly>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-1">
+                        <div class="form-group">
+
+                        </div>
+                        </div>
+
+
+                        <!--<div class="col-md-2">-->
+                        <!--<div class="form-group">-->
+                        <!--&lt;!&ndash;<button class="btn btn-boxs btn-4" style="margin-bottom: -10px;width: 100px; height: 50px; padding-top: 3px;" data-toggle="modal" data-target="#add-site"><b>新增站点</b></button>&ndash;&gt;-->
+                        <!--<a class="btn btn-boxs btn-4" href="#add-site"-->
+                        <!--style="margin-bottom: -10px; width: 100px; height: 50px; padding-top: 3px;"-->
+                        <!--data-toggle="modal">新增站点</a>-->
+                        <!--&lt;!&ndash;<a class="btn btn-boxs btn-4" href="" id="add-site-model"&ndash;&gt;-->
+                        <!--&lt;!&ndash;style="margin-bottom: -10px; width: 100px; height: 50px; padding-top: 3px;"&ndash;&gt;-->
+                        <!--&lt;!&ndash;&gt;新增站点2</a>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--</div>-->
+                    </form>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <!--<a class="btn btn-boxs btn-4" href="/supplyCar"-->
+                            <!--style="margin-bottom: -10px; width: 100px; height: 50px; padding-top: 3px;"-->
+                            <!--&gt;配车</a>-->
+                            <button class="btn btn-boxs btn-4" onclick="supplyCar()"
+                                    style="margin-bottom: -10px; width: 200px; height: 50px; padding-top: 3px;"
+                            >配车</button>
+                        </div>
+
+                    </div>
+                    <br/>
+                    <!--<br/> <br/>-->
+                    <!--<br /> <br /> <br />-->
+                    <form action="/freecategoryCar">
+                        <input type="text" name="id" th:value="${id}" style="display: none" id="classId">
+                        <div class="col-md-12">
+                            <h4 style="border-bottom: 1px solid #ddd;">车辆信息
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+                                <font size="3"><label for="car-type">车辆类型:</label>
+                                    <!-- 所属单位地点 -->
+                                    <select class="" id="car-type"
+                                            style="width: 100px;" name="carCategory"
+                                            th:onchange="'javascript:this.form.submit();'">
+                                        <option value="haha">请选择</option>
+                                        <option value="BC">大型货车</option>
+                                        <option value="MC">中型货车</option>
+                                        <option value="LC">小型货车</option>
+                                    </select>
+                                </font>
+
+                            </h4>
+                        </div>
+                    </form>
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr class="bg-info text-white">
+                                <th>勾选</th>
+                                <th>车辆编号</th>
+                                <th>车牌号</th>
+                                <th>车型</th>
+                                <th>状态</th>
+
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="car :${cars}">
+                                <td>
+                                    <div class="checkbox">
+                                            <input type="checkbox" th:value="${car.id}" name="choose">
+                                    </div>
+                                </td>
+
+
+                                <td th:text="${car.id}"></td>
+                                <td th:text="${car.licenseNumber}"></td>
+
+                                <td th:if="${car.carCategoryId==1}">大型车</td>
+                                <td th:if="${car.carCategoryId==2}">中型车</td>
+                                <td th:if="${car.carCategoryId==3}">小型车</td>
+
+                                <td th:if="${car.carStatus==1||car.carStatus==3}">空闲</td>
+                                <td th:if="${car.carStatus==2||car.carStatus==4}">工作中</td>
+                                <td th:if="${car.carStatus==9}">维修中</td>
+
+                            </tbody>
+
+
+                        </table>
+                    </div>
+
+
+                    <div class="col-md-12" align="center">
+
+                        <a th:href="@{${classindex}(id=${id},carCategory=${carCategory},carStatus=${carStatus},start=0)}"
+                           class="btn btn-outline-info"
+                           style="width: 110px; height: 55px; margin-right: 0px;">首页</a>
+                        <a th:href="@{${classindex}(id=${id},carCategory=${carCategory},carStatus=${carStatus},start=${pre})}"
+                           class="btn btn-outline-info"
+                           style="width: 110px; height: 55px; margin-right: 0px;">上一页</a>
+                        <a th:href="@{${classindex}(id=${id},carCategory=${carCategory},carStatus=${carStatus},start=${next})}"
+                           class="btn btn-outline-info"
+                           style="width: 110px; height: 55px; margin-right: 0px;">下一页</a>
+                        <a th:href="@{${classindex}(id=${id},carCategory=${carCategory},carStatus=${carStatus},start=${total})}"
+                           class="btn btn-outline-info"
+                           style="width: 110px; height: 55px;">尾页</a>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+</body>
+
+<!--Global Javascript -->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/popper/popper.min.js"></script>
+<script src="/static/js/tether.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.cookie.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/chart.min.js"></script>
+<script src="/static/js/front.js"></script>
+
+<script src="/static/js/city-picker.data.js"></script>
+<script src="/static/js/city-picker.js"></script>
+
+
+<script>
+
+    function supplyCar() {
+
+        // alert("peiche");
+
+        var carID = new Array();
+
+        var id = $("#classId").val();
+        $("input:checkbox[name=choose]:checked").each(function () {
+            // alert(1);
+            //alert("选中的值："+this.val());
+            // alert("选中的值："+$(this).val());
+            carID.push($(this).val());
+
+        });
+        window.location.href ="supplyCar?carID="+carID+"&id="+id;
+        //获取所有的input标签
+
+        // var input = document.getElementsByTagName("input");
+        // var str="选中的值为:";
+        // for (var i = 0; i < input.length; i++)
+        // {
+        //     var obj = input[i];
+        //     //判断是否是checkbox并且已经选中  && obj.checked
+        //     if (obj.type == "checkbox" )
+        //     {
+        //         var code = obj.value;//获取checkbox的值
+        //         str=str+code+",";
+        //     }
+        //     alert(str);
+        // }
+
+        // $("choose").each(function () {
+        //     console.log("选中的值："+this.val());
+        //     window.location.href ="supplyCar?id="+this.val();
+        // });
+
+
+    }
+
+</script>
+
+</html>

@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <!-- 第二种mybatis逆向生成xml配置 -->
 <generatorConfiguration>
+
     <!-- 需要指明数据库连接器的绝对路径 -->
     <classPathEntry
             location="/Users/roy/Software/maven/repository/mysql/mysql-connector-java/5.1.47/mysql-connector-java-5.1.47.jar" />
@@ -40,10 +41,12 @@
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
+
         <!--对应的mapper.xml文件  -->
         <sqlMapGenerator targetPackage="mappers" targetProject="./src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
+
 
         <!-- 对应的Mapper接口类文件 -->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.zoo.logistics.mapper" targetProject="./src/main/java">

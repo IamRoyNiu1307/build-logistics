@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <title>Zoo物流 河南管理中心-用户管理</title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <link rel="stylesheet" href="/static/css/city-picker.css">
+
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/font-icon-style.css">
+    <link rel="stylesheet" href="/static/css/style.default.css"
+          id="theme-stylesheet">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/css/ui-elements/card.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-datetimepicker.css"
+          media="screen">
+    <link rel="stylesheet" href="/static/css/ui-elements/button.css">
+
+</head>
+<body>
+
+<!--====================================================
+                         头部栏
+======================================================-->
+<header class="header">
+    <!--引入头部栏;传入参数-->
+    <div th:replace="topbar::#topbar"></div>
+</header>
+
+<div class="page-content d-flex align-items-stretch">
+
+    <!--***** 左侧导航栏 *****-->
+    <!-- 用户栏 -->
+    <!--引入侧边栏;传入参数-->
+    <div th:replace="sidebar::#master-sidebar"></div>
+
+
+    <div class="content-inner">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--*****	路线信息	 *****-->
+                <div class="card form" id="form1">
+                    <div class="card-header">
+                        <h3><i class="icon icon-bill"></i>&nbsp;&nbsp;后台用户管理中心</h3>
+                    </div>
+                    <br>
+                    <form class="form-inline" action="/selectAdmin">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="stationName">站点名称：</label>
+                                <input type="text" class="form-control w-100" id="stationName" name="stationName"
+                                       placeholder="请输入站点名称">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="level">级别：</label>
+                                <input type="text" class="form-control w-100" id="level" name="level"
+                                       placeholder="请输入用户级别">
+                            </div>
+                        </div>
+
+                        <!--<div class="col-md-2">-->
+                        <!--<div class="form-group">-->
+                        <!--<label for="car-type">路线范围:</label>-->
+
+                        <!--<select class="form-control w-100" id="car-type" style="width: 200px;">-->
+                        <!--<option value="">请选择</option>-->
+                        <!--<option value="BC">省内</option>-->
+                        <!--<option value="MC">省外</option>-->
+
+                        <!--</select>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-boxs btn-2"
+                                        style="margin-bottom: -10px;width: 100px; height: 50px; padding-top: 3px;"><b>查&nbsp;&nbsp;询</b>
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <!--<div class="col-md-3">-->
+                        <!--<div class="form-group">-->
+                        <!--&lt;!&ndash;<button class="btn btn-boxs btn-4" style="margin-bottom: -10px;width: 100px; height: 50px; padding-top: 3px;" data-toggle="modal" data-target="#add-car"><b>添加车辆</b></button>&ndash;&gt;-->
+                        <!--<a href="#add-path" class="btn btn-boxs btn-4"-->
+                        <!--style="margin-bottom: -10px;width: 100px; height: 50px; padding-top: 3px;"-->
+                        <!--data-toggle="modal">新增路线</a>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                    </form>
+                    <br/>
+                    <br/>
+                    <br/>
+
+
+                    <div class="col-md-12">
+                        <h4 style="border-bottom: 1px solid #ddd;">用户信息</h4>
+                    </div>
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr class="bg-info text-white">
+                                <th>用户编号</th>
+                                <th>用户账号</th>
+                                <th>所属站点</th>
+                                <th>用户级别</th>
+                                <th>用户信息修改</th>
+                                <th>删除用户</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="admin :${admins}">
+                                <td th:text="${admin.id}"></td>
+                                <td th:text="${admin.account}"></td>
+                                <td th:text="${admin.station.stationName}"></td>
+                                <td th:text="${admin.level}"></td>
+
+                                <td><a href="#update-admin" class="btn btn-default btn-xs" id="update-site-model"
+                                       style="text-align:left;margin-right: 0px;margin-bottom: 0px;height: 25px;padding-top: 0px;margin-top: -20px "
+                                       th:onclick="'javascript:query(\''+${admin.id}+'\');'"
+                                       data-toggle="modal">更新</a></td>
+
+                                <td style="padding-top: 5px;padding-bottom: 5px">
+                                    <a th:href="@{deleteAdmin(id=${admin.id})}" onclick="return deleteAdmin()"
+                                       class="deleteCar btn btn-default btn-xs"
+                                       style="text-align:left;margin-right: 0px;margin-bottom: 0px;height: 25px;padding-top: 0px;margin-top: -10px ">删除</a>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                            <script>
+
+                                function deleteAdmin() {
+                                    var flag = confirm("确定要删除此用户的信息吗?");
+
+                                    return flag;
+                                }
+
+
+                            </script>
+
+                        </table>
+
+
+                    </div>
+
+                    <!--内容页底部的首页，上一页，下一页，尾页-->
+                    <div class="col-md-12" align="center">
+                        <a th:href="@{${adminindex}(stationName=${stationName},level=${level},start=0)}"
+                           class="btn btn-outline-info"
+                           style="width: 110px; height: 55px; margin-right: 0px;">首页</a>
+                        <a th:href="@{${adminindex}(stationName=${stationName},level=${level},start=${pre})}"
+                           class="btn btn-outline-info"
+                           style="width: 110px; height: 55px; margin-right: 0px;">上一页</a>
+                        <a th:href="@{${adminindex}(stationName=${stationName},level=${level},start=${next})}"
+                           class="btn btn-outline-info"
+                           style="width: 110px; height: 55px; margin-right: 0px;">下一页</a>
+                        <a th:href="@{${adminindex}(stationName=${stationName},level=${level},start=${total})}"
+                           class="btn btn-outline-info"
+                           style="width: 110px; height: 55px;">尾页</a>
+
+
+                    </div>
+
+
+
+
+                    <!-- 模态框（Modal） update-admin   -->
+                    <div class="modal fade" id="update-admin" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+                         style="z-index: 10000;">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        <i class="icon" data-icon="g"></i>&nbsp;&nbsp;修改用户信息
+                                    </h4>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <!--*****	用户信息	 *****-->
+                                    <div class="card form" id="form2">
+
+                                        <form action="/updateAdmin">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="admin-number-update">用户编号</label> <input type="text"
+                                                                                                            class="form-control w-100"
+                                                                                                            id="admin-number-update"
+                                                                                                             name="adminId"
+                                                                                                            aria-describedby="emailHelp"
+                                                                                                            placeholder="用户编号"
+                                                                                                            readonly="readonly">
+                                                    </div>
+                                                    <br/>
+
+                                                    <div class="form-group">
+                                                        <label for="admin-stationNum">用户所在站点编号</label> <input type="text"
+                                                                                                      class="form-control w-100"
+                                                                                                      id="admin-stationNum"
+                                                                                                      aria-describedby="emailHelp"
+                                                                                                      placeholder="用户所在站点" readonly>
+                                                    </div>
+                                                    <br/>
+
+                                                    <div class="form-group">
+
+                                                        <label for="admin-level">用户级别</label>
+                                                        <select class="form-control w-100" id="admin-level"
+                                                                name="adminLevel">
+                                                            <option value="haha">请选择</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                        </select>
+
+                                                    </div>
+                                                    <br/>
+
+                                                </div>
+
+                                                <br/>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="admin-account">用户账号</label> <input
+                                                            type="text" class="form-control w-100"
+                                                            id="admin-account" aria-describedby="emailHelp"
+                                                            placeholder="用户账号" readonly>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-group">
+                                                        <label for="admin-stationName">站点名称</label> <input
+                                                            type="text" class="form-control w-100"
+                                                            id="admin-stationName" aria-describedby="emailHelp"
+                                                            placeholder="站点名称" value="" readonly>
+                                                    </div>
+                                                    <br/>
+                                                    <div class="form-group">
+                                                        <label for="Levelpermissions">级别权限说明</label> <input
+                                                            type="text" class="form-control w-100" id="Levelpermissions"
+                                                            aria-describedby="emailHelp" placeholder="级别权限" readonly>
+                                                    </div>
+                                                    <br/>
+
+
+                                                </div>
+                                                <br/>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-info" id="clearModel">清空</button>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <button type="button" class="btn btn-default"
+                                                        data-dismiss="modal" id="closeModel">关闭
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">提交更改</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal -->
+                    </div>
+
+
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+
+<!--Global Javascript -->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/popper/popper.min.js"></script>
+<script src="/static/js/tether.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.cookie.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/chart.min.js"></script>
+<script src="/static/js/front.js"></script>
+
+<script src="/static/js/city-picker.data.js"></script>
+<script src="/static/js/city-picker.js"></script>
+
+<script type="text/javascript" src="/static/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/datetimepicker/js/locales/bootstrap-datetimepicker.fr.js"
+        charset="UTF-8"></script>
+
+<script>
+
+    //修改按钮的操作
+    function query(id) {
+        // alert("修改==========" + id);
+        $.ajax({
+            url: "/queryAdmin",
+            async: true,
+            type: "POST",
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify({"id":id,"time":new Date()}),
+            success: function (map) {
+                //ajax获取从后台传递的值，并将其显示在前台页面上
+                $("#admin-number-update").val(map.id);
+                $("#admin-account").val(map.account);
+                $("#admin-stationNum").val(map.stationId);
+                $("#admin-level").val(map.level);
+                $("#admin-stationName").val(map.stationName);
+
+                if ($("#admin-level").val()=="1"){
+                    $("#Levelpermissions").val("最高权限，所有操作");
+
+                } else if ($("#admin-level").val()=="2"){
+                    $("#Levelpermissions").val("中级权限，物流管理");
+                } else if ($("#admin-level").val()=="3"){
+                    $("#Levelpermissions").val("低级权限，业务管理");
+                } else {
+                    $("#Levelpermissions").val("");
+                }
+
+
+            },
+            error: function (data) {
+                alert(data);
+                alert("请求失败");
+            },
+            // dataType: "json"
+
+
+        });
+
+
+    }
+
+
+    $(function () {
+
+        //用户级别选择改变的时候，自动改变级别权限说明
+        $("#admin-level").change(function () {
+            if ($(this).val() == "1") {
+                $("#Levelpermissions").val("最高权限，所有操作");
+            } else if ($(this).val() == "2") {
+                $("#Levelpermissions").val("中级权限，物流管理");
+            } else if ($(this).val() == "3") {
+                $("#Levelpermissions").val("低级权限，业务管理");
+            } else {
+                $("#Levelpermissions").val("");
+            }
+
+        });
+
+    });
+
+        //清除按钮清除所有的表单信息
+    $("#clearModel").click(function () {
+
+        $("#admin-level").val()=="haha"
+
+
+        //样式去除
+        $("#admin-level").attr("style", "1px solid rgba(0,0,0,.15)");
+
+    });
+
+
+    //关闭按钮清除所有的表单信息
+    $("#closeModel").click(function () {
+
+        //样式去除
+        $("#admin-level").attr("style", "1px solid rgba(0,0,0,.15)");
+
+    });
+
+
+    //失焦时验证信息
+    $("#admin-level").focusout(function () {
+
+        if ($(this).val() == "haha") {
+            $(this).attr("style", "border-color:#FF5252");
+        } else {
+            $(this).attr("style", "border-color:lime");
+        }
+
+    });
+
+    //表单提交前验证
+    $("#form2").submit(function () {
+
+        //设置跳转属性
+        var flag = true;
+
+        //权限级别非空验证
+        if ($("#admin-level").val() == "haha") {
+            //级别为空
+            $("#admin-level").attr("style", "border-color:#FF5252");
+            flag = false;
+        }
+        return flag;
+    });
+
+
+</script>
+
+</html>

@@ -14,28 +14,90 @@
   <sql id="Base_Column_List" >
     id, account, password, level, station_id
   </sql>
+
+  <!--检查用户名和密码是否存在-->
   <select id="checkAccount" resultMap="BaseResultMap" parameterType="com.zoo.logistics.entity.Admin" >
     select
     <include refid="Base_Column_List" />
     from admin
     where account = #{account,jdbcType=VARCHAR} and password = #{password,jdbcType=VARCHAR}
   </select>
+
+
+  <!--查询表中数量-->
+  <select id="AdminCount" resultType="int">
+        select count(1) from admin
+    </select>
+
+
+  <!--主键查询-->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from admin
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!--站点id查询-->
+  <select id="selectByStationId" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select
+    <include refid="Base_Column_List" />
+    from admin
+    where station_id in
+    <foreach item="stationId" index="index" collection="list"
+             open="(" separator="," close=")">
+      #{stationId}
+    </foreach>
+  </select>
+
+  <!--用户级别查询-->
+  <select id="selectByLevel" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from admin
+    where level = #{level,jdbcType=INTEGER}
+  </select>
+
+  <!--用户级别查询-->
+  <select id="selectByAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from admin
+    where
+    stationId in
+    <foreach item="stationId" index="index" collection="stationId"
+             open="(" separator="," close=")">
+      #{stationId}
+    </foreach>
+    and
+    level = #{level,jdbcType=INTEGER}
+  </select>
+
+
+
+
+  <!--全表查询-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from admin
+  </select>
+
+  <!--主键删除-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from admin
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+
   <insert id="insert" parameterType="com.zoo.logistics.entity.Admin" >
     insert into admin (id, account, password, 
       level, station_id)
     values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{level,jdbcType=INTEGER}, #{stationId,jdbcType=INTEGER})
   </insert>
+
+
   <insert id="insertSelective" parameterType="com.zoo.logistics.entity.Admin" >
     insert into admin
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -73,6 +135,8 @@
       </if>
     </trim>
   </insert>
+
+
   <update id="updateByPrimaryKeySelective" parameterType="com.zoo.logistics.entity.Admin" >
     update admin
     <set >
@@ -91,6 +155,8 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
   <update id="updateByPrimaryKey" parameterType="com.zoo.logistics.entity.Admin" >
     update admin
     set account = #{account,jdbcType=VARCHAR},

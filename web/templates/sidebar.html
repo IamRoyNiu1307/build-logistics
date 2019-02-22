@@ -18,10 +18,15 @@
     <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/font-icon-style.css">
     <link rel="stylesheet" href="/static/css/style.default.css" id="theme-stylesheet">
+    <link rel="stylesheet" href="/static/css/form.css">
+
 
     <!-- Core stylesheets -->
     <link rel="stylesheet" href="/static/css/ui-elements/card.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-datetimepicker.css"
+          media="screen">
+    <link rel="stylesheet" href="/static/css/ui-elements/button.css">
 </head>
 <body>
 <nav id="sidebar" class="side-navbar">
@@ -98,5 +103,85 @@
 
     </ul>
 </nav>
+<!--总站菜单栏-->
+<nav id="master-sidebar" class="side-navbar">
+    <div class="sidebar-header d-flex align-items-center">
+        <div class="avatar">
+            <img src="/static/img/avatar-1.jpg" alt="..."
+                 class="img-fluid rounded-circle">
+        </div>
+        <div class="title">
+            <h1 class="h4">Steena Ben</h1>
+            <h5 style="font-size: small;">
+                <b>省级管理中心--河南</b>
+            </h5>
+        </div>
+    </div>
+    <hr>
+    <!-- 菜单栏-->
+    <ul class="list-unstyled">
+        <li class="active"><a href="/index"><i class="icon-home"></i>首页</a>
+        </li>
+
+        <!--管理-->
+        <li><a href="#manage-1" aria-expanded="false"
+               data-toggle="collapse"> <i class="icon icon-presentation"></i>业务管理
+        </a>
+            <ul id="manage-1" class="collapse list-unstyled">
+
+                <li><a href="order-manage.html">订单管理</a></li>
+                <li><a href="receipt-manage.html">交接单管理</a></li>
+                <li><a href="abnormal-manage.html">异常单管理</a></li>
+
+                <li><a href="freight-manage.html">运费管理</a></li>
+            </ul>
+        </li>
+
+        <li><a href="#manage-2" aria-expanded="false"
+               data-toggle="collapse"> <i class="icon icon-list-1"></i>物流管理
+        </a>
+            <ul id="manage-2" class="collapse list-unstyled">
+
+                <li><a href="/siteManage">站点管理</a></li>
+                <li><a href="/carManage">车辆管理</a></li>
+                <li><a href="/pathManage">路线管理</a></li>
+                <li><a href="/classManage">班次管理</a></li>
+            </ul>
+        </li>
+
+        <!--财务管理-->
+        <li><a href="#manage-3" aria-expanded="false"
+               data-toggle="collapse"> <i class="icon icon-page"></i>财务管理
+        </a>
+            <ul id="manage-3" class="collapse list-unstyled">
+                <li><a href="Financial-Management.html">查看财务状况</a></li>
+                <li><a href="Adjustment-programs.html">调整分配方案</a></li>
+            </ul>
+        </li>
+
+        <!--权限管理-->
+        <li><a href="#authority-management" aria-expanded="false"
+               data-toggle="collapse"> <i class="icon icon-user"></i>权限设置
+        </a>
+            <ul id="authority-management" class="collapse list-unstyled">
+                <li><a href="/PermissionAssignment">权限分配</a></li>
+                <li><a href="/adminManage">后台用户管理</a></li>
+            </ul>
+        </li>
+
+        <li><a href="inquire.html"><i class="icon icon-search"></i>快速查询通道</a>
+        </li>
+    </ul>
+</nav>
 </body>
+
+<!--Global Javascript -->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/popper/popper.min.js"></script>
+<script src="/static/js/tether.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.cookie.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/chart.min.js"></script>
+<script src="/static/js/front.js"></script>
 </html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <title>Zoo物流 河南管理中心-路线管理</title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <link rel="stylesheet" href="/static/css/city-picker.css">
+
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed"
+          rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/font-icon-style.css">
+    <link rel="stylesheet" href="/static/css/style.default.css"
+          id="theme-stylesheet">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/css/ui-elements/card.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/bootstrap-datetimepicker.css"
+          media="screen">
+    <link rel="stylesheet" href="/static/css/ui-elements/button.css">
+
+</head>
+<body>
+
+<!--====================================================
+                         头部栏
+======================================================-->
+<header class="header">
+    <!--引入头部栏;传入参数-->
+    <div th:replace="topbar::#topbar"></div>
+</header>
+
+<div class="page-content d-flex align-items-stretch">
+
+    <!--***** 左侧导航栏 *****-->
+    <!-- 用户栏 -->
+    <!--引入侧边栏;传入参数-->
+    <div th:replace="sidebar::#master-sidebar"></div>
+
+
+    <div class="content-inner">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--*****	路线信息	 *****-->
+                <div class="card form" id="form1">
+                    <div class="card-header">
+                        <h3><i class="icon icon-bill"></i>&nbsp;&nbsp;路线管理中心</h3>
+                    </div>
+                    <br>
+                    <form class="form-inline" action="/selectPath">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="start-area">起始地：</label>
+                                <input type="text" class="form-control w-100" id="start-area" name="startArea"
+                                       placeholder="请输入路线起始地">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="end-area">目的地：</label>
+                                <input type="text" class="form-control w-100" id="end-area" name="endArea"
+                                       placeholder="请输入路线目的地">
+                            </div>
+                        </div>
+
+                        <!--<div class="col-md-2">-->
+                        <!--<div class="form-group">-->
+                        <!--<label for="car-type">路线范围:</label>-->
+
+                        <!--<select class="form-control w-100" id="car-type" style="width: 200px;">-->
+                        <!--<option value="">请选择</option>-->
+                        <!--<option value="BC">省内</option>-->
+                        <!--<option value="MC">省外</option>-->
+
+                        <!--</select>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-boxs btn-2"
+                                        style="margin-bottom: -10px;width: 100px; height: 50px; padding-top: 3px;"><b>查&nbsp;&nbsp;询</b>
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <!--<button class="btn btn-boxs btn-4" style="margin-bottom: -10px;width: 100px; height: 50px; padding-top: 3px;" data-toggle="modal" data-target="#add-car"><b>添加车辆</b></button>-->
+                                <a href="#add-path" class="btn btn-boxs btn-4"
+                                   style="margin-bottom: -10px;width: 100px; height: 50px; padding-top: 3px;"
+                                   data-toggle="modal">新增路线</a>
+                            </div>
+                        </div>
+                    </form>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+
+                        <div class="col-md-12">
+                            <h4 style="border-bottom: 1px solid #ddd;">路线信息</h4>
+                        </div>
+                        <div class="col-md-12">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr class="bg-info text-white">
+                                    <th>路线编号</th>
+                                    <th>路线起点</th>
+                                    <th>路线终点</th>
+                                    <!--<th>路线信息修改</th>-->
+                                    <th>删除路线</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr th:each="route :${routes}">
+                                    <td th:text="${route.id}"></td>
+                                    <td th:text="${route.startstation.stationName}"></td>
+                                    <td th:text="${route.endstation.stationName}"></td>
+
+
+                                    <td style="padding-top: 5px;padding-bottom: 5px">
+                                        <a th:href="@{deleteRoute(id=${route.id})}" onclick="return deleteRoute()"
+                                           class="deleteCar btn btn-default btn-xs"
+                                           style="text-align:left;margin-right: 0px;margin-bottom: 0px;height: 25px;padding-top: 0px;margin-top: -10px ">删除</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                                <script>
+
+                                    function deleteRoute() {
+                                        var flag = confirm("确定要删除此路线的信息吗?");
+
+                                        return flag;
+                                    }
+
+
+                                </script>
+
+                            </table>
+
+
+                        </div>
+
+                        <div class="col-md-12" align="center">
+                            <!--<a href="#" class="btn btn-outline-info" style="width: 110px; height: 55px; margin-right: 0px;">首页</a>-->
+                            <!--<a href="#" class="btn btn-outline-info" style="width: 110px; height: 55px; margin-right: 0px;">上一页</a>-->
+                            <!--<a href="#" class="btn btn-outline-info" style="width: 110px; height: 55px; margin-right: 0px;">下一页</a>-->
+                            <!--<a href="#" class="btn btn-outline-info" style="width: 110px; height: 55px;">尾页</a>-->
+
+                            <a th:href="@{${pathindex}(startArea=${startArea},endArea=${endArea},start=0)}"
+                               class="btn btn-outline-info"
+                               style="width: 110px; height: 55px; margin-right: 0px;">首页</a>
+                            <a th:href="@{${pathindex}(startArea=${startArea},endArea=${endArea},start=${pre})}"
+                               class="btn btn-outline-info"
+                               style="width: 110px; height: 55px; margin-right: 0px;">上一页</a>
+                            <a th:href="@{${pathindex}(startArea=${startArea},endArea=${endArea},start=${next})}"
+                               class="btn btn-outline-info"
+                               style="width: 110px; height: 55px; margin-right: 0px;">下一页</a>
+                            <a th:href="@{${pathindex}(startArea=${startArea},endArea=${endArea},start=${total})}"
+                               class="btn btn-outline-info"
+                               style="width: 110px; height: 55px;">尾页</a>
+
+
+                        </div>
+
+
+                        <!--模态窗 - add-path -->
+                        <div class="modal fade" id="add-path" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                             aria-hidden="true" style="z-index: 10000;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title" id="myModalLabel"><i class="icon" data-icon="g"></i>&nbsp;&nbsp;新增路线登记
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <!--*****	路线信息	 *****-->
+                                        <div class="card form" id="form2">
+
+                                            <form action="/addPath">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="path-start-station-num">起始点：</label>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <label id="testNum"></label>
+                                                            <input type="text" class="form-control w-100"
+                                                                   id="path-start-station-num"
+                                                                   placeholder="请输入起始点编号"
+                                                                   onkeyup="displayStartStation()"
+                                                                   name="startSiteNum">
+                                                        </div>
+                                                        <br/>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control w-100"
+                                                                   id="path-start-station"
+                                                                   placeholder="起始站点地址为" readonly>
+                                                        </div>
+                                                        <br/>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+
+                                                        <div class="form-group">
+                                                            <label for="path-end-station-num">结束点：</label>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <label id="testPath"></label>
+                                                            <input type="text" class="form-control w-100"
+                                                                   id="path-end-station-num"
+                                                                   aria-describedby="emailHelp"
+                                                                   placeholder="请输入起终点编号"
+                                                                   onkeyup="displayEndStation()"
+                                                                   name="endSiteNum">
+                                                        </div>
+                                                        <br/>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control w-100"
+                                                                   id="path-end-station"
+                                                                   placeholder="终止站点地址为" readonly>
+                                                        </div>
+                                                        <br/>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <br/>
+                                                <!--<div class="row">-->
+                                                <!--<div class="col-md-12">-->
+                                                <!--<div class="form-group">-->
+                                                <!--<label for="display-panel">显示路线信息</label>-->
+                                                <!--&lt;!&ndash; 所属单位地点 &ndash;&gt;-->
+                                                <!--<textarea class="form-control w-100" rows="3"-->
+                                                <!--id="display-panel" name="display-panel" readonly>-->
+                                                <!--</textarea>-->
+
+
+                                                <!--</div>-->
+
+                                                <!--</div>-->
+                                                <!--</div>-->
+                                                <!--<br/>-->
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+
+                                                        <div class="form-group">
+                                                            <label for="remark">备注</label>
+                                                            <textarea class="form-control w-100" rows="3"
+                                                                      id="remark" name="remark"></textarea>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="reset" class="btn btn-info" id="clearModel">清空
+                                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                                                            id="closeModel">
+                                                        关闭
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">确认提交</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                            <!-- /.modal -->
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+
+<!--Global Javascript -->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/popper/popper.min.js"></script>
+<script src="/static/js/tether.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.cookie.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/chart.min.js"></script>
+<script src="/static/js/front.js"></script>
+
+<script src="/static/js/city-picker.data.js"></script>
+<script src="/static/js/city-picker.js"></script>
+
+<script type="text/javascript" src="/static/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/static/datetimepicker/js/locales/bootstrap-datetimepicker.fr.js"
+        charset="UTF-8"></script>
+
+<script>
+
+    //显示起始点编号对应的站点名称信息
+    function displayStartStation() {
+        // 获取输入的编号
+        var text = $("#path-start-station-num").val();
+
+        //ajax获取对应的站点名称信息
+        $.ajax({
+            url: "/displayStationName",
+            async: true,
+            type: "POST",
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify({"context": text}),
+            success: function (map) {
+                $("#path-start-station").val(map.stationName);
+
+                //alert(map.stationverify);
+                if (map.stationverify == "1") {
+                    $("#testNum").html("");
+                    //alert("通过");
+                    $("#path-start-station-num").attr("style", "border-color:lime");
+                } else if (map.stationverify == "2") {
+                    $("#testNum").html("<font color=\"red\" size=\"3px\">格式错误！</font>");
+                    //alert("格式错误");
+                    $("#path-start-station-num").attr("style", "border-color:#FF5252");
+                } else if (map.stationverify == "4") {
+                    $("#testNum").html("<font color=\"red\" size=\"3px\">不存在此站点！</font>");
+                    //alert("格式错误");
+                    $("#path-start-station-num").attr("style", "border-color:#FF5252");
+                }
+                else {
+                    $("#testNum").html("");
+                    //alert("不能为空");
+                    $("#path-start-station-num").attr("style", "border-color:#FF5252");
+                }
+
+
+            },
+            error: function (data) {
+                alert(data);
+                alert("请求失败");
+            },
+        });
+
+
+    }
+
+    //显示终点编号对应的站点名称信息
+    function displayEndStation() {
+
+        // 获取输入的编号
+        var text = $("#path-end-station-num").val();
+
+        $.ajax({
+            url: "/displayStationName",
+            //async: true,
+            type: "POST",
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify({"context": text}),
+            success: function (map) {
+                //将对应显示的文本框的值修改为对应的station的值
+                $("#path-end-station").val(map.stationName);
+
+                //alert(map.stationverify);
+                if (map.stationverify == "1") {
+                    // $("#testPath").html("");
+                    //alert("通过");
+                    $("#path-end-station-num").attr("style", "border-color:lime");
+                } else if (map.stationverify == "2") {
+                    //$("#testPath").html("<font color=\"red\" size=\"3px\">格式错误！</font>");
+                    //alert("格式错误");
+                    $("#path-end-station-num").attr("style", "border-color:#FF5252");
+                } else if (map.stationverify == "4") {
+                    //$("#testPath").html("<font color=\"red\" size=\"3px\">不存在此站点！</font>");
+                    //alert("格式错误");
+                    $("#path-end-station-num").attr("style", "border-color:#FF5252");
+                }
+                else {
+                    //$("#testPath").html("");
+                    //alert("不能为空");
+                    $("#path-end-station-num").attr("style", "border-color:#FF5252");
+                }
+
+
+            },
+            error: function (data) {
+                alert(data);
+                alert("请求失败");
+            },
+        });
+
+
+        //对传入的起始地和结束地进行验证，验证此线路是否存在
+        var text2 = $("#path-start-station-num").val();
+        var url = "/checkPath";
+        var args = {
+            "context": text,
+            "context2": text2
+        };
+
+        $("#testPath").load(url, args);
+
+    }
+
+
+    //清除按钮清除所有的表单信息
+    $("#clearModel").click(function () {
+
+        //表单清空
+        $("#testNum").html("");
+        $("#testPath").html("");
+
+
+        //样式去除
+        $("#path-start-station-num").attr("style", "1px solid rgba(0,0,0,.15)");
+        $("#path-end-station-num").attr("style", "1px solid rgba(0,0,0,.15)");
+
+    });
+    //关闭按钮清除所有的表单信息
+    $("#closeModel").click(function () {
+
+        //表单清空
+        $("#path-start-station-num").val("");
+        $("#path-end-station-num").val("");
+        $("#remark").val("");
+
+        $("#testNum").html("");
+        $("#testPath").html("");
+
+
+        //样式去除
+        $("#path-start-station-num").attr("style", "1px solid rgba(0,0,0,.15)");
+        $("#path-end-station-num").attr("style", "1px solid rgba(0,0,0,.15)");
+
+
+    });
+
+
+    //表单提交前验证
+    $("#form2").submit(function () {
+
+        /*
+        应该进行的验证有：
+        1.非空验证
+        2.输入内容符合条件的验证
+        3.路线不存在的验证
+         */
+
+        //设置跳转属性
+        var flag = true;
+
+
+        //起始地非空验证
+        if ($("#path-start-station-num").val() == "") {
+            // alert("起始点为空");
+            $("#path-start-station-num").attr("style", "border-color:#FF5252");
+            flag = false;
+        }
+
+        //结束点非空验证
+        if ($("#path-end-station-num").val() == "") {
+            // alert("结束点为空错误");
+            $("#path-end-station-num").attr("style", "border-color:#FF5252");
+            flag = false;
+        }
+
+        return flag;
+    });
+
+
+</script>
+
+</html>

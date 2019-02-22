@@ -41,71 +41,137 @@
     where car.route_id=route.id and car.car_status = 1 and start_station_id = #{stationId} or car.route_id=route.id and car.car_status = 3 and end_station_id = #{stationId}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+
+    <!--查询表中数量-->
+    <select id="CarCount" resultType="int">
+        select count(1) from car
+    </select>
+
+
+    <!--全表查询-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from car
+    </select>
+
+    <!--根据车牌号查询-->
+    <select id="selectBylicenseNumber" resultMap="BaseResultMap" parameterType="com.zoo.logistics.entity.Car">
+        select
+        <include refid="Base_Column_List"/>
+        from car
+        where license_number like concat('%',#{licenseNumber,jdbcType=VARCHAR},'%')
+    </select>
+
+    <!--根据车辆状态查询-->
+    <select id="selectBycarStatus" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from car
+        where car_status = #{carStatus1,jdbcType=INTEGER} or car_status = #{carStatus2,jdbcType=INTEGER}
+    </select>
+
+    <!--根据车辆类型查询-->
+    <select id="selectBycarCategoryId" resultMap="BaseResultMap"  parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from car
+        where car_category_id = #{carCategoryId,jdbcType=INTEGER}
+    </select>
+
+    <!--双条件查询-->
+    <select id="selectByCategoryStatus" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from car
+        where car_category_id = #{carCategoryId,jdbcType=INTEGER}
+        and
+        (car_status = #{carStatus1,jdbcType=INTEGER} or car_status = #{carStatus2,jdbcType=INTEGER})
+    </select>
+
+    <!--主键查询-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from car
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--主键删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from car
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zoo.logistics.entity.Car" >
+
+    <!--插入数据-->
+    <insert id="insert" parameterType="com.zoo.logistics.entity.Car">
     insert into car (id, license_number, route_id, 
       car_status, car_category_id)
     values (#{id,jdbcType=INTEGER}, #{licenseNumber,jdbcType=VARCHAR}, #{routeId,jdbcType=INTEGER}, 
       #{carStatus,jdbcType=INTEGER}, #{carCategoryId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.zoo.logistics.entity.Car" >
-    insert into car
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="licenseNumber != null" >
-        license_number,
-      </if>
-      <if test="routeId != null" >
-        route_id,
-      </if>
-      <if test="carStatus != null" >
-        car_status,
-      </if>
-      <if test="carCategoryId != null" >
-        car_category_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="licenseNumber != null" >
-        #{licenseNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="routeId != null" >
-        #{routeId,jdbcType=INTEGER},
-      </if>
-      <if test="carStatus != null" >
-        #{carStatus,jdbcType=INTEGER},
-      </if>
-      <if test="carCategoryId != null" >
-        #{carCategoryId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zoo.logistics.entity.Car" >
-    update car
-    <set >
-      <if test="licenseNumber != null" >
-        license_number = #{licenseNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="routeId != null" >
-        route_id = #{routeId,jdbcType=INTEGER},
-      </if>
-      <if test="carStatus != null" >
-        car_status = #{carStatus,jdbcType=INTEGER},
-      </if>
-      <if test="carCategoryId != null" >
-        car_category_id = #{carCategoryId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.zoo.logistics.entity.Car" >
+
+    <!--不为空插入-->
+    <insert id="insertSelective" parameterType="com.zoo.logistics.entity.Car">
+        insert into car
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="licenseNumber != null">
+                license_number,
+            </if>
+            <if test="routeId != null">
+                route_id,
+            </if>
+            <if test="carStatus != null">
+                car_status,
+            </if>
+            <if test="carCategoryId != null">
+                car_category_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="licenseNumber != null">
+                #{licenseNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="routeId != null">
+                #{routeId,jdbcType=INTEGER},
+            </if>
+            <if test="carStatus != null">
+                #{carStatus,jdbcType=INTEGER},
+            </if>
+            <if test="carCategoryId != null">
+                #{carCategoryId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <!--不为空修改-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.zoo.logistics.entity.Car">
+        update car
+        <set>
+            <if test="licenseNumber != null">
+                license_number = #{licenseNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="routeId != null">
+                route_id = #{routeId,jdbcType=INTEGER},
+            </if>
+            <if test="carStatus != null">
+                car_status = #{carStatus,jdbcType=INTEGER},
+            </if>
+            <if test="carCategoryId != null">
+                car_category_id = #{carCategoryId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--主键修改-->
+    <update id="updateByPrimaryKey" parameterType="com.zoo.logistics.entity.Car">
     update car
     set license_number = #{licenseNumber,jdbcType=VARCHAR},
       route_id = #{routeId,jdbcType=INTEGER},
@@ -113,5 +179,4 @@
       car_category_id = #{carCategoryId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-
 </mapper>
