@@ -39,6 +39,13 @@
   from `order`
   where id = #{id,jdbcType=INTEGER}
 </select>
+  <select id="selectWaitingOrder" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from `order`
+    where status_id = 1 and start_station = #{stationId}
+    order by `order`.order_id
+  </select>
   <select id="selectByEquipmentReceiptId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
@@ -50,6 +57,31 @@
     <include refid="Base_Column_List" />
     from `order`
     where order_id = #{orderId}
+  </select>
+  <select id="selectOrderCountByStationId" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(*)
+    from `order`
+    where status_id = 2 and current_station = #{stationId}
+  </select>
+  <select id="selectSumVolumeByStationId" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select sum(volume)
+    from `order`
+    where status_id = 2 and current_station = #{stationId}
+  </select>
+  <select id="selectSendOrderCountByStationId" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(*)
+    from `order`
+    where status_id = 2 and current_station = #{stationId} and current_station != end_station
+  </select>
+  <select id="selectDeliveryOrderCountByStationId" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(*)
+    from `order`
+    where status_id = 2 and current_station = #{stationId} and current_station = end_station
+  </select>
+  <select id="selectWarningOrderCountByStationId" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select count(*)
+    from `order`
+    where status_id = 9 and current_station = #{stationId}
   </select>
   <select id="selectByCreaterAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select

@@ -35,9 +35,11 @@
     <hr>
     <!-- 菜单栏-->
     <ul class="list-unstyled">
-        <li class="active "> <a href="/index"><i class="icon-home"></i>首页</a></li>
-        <li class="active "> <a href="/consignment/page/1"><i class="icon-paper-airplane"></i>发货</a></li>
-        <li class="active mb-2"> <a href="/order/putin"><i class="icon-check"></i>入库</a></li>
+        <li class="active"> <a href="/index"><i class="icon-home"></i>首页</a></li>
+        <li class="active"> <a href="/consignment/page/1"><i class="icon-paper-airplane"></i>发货</a></li>
+        <li class="active"> <a href="/order/putin"><i class="icon-check"></i>入库</a></li>
+        <li class="active"> <a href="/order/takeOrder/page/1"><i class="icon-bill"></i>揽件</a></li>
+        <li class="active mb-2"> <a href="/order/deliveryOrder"><i class="icon-list-1"></i>配送</a></li>
 
         <li><a href="#order" aria-expanded="false" data-toggle="collapse"> <i class="icon-list"></i>订单管理
         </a>
@@ -60,9 +62,7 @@
         <li><a href="#receive" aria-expanded="false" data-toggle="collapse"> <i class="icon-check"></i>订单收货
         </a>
             <ul id="receive" class="collapse list-unstyled">
-                <li><a href="/equipmentReceipt/page">交接单确认</a></li>
-                <li><a href="email.html">交接单修改</a></li>
-                <li><a href="media.html">班次查询</a></li>
+                <li><a href="/order/confirmOrder">确认收货</a></li>
             </ul>
         </li>
         <li><a href="#exception-orders" aria-expanded="false" data-toggle="collapse"> <i class="icon-padnote"></i>订单异常处理

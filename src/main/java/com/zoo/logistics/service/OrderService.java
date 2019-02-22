@@ -1,5 +1,7 @@
 package com.zoo.logistics.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zoo.logistics.api.Distance;
 import com.zoo.logistics.api.Geo;
 import com.zoo.logistics.entity.Log;
@@ -57,11 +59,9 @@ public class OrderService {
             }else{
                 receiverCity = order.getReceiverArea().substring(order.getReceiverArea().indexOf("/")+1);
             }
-            System.out.println(senderCity+"  "+receiverCity);
             //获取发件城市和收件城市所有的站点
             List<Station> startStations = stationMapper.selectByCityName(senderCity);
             List<Station> endStations = stationMapper.selectByCityName(receiverCity);
-            System.out.println(startStations.size()+"   "+endStations.size());
             if(startStations.size()>0&&endStations.size()>0){
                 //拼接地址
                 String startAddr = order.getSenderArea().replaceAll("/","")+order.getSenderStreet();
@@ -77,7 +77,6 @@ public class OrderService {
                 order.setStartStation(nearestStartStation.getId());
                 order.setEndStation(nearestEndStation.getId());
                 Log log = new Log(orderId, new Date(now),"已下单，等待揽件");
-                System.out.println(order);
                 orderMapper.insert(order);
                 logMapper.insertSelective(log);
                 resultMap.put("status",1);
@@ -107,6 +106,7 @@ public class OrderService {
             result.put("status",1);
             result.put("msg","查找成功");
             result.put("order",order);
+            System.out.println(order);
         }else{
             result.put("status",0);
             result.put("msg","没有找到");
@@ -171,5 +171,58 @@ public class OrderService {
         return orderMapper.selectByCreaterAccount(createrAccount);
     }
 
+    public PageInfo selectWaitingOrder(int stationId, int pageNum, int pageSize){
+//        List<Car> allCarInCurrentStation = carMapper.getAllCarInCurrentStation(stationId,new RowBounds(start,limit));
+        PageHelper.startPage(pageNum, pageSize);
+        List<Order> orderList = orderMapper.selectWaitingOrder(stationId);
+        PageInfo pageInfo = new PageInfo(orderList);
+        return pageInfo;
 
+    }
+
+    /**
+     * 批量指派快递员揽件
+     * @param orders 订单号数组
+     */
+    public void batchAssign(String[] orders,int stationId) {
+        for(String each : orders){
+            Order order = orderMapper.selectByOrderId(each);
+            order.setStatusId(6);
+            order.setCurrentStation(stationId);
+            orderMapper.updateByPrimaryKeySelective(order);
+        }
+    }
+
+    /**
+     * 批量指派快递员派件
+     * @param orders 订单号数组
+     */
+    public void batchDelivery(String[] orders,int stationId){
+        for(String each : orders){
+            Order order = orderMapper.selectByOrderId(each);
+            order.setStatusId(4);
+            order.setCurrentStation(stationId);
+            orderMapper.updateByPrimaryKeySelective(order);
+        }
+    }
+
+    /**
+     * 查询分站的报表
+     * @param stationId 站点id
+     * @return
+     */
+    public Map getSubStatement(int stationId){
+        Map resultMap = new HashMap();
+        Integer orderCount = orderMapper.selectOrderCountByStationId(stationId);
+        Integer sumVolume = orderMapper.selectSumVolumeByStationId(stationId);
+        Integer sendOrderCount = orderMapper.selectSendOrderCountByStationId(stationId);
+        Integer deliveryOrderCount = orderMapper.selectDeliveryOrderCountByStationId(stationId);
+        Integer warningOrderCount = orderMapper.selectWarningOrderCountByStationId(stationId);
+        resultMap.put("orderCount",orderCount==null?0:orderCount);
+        resultMap.put("sumVolume",sumVolume==null?0:sumVolume);
+        resultMap.put("sendOrderCount",sendOrderCount==null?0:sendOrderCount);
+        resultMap.put("deliveryOrderCount",deliveryOrderCount==null?0:deliveryOrderCount);
+        resultMap.put("warningOrderCount",warningOrderCount==null?0:warningOrderCount);
+        return resultMap;
+    }
 }

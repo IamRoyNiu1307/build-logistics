@@ -238,7 +238,7 @@
                             "                      <td><button onclick='orderException(this)' class='btn btn-sm btn-warning' id='"+orderList[index].orderId+"'>设为异常</button></td>\n" +
                             "                      </tr>")
                     }
-                }else{
+                }else if(map.status==0){
                     alert(map.msg)
                 }
             }
@@ -260,7 +260,7 @@
                 }
             },
             error:function (map) {
-                alert(JSON.stringify(map))
+
             }
         })
     }
@@ -277,7 +277,6 @@
             contentType: "application/json;charset=UTF-8",
             success:function (msg) {
                 if(msg=="success"){
-                    alert("提交成功！")
                     location.reload()
                 }
 

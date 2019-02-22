@@ -26,4 +26,16 @@ public interface OrderMapper {
     void orderException(String orderId,int stationId);
 
     List<Order> selectByCreaterAccount(String createrAccount);
+
+    List<Order> selectWaitingOrder(int stationId);
+
+    Integer selectOrderCountByStationId(int stationId);
+
+    Integer selectSumVolumeByStationId(int stationId);
+
+    Integer selectSendOrderCountByStationId(int stationId);
+
+    Integer selectDeliveryOrderCountByStationId(int stationId);
+
+    Integer selectWarningOrderCountByStationId(int stationId);
 }

@@ -36,6 +36,11 @@ public class LogService {
         }
     }
 
+    /**
+     * 根据orderId查找该order的历史信息 倒序排列
+     * @param orderId 订单编号
+     * @return
+     */
     public List<Log> selectByOrderIdDesc(String orderId){
         return logMapper.selectByOrderIdDesc(orderId);
     }

@@ -21,7 +21,7 @@
     select
     <include refid="Base_Column_List" />
     from equipment_receipt
-    where car_license_number = #{carLicenseNumber}
+    where car_license_number = #{carLicenseNumber} and status = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from equipment_receipt

@@ -35,7 +35,6 @@ public class ConsignmentController {
         int limit = 8;
 
         Admin admin = (Admin) request.getSession().getAttribute("admin");
-        System.out.println("req get:"+request.getSession().getAttribute("admin"));
 
         //获取站中所有车辆信息
         PageInfo carPageInfo = carService.getAllCarInCurrentStation(admin.getStationId(), curPage, limit);

@@ -2,11 +2,13 @@ package com.zoo.logistics.controller;
 
 import com.zoo.logistics.entity.Admin;
 import com.zoo.logistics.service.AdminService;
+import com.zoo.logistics.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 
 /**
@@ -17,6 +19,8 @@ public class LoginController {
 
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private OrderService orderService;
 
     /**
      * 主页，登录界面
@@ -43,7 +47,12 @@ public class LoginController {
     public String login(Admin admin, HttpServletRequest request){
         Admin result = adminService.checkAccountAndPassword(admin);
         if(result!=null){
+
+            Map subStatement = orderService.getSubStatement(result.getStationId());
+
             request.getSession().setAttribute("admin",result);
+            request.getSession().setAttribute("subStatement",subStatement);
+
             //在spring-servlet.xml中配置了Thymeleaf视图解析器，Thymeleaf会将返回的字符串拼接上解析器中的前缀和后缀
             return "redirect:/index";
         }else {

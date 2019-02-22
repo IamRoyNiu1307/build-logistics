@@ -38,6 +38,12 @@ public class EquipmentReceiptController {
         return "equipment-receipt";
     }
 
+    /**
+     * 查找交接单
+     * @param map
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/searchEquipmentReceipt")
     public Map searchEquipmentReceipt(@RequestBody Map map, HttpServletRequest request){
@@ -46,7 +52,12 @@ public class EquipmentReceiptController {
         return resultMap;
     }
 
-
+    /**
+     * 确认交接单
+     * @param map
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/confirmEquipmentReceipt")
     public String confirmEquipmentReceipt(@RequestBody Map map, HttpServletRequest request){

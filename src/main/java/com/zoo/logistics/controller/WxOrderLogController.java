@@ -1,6 +1,7 @@
 package com.zoo.logistics.controller;
 
 import com.zoo.logistics.api.Distance;
+import com.zoo.logistics.api.Geo;
 import com.zoo.logistics.entity.*;
 import com.zoo.logistics.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +73,26 @@ public class WxOrderLogController {
             map.put("carStatus","inStation");
             map.put("currentPosLng",currentStation.getPosLng());
             map.put("currentPosLat",currentStation.getPosLat());
-            map.put("scale",10);
+            map.put("scale",13);
+        }else if (order.getStatusId()==4){
+            String address = order.getReceiverArea()+order.getReceiverStreet();
+            String[] pos = Geo.geo(address).split(",");
+            map.put("receiverPosLng",new BigDecimal(pos[0]).setScale(6,BigDecimal.ROUND_DOWN));
+            map.put("receiverPosLat",new BigDecimal(pos[1]).setScale(6,BigDecimal.ROUND_DOWN));
+            if(order.getCurrentStation()!=null) {
+                Station currentStation = stationService.selectByPrimaryKey(order.getCurrentStation());
+                int dist = Distance.getDistance(currentStation.getPosLng() + "," + currentStation.getPosLat(), pos[0] + "," + pos[1]);
+                map.put("scale", getScale(dist));
+            }else{
+                map.put("scale", 13);
+            }
+        }else if (order.getStatusId()==6){
+            String address = order.getSenderArea()+order.getSenderStreet();
+            String[] pos = Geo.geo(address).split(",");
+            map.put("senderPosLng",new BigDecimal(pos[0]).setScale(6,BigDecimal.ROUND_DOWN));
+            map.put("senderPosLat",new BigDecimal(pos[1]).setScale(6,BigDecimal.ROUND_DOWN));
+            int dist = Distance.getDistance(startStation.getPosLng()+","+startStation.getPosLat(),pos[0]+","+pos[1]);
+            map.put("scale",getScale(dist));
         }else if(order.getStatusId()==1||order.getStatusId()==5){
             int dist = Distance.getDistance(startStation.getPosLng()+","+startStation.getPosLat(), endStation.getPosLng()+","+endStation.getPosLat());
             map.put("scale",getScale(dist));
@@ -100,8 +121,10 @@ public class WxOrderLogController {
             return 11;
         else if(dist>30000)
             return 12;
-        else
+        else if(dist>10000)
             return 13;
+        else
+            return 14;
     }
 
 }

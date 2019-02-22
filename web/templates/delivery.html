@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <title>Bootstrap Admin Template </title>
+    <link rel="shortcut icon" href="img/favicon.ico">
+
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/font-icon-style.css">
+    <link rel="stylesheet" href="/static/css/style.default.css" id="theme-stylesheet">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+
+<body>
+
+<!--====================================================
+                     头部栏
+======================================================-->
+<header class="header">
+    <!--引入侧边栏;传入参数-->
+    <div th:replace="topbar::#topbar"></div>
+</header>
+
+<!--====================================================
+                    页面
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+
+    <!--***** 左侧导航栏 *****-->
+    <!-- 用户栏 -->
+    <!--引入侧边栏;传入参数-->
+    <div th:replace="sidebar::#sidebar"></div>
+
+        <div class="content-inner chart-cont">
+
+            <!--***** FORM LAYOUTS *****-->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!--***** PRODUCT INFO *****-->
+                    <div class="card form" id="form1" style="height: 800px;">
+                        <div class="card-header">
+                            <h3><i class="fa fa-archive"></i> 订单入库</h3>
+                        </div>
+                        <br>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="orderId">订单编号</label>
+                                        <input type="text" class="form-control" id="orderId"
+                                            placeholder="请输入订单编号">
+                                    </div>
+                                </div>
+                                <div><a class="search-btn">搜索</a> </div>
+
+                            </div>
+
+                            <div class="row mt-2" style="overflow-y:Scroll;overflow-x:hidden;height: 500px">
+                                <table class="table table-light table-responsive">
+                                    <thead>
+                                            <th>订单编号</th>
+                                            <th>收件人</th>
+                                            <th>收件地址</th>
+                                            <th>货物类型</th>
+                                            <th>重量</th>
+                                            <th>体积</th>
+
+                                    </thead>
+                                    <tbody id="orderList">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <button class="btn btn-general btn-blue mr-2 assign" data-toggle="modal" data-target="#assignModal">指派</button>
+                            </div>
+                        </div>
+
+                            <!--<button type="reset" class="btn btn-general btn-white">清空</button>-->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10000">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    任务指派
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                </button>
+            </div>
+            <div class="modal-body pre-scrollable" style="max-height:600px;min-height: 500px">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-light table-responsive" style="min-height: 200px;">
+                            <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>当前任务(件)</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="courierList">
+                            <tr th:if="${courierList!=null}" th:each="courier:${courierList}">
+                                <td th:text="${courier.name}"></td>
+                                <td th:text="${courier.missionCount}"></td>
+                                <td>
+                                    <button th:id="${courier.account}" class="btn btn-sm btn-primary assignCourier" data-toggle="modal" data-target="#assignModal">指派</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+    <!--Global Javascript -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper/popper.min.js"></script>
+    <script src="/static/js/tether.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
+    <script src="/static/js/jquery.validate.min.js"></script>
+    <script src="/static/js/chart.min.js"></script>
+    <script src="/static/js/front.js"></script>
+
+    <!--Core Javascript -->
+    <script>
+
+        $("#orderId").keypress(function (e) {
+            if (e.which == 13) {
+                var datas = {
+                    "orderId":$("#orderId").val(),
+                    "todo":"delivery"
+                }
+
+                //ajax
+                $.ajax({
+                    url:"/order/searchOrder",
+                    type:"post",
+                    data:JSON.stringify(datas),
+                    contentType: "application/json;charset=UTF-8",
+                    // contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    success:function (map) {
+                        if(map.status==1){
+                            $("#orderList").append("<tr>\n" +
+                                "                      <td>"+map.order.orderId+"</td>\n" +
+                                "                      <td>"+map.order.receiverName+"  "+map.order.receiverTel+"</td>\n" +
+                                "                      <td>"+map.order.receiverArea+"  "+map.order.receiverStreet+"</td>\n" +
+                                "                      <td>"+map.order.orderCategory.name+"</td>\n" +
+                                "                      <td>"+map.order.volume+"</td>\n" +
+                                "                      <td>"+map.order.weight+"</td>\n" +
+                                "                      </tr>")
+                        }else if(map.status==0){
+                            alert(map.msg)
+                        }
+                    },
+                    error:function (map) {
+                        alert('当前服务不可用')
+                    }
+                })
+
+                $("#orderId").val("")
+            }
+        })
+
+        var selectedOrderId = []
+        //点击订单列表下的指派按钮
+        $("body").on("click",".assign",function () {
+            selectedOrderId = []
+            $("#orderList tr").each(function () {
+                selectedOrderId.push($(this).children("td:eq(0)").html())
+            })
+        })
+
+        //点击快递员的指派按钮
+        $("body").on("click",".assignCourier",function () {
+            //该快递员的账号
+            var selectedCourierAccount = this.id
+            //该快递员的姓名
+            var selectedCourierName = $(this).parents("tr").children("td:eq(0)").html()
+
+            var data = {"orderId":selectedOrderId,"courierAccount":selectedCourierAccount,"courierName":selectedCourierName}
+
+            $.ajax({
+                url:"/order/assignDelivery",
+                type:"post",
+                data:JSON.stringify(data),
+                contentType: "application/json;charset=UTF-8",
+                // contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                success:function (map) {
+                    if(map.status==1){
+                        alert("已指派!")
+                        location.reload()
+                    }else if(map.status==0){
+                        alert(map.msg)
+                    }
+                },
+                error:function (map) {
+                    alert(JSON.stringify(map))
+                }
+            })
+
+        })
+
+
+
+        new Chart(document.getElementById("myChart-nav").getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ["M", "T", "W", "T", "F", "S", "S"],
+                datasets: [{
+                    backgroundColor: [
+                        "#2ecc71",
+                        "#3498db",
+                        "#95a5a6",
+                        "#9b59b6",
+                        "#f1c40f",
+                        "#e74c3c",
+                        "#34495e"
+                    ],
+                    data: [12, 19, 3, 17, 28, 24, 7]
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: ''
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

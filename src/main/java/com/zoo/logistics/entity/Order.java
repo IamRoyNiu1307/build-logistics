@@ -1,6 +1,7 @@
 package com.zoo.logistics.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Order implements Serializable {
@@ -42,7 +43,7 @@ public class Order implements Serializable {
 
     private String createrAccount;
 
-//    private Date createDate;
+    private String createDate;
 
     private Date finishDate;
 
@@ -230,13 +231,16 @@ public class Order implements Serializable {
         this.createrAccount = createrAccount == null ? null : createrAccount.trim();
     }
 
-//    public Date getCreateDate() {
-//        return createDate;
-//    }
-//
-//    public void setCreateDate(Date createDate) {
-//        this.createDate = createDate;
-//    }
+    public String getCreateDate() {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date=new Date(Long.valueOf(orderId));
+        String createDate=sdf.format(date);
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
 
     public Date getFinishDate() {
         return finishDate;

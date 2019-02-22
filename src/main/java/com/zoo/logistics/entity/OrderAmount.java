@@ -1,16 +1,13 @@
 package com.zoo.logistics.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class OrderAmount implements Serializable {
     private Integer id;
 
     private String orderid;
 
-    private BigDecimal freightCharge;
-
-    private BigDecimal deliveryCharge;
+    private Float freightCharge;
 
     private static final long serialVersionUID = 1L;
 
@@ -30,19 +27,19 @@ public class OrderAmount implements Serializable {
         this.orderid = orderid == null ? null : orderid.trim();
     }
 
-    public BigDecimal getFreightCharge() {
+    public Float getFreightCharge() {
         return freightCharge;
     }
 
-    public void setFreightCharge(BigDecimal freightCharge) {
+    public void setFreightCharge(Float freightCharge) {
         this.freightCharge = freightCharge;
     }
 
-    public BigDecimal getDeliveryCharge() {
-        return deliveryCharge;
+    public OrderAmount() {
     }
 
-    public void setDeliveryCharge(BigDecimal deliveryCharge) {
-        this.deliveryCharge = deliveryCharge;
+    public OrderAmount(String orderid, Float freightCharge) {
+        this.orderid = orderid;
+        this.freightCharge = freightCharge;
     }
 }

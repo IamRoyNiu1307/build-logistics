@@ -11,8 +11,12 @@ public class AdminService {
     @Autowired
     private AdminMapper adminMapper;
 
+    /**
+     * 登录检验用户名密码
+     * @param admin admin实体
+     * @return
+     */
     public Admin checkAccountAndPassword(Admin admin){
-        //实际开发的写法
         Admin result = adminMapper.checkAccount(admin);
         return result;
     }

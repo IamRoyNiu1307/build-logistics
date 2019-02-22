@@ -4,11 +4,10 @@
   <resultMap id="BaseResultMap" type="com.zoo.logistics.entity.OrderAmount" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="orderid" property="orderid" jdbcType="VARCHAR" />
-    <result column="freight_charge" property="freightCharge" jdbcType="DECIMAL" />
-    <result column="delivery_charge" property="deliveryCharge" jdbcType="DECIMAL" />
+    <result column="freight_charge" property="freightCharge" jdbcType="REAL" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, orderid, freight_charge, delivery_charge
+    id, orderid, freight_charge
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -21,10 +20,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zoo.logistics.entity.OrderAmount" >
-    insert into order_amount (id, orderid, freight_charge, 
-      delivery_charge)
-    values (#{id,jdbcType=INTEGER}, #{orderid,jdbcType=VARCHAR}, #{freightCharge,jdbcType=DECIMAL}, 
-      #{deliveryCharge,jdbcType=DECIMAL})
+    insert into order_amount (id, orderid, freight_charge
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderid,jdbcType=VARCHAR}, #{freightCharge,jdbcType=REAL}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zoo.logistics.entity.OrderAmount" >
     insert into order_amount
@@ -38,9 +37,6 @@
       <if test="freightCharge != null" >
         freight_charge,
       </if>
-      <if test="deliveryCharge != null" >
-        delivery_charge,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -50,10 +46,7 @@
         #{orderid,jdbcType=VARCHAR},
       </if>
       <if test="freightCharge != null" >
-        #{freightCharge,jdbcType=DECIMAL},
-      </if>
-      <if test="deliveryCharge != null" >
-        #{deliveryCharge,jdbcType=DECIMAL},
+        #{freightCharge,jdbcType=REAL},
       </if>
     </trim>
   </insert>
@@ -64,10 +57,7 @@
         orderid = #{orderid,jdbcType=VARCHAR},
       </if>
       <if test="freightCharge != null" >
-        freight_charge = #{freightCharge,jdbcType=DECIMAL},
-      </if>
-      <if test="deliveryCharge != null" >
-        delivery_charge = #{deliveryCharge,jdbcType=DECIMAL},
+        freight_charge = #{freightCharge,jdbcType=REAL},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -75,8 +65,7 @@
   <update id="updateByPrimaryKey" parameterType="com.zoo.logistics.entity.OrderAmount" >
     update order_amount
     set orderid = #{orderid,jdbcType=VARCHAR},
-      freight_charge = #{freightCharge,jdbcType=DECIMAL},
-      delivery_charge = #{deliveryCharge,jdbcType=DECIMAL}
+      freight_charge = #{freightCharge,jdbcType=REAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -2,7 +2,9 @@ package com.zoo.logistics.controller;
 
 import com.google.gson.JsonParser;
 import com.google.gson.JsonObject;
+import com.zoo.logistics.entity.Courier;
 import com.zoo.logistics.entity.User;
+import com.zoo.logistics.service.CourierService;
 import com.zoo.logistics.service.UserService;
 import com.zoo.logistics.util.HttpRequestUtil;
 import com.zoo.logistics.util.MyConst;
@@ -23,8 +25,16 @@ public class WxLoginController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CourierService courierService;
+
     private JsonParser jp=new JsonParser();
 
+    /**
+     * 微信小程序 用户登录
+     * @param user
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/userLogin")
     public Map userLogin(@RequestBody User user){
@@ -40,6 +50,34 @@ public class WxLoginController {
             userService.updateByPrimaryKeySelectiv(resultUser);
             map.put("status",1);
             map.put("user",resultUser);
+        }else {
+            map.put("status",0);
+            map.put("msg","账号或密码错误");
+        }
+
+        return map;
+    }
+
+    /**
+     * 微信小程序 快递员登录
+     * @param courier
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/courierLogin")
+    public Map courierLogin(@RequestBody Courier courier){
+        Map map = new HashMap();
+
+        Courier resultCourier = courierService.selectByAccountAndPassword(courier);
+
+        if(resultCourier!=null){
+            //查询该微信号绑定的快递员账号，将其openid设为空
+            courierService.setOpenidEqNullIfExist(courier.getOpenid());
+            //将该快递员账号的openid设为此openid
+            resultCourier.setOpenid(courier.getOpenid());
+            courierService.updateByPrimaryKeySelectiv(resultCourier);
+            map.put("status",1);
+            map.put("courier",resultCourier);
         }else {
             map.put("status",0);
             map.put("msg","账号或密码错误");
@@ -81,10 +119,43 @@ public class WxLoginController {
         return map;
     }
 
-
+    /**
+     * 根据openid查找绑定的用户账号
+     * @param openid 微信号的唯一标示
+     * @return 账号实体
+     */
     @ResponseBody
     @RequestMapping(value = "/getUserAccount",method = RequestMethod.GET)
-    public User getUserAccountByOpenid(String openid){
-        return userService.selectByOpenid(openid);
+    public Map getUserAccountByOpenid(String openid){
+        Map result = new HashMap();
+        User user = userService.selectByOpenid(openid);
+        if(user!=null){
+            result.put("status",1);
+            result.put("user",user);
+        }else {
+            result.put("status",0);
+            result.put("msg","未绑定账号");
+        }
+        return result;
+    }
+
+    /**
+     * 根据openid查找绑定的快递员账号
+     * @param openid 微信号的唯一标示
+     * @return 账号实体
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getCourierAccount",method = RequestMethod.GET)
+    public Map getCourierAccountByOpenid(String openid){
+        Map result = new HashMap();
+        Courier courier = courierService.selectByOpenid(openid);
+        if(courier!=null){
+            result.put("status",1);
+            result.put("courier",courier);
+        }else {
+            result.put("status",0);
+            result.put("msg","未绑定账号");
+        }
+        return result;
     }
 }

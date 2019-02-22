@@ -53,15 +53,15 @@
                     <div class="card">
                         <div class="card-block">
                             <div class="text-left report1-cont">
-                                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-success"></i> 9,220件</h2>
+                                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-success" th:text="${session.subStatement.orderCount}">9,220</i> 件</h2>
                                 <span class="text-muted">仓库存储量</span>
                             </div>
-                            <span class="text-success">80%</span>
+                            <span id="sumVolume" class="text-success">80%</span>
                             <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 80%; height: 6px;"
+                                <div id="sumVolume1" class="progress-bar bg-success" role="progressbar"
                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
-                            <p><small>预估还可存放1000件</small></p>
+                            <p><small id="sumVolume2">预估还可存放1000件</small></p>
                         </div>
                     </div>
                 </div>
@@ -69,12 +69,12 @@
                     <div class="card">
                         <div class="card-block">
                             <div class="text-left report1-cont">
-                                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-danger"></i> 5,530件</h2>
+                                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-danger" th:text="${session.subStatement.sendOrderCount}">5,530</i> 件</h2>
                                 <span class="text-muted">代发件</span>
                             </div>
-                            <span class="text-danger">43%</span>
+                            <span id="sendOrder" class="text-danger">43%</span>
                             <div class="progress">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 43%; height: 6px;"
+                                <div id="sendOrder1" class="progress-bar bg-danger" role="progressbar" style="width: 43%; height: 6px;"
                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             <p><small>占总比</small></p>
@@ -85,12 +85,12 @@
                     <div class="card">
                         <div class="card-block">
                             <div class="text-left report1-cont">
-                                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-warning"></i> 3,620件</h2>
-                                <span class="text-muted">待取件 </span>
+                                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-info" th:text="${session.subStatement.deliveryOrderCount}">3,620</i> 件</h2>
+                                <span class="text-muted">待送件 </span>
                             </div>
-                            <span class="text-warning">53%</span>
+                            <span id="deliveryOrder" class="text-info">53%</span>
                             <div class="progress">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 53%; height: 6px;"
+                                <div id="deliveryOrder1" class="progress-bar bg-info" role="progressbar" style="width: 53%; height: 6px;"
                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             <p><small>占总比</small></p>
@@ -101,12 +101,12 @@
                     <div class="card">
                         <div class="card-block">
                             <div class="text-left report1-cont">
-                                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-info"></i> 362件</h2>
+                                <h2 class="font-light m-b-0"><i class="ti-arrow-up text-warning" th:text="${session.subStatement.warningOrderCount}">362</i> 件</h2>
                                 <span class="text-muted">异常件</span>
                             </div>
-                            <span class="text-info">6%</span>
+                            <span id="warningOrder" class="text-warning">6%</span>
                             <div class="progress">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: 70%; height: 6px;"
+                                <div id="warningOrder1" class="progress-bar bg-warning" role="progressbar" style="width: 70%; height: 6px;"
                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             <p><small>占总比</small></p>
@@ -171,195 +171,195 @@
 
 
             <!--***** REPORT-3 *****-->
-            <div class="row" id="report3">
-                <div class="col-md-8">
-                    <div class="card card-c2">
-                        <table class="table table-hover">
-                            <thead>
-                                <div class="dropdown pull-right menu-sett-card">
-                                    <a id="notifications" class="nav-link" rel="nofollow" data-target="#" href="#"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fa fa-ellipsis-v men"></i>
-                                    </a>
-                                    <ul aria-labelledby="notifications" class="dropdown-menu">
-                                        <li>
-                                            <a rel="nofollow" href="#" class="dropdown-item nav-link">Edit</a>
-                                        </li>
-                                        <li>
-                                            <a rel="nofollow" href="#" class="dropdown-item nav-link">FAQ</a>
-                                        </li>
-                                        <li>
-                                            <a rel="nofollow" href="#" class="dropdown-item nav-link">Support</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <tr>
-                                    <th>订单追踪(目的地)</th>
-                                    <th>更新时间</th>
-                                    <th>进度
-                                        <!-- <i class="fa fa-ellipsis-v pull-right" ></i> -->
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>河南省-周口市</td>
-                                    <td>23/03/2018</td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 75%; height:10px;"
-                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>辽宁省-黑龙江市</td>
-                                    <td>02/06/2018</td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 100%; height:10px;"
-                                                aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>北京市</td>
-                                    <td>11/02/2018</td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 95%; height:10px;"
-                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>福建省-福州市</td>
-                                    <td>05/03/2018</td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 75%; height:10px;"
-                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>陕西省-西安市</td>
-                                    <td>24/02/2018</td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 100%; height:10px;"
-                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>四川省-成都市</td>
-                                    <td>01/09/2018</td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 55%; height:10px;"
-                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>吉林省-太原市</td>
-                                    <td>15/12/2018</td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 85%; height:10px;"
-                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>上海</td>
-                                    <td>18/08/2018</td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 55%; height:10px;"
-                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>山东省-青岛市</td>
-                                    <td>08/08/2018</td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 45%; height:10px;"
-                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>上海</td>
-                                    <td>18/08/2018</td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 55%; height:10px;"
-                                                aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card card-c2">
-                        <div class="dropdown pull-right menu-sett-card">
-                            <a id="notifications" class="nav-link" rel="nofollow" data-target="#" href="#" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v men"></i>
-                            </a>
-                            <ul aria-labelledby="notifications" class="dropdown-menu">
-                                <li>
-                                    <a rel="nofollow" href="#" class="dropdown-item nav-link">Edit</a>
-                                </li>
-                                <li>
-                                    <a rel="nofollow" href="#" class="dropdown-item nav-link">FAQ</a>
-                                </li>
-                                <li>
-                                    <a rel="nofollow" href="#" class="dropdown-item nav-link">Support</a>
-                                </li>
-                            </ul>
-                        </div>
+            <!--<div class="row" id="report3">-->
+                <!--<div class="col-md-8">-->
+                    <!--<div class="card card-c2">-->
+                        <!--<table class="table table-hover">-->
+                            <!--<thead>-->
+                                <!--<div class="dropdown pull-right menu-sett-card">-->
+                                    <!--<a id="notifications" class="nav-link" rel="nofollow" data-target="#" href="#"-->
+                                        <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                                        <!--<i class="fa fa-ellipsis-v men"></i>-->
+                                    <!--</a>-->
+                                    <!--<ul aria-labelledby="notifications" class="dropdown-menu">-->
+                                        <!--<li>-->
+                                            <!--<a rel="nofollow" href="#" class="dropdown-item nav-link">Edit</a>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                            <!--<a rel="nofollow" href="#" class="dropdown-item nav-link">FAQ</a>-->
+                                        <!--</li>-->
+                                        <!--<li>-->
+                                            <!--<a rel="nofollow" href="#" class="dropdown-item nav-link">Support</a>-->
+                                        <!--</li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                                <!--<tr>-->
+                                    <!--<th>订单追踪(目的地)</th>-->
+                                    <!--<th>更新时间</th>-->
+                                    <!--<th>进度-->
+                                        <!--&lt;!&ndash; <i class="fa fa-ellipsis-v pull-right" ></i> &ndash;&gt;-->
+                                    <!--</th>-->
+                                <!--</tr>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                                <!--<tr>-->
+                                    <!--<td>河南省-周口市</td>-->
+                                    <!--<td>23/03/2018</td>-->
+                                    <!--<td>-->
+                                        <!--<div class="progress">-->
+                                            <!--<div class="progress-bar bg-info" role="progressbar" style="width: 75%; height:10px;"-->
+                                                <!--aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>辽宁省-黑龙江市</td>-->
+                                    <!--<td>02/06/2018</td>-->
+                                    <!--<td>-->
+                                        <!--<div class="progress">-->
+                                            <!--<div class="progress-bar bg-info" role="progressbar" style="width: 100%; height:10px;"-->
+                                                <!--aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>北京市</td>-->
+                                    <!--<td>11/02/2018</td>-->
+                                    <!--<td>-->
+                                        <!--<div class="progress">-->
+                                            <!--<div class="progress-bar bg-info" role="progressbar" style="width: 95%; height:10px;"-->
+                                                <!--aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>福建省-福州市</td>-->
+                                    <!--<td>05/03/2018</td>-->
+                                    <!--<td>-->
+                                        <!--<div class="progress">-->
+                                            <!--<div class="progress-bar bg-info" role="progressbar" style="width: 75%; height:10px;"-->
+                                                <!--aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>陕西省-西安市</td>-->
+                                    <!--<td>24/02/2018</td>-->
+                                    <!--<td>-->
+                                        <!--<div class="progress">-->
+                                            <!--<div class="progress-bar bg-info" role="progressbar" style="width: 100%; height:10px;"-->
+                                                <!--aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>四川省-成都市</td>-->
+                                    <!--<td>01/09/2018</td>-->
+                                    <!--<td>-->
+                                        <!--<div class="progress">-->
+                                            <!--<div class="progress-bar bg-info" role="progressbar" style="width: 55%; height:10px;"-->
+                                                <!--aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>吉林省-太原市</td>-->
+                                    <!--<td>15/12/2018</td>-->
+                                    <!--<td>-->
+                                        <!--<div class="progress">-->
+                                            <!--<div class="progress-bar bg-info" role="progressbar" style="width: 85%; height:10px;"-->
+                                                <!--aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>上海</td>-->
+                                    <!--<td>18/08/2018</td>-->
+                                    <!--<td>-->
+                                        <!--<div class="progress">-->
+                                            <!--<div class="progress-bar bg-info" role="progressbar" style="width: 55%; height:10px;"-->
+                                                <!--aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>山东省-青岛市</td>-->
+                                    <!--<td>08/08/2018</td>-->
+                                    <!--<td>-->
+                                        <!--<div class="progress">-->
+                                            <!--<div class="progress-bar bg-info" role="progressbar" style="width: 45%; height:10px;"-->
+                                                <!--aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>上海</td>-->
+                                    <!--<td>18/08/2018</td>-->
+                                    <!--<td>-->
+                                        <!--<div class="progress">-->
+                                            <!--<div class="progress-bar bg-info" role="progressbar" style="width: 55%; height:10px;"-->
+                                                <!--aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>-->
+                                        <!--</div>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-4">-->
+                    <!--<div class="card card-c2">-->
+                        <!--<div class="dropdown pull-right menu-sett-card">-->
+                            <!--<a id="notifications" class="nav-link" rel="nofollow" data-target="#" href="#" data-toggle="dropdown"-->
+                                <!--aria-haspopup="true" aria-expanded="false">-->
+                                <!--<i class="fa fa-ellipsis-v men"></i>-->
+                            <!--</a>-->
+                            <!--<ul aria-labelledby="notifications" class="dropdown-menu">-->
+                                <!--<li>-->
+                                    <!--<a rel="nofollow" href="#" class="dropdown-item nav-link">Edit</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a rel="nofollow" href="#" class="dropdown-item nav-link">FAQ</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a rel="nofollow" href="#" class="dropdown-item nav-link">Support</a>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
 
-                        <!-- //发往各地区的物流占比 饼状图
-                        // 东北（黑龙江省、吉林省、辽宁省）；
-                        // 华东（上海市、江苏省、浙江省、安徽省、福建省、江西省、山东省、台湾省）；
-                        // 华北（北京市、天津市、山西省、河北省、内蒙古自治区）；
-                        // 华中（河南省、湖北省、湖南省）；
-                        // 华南（广东省、广西壮族自治区、海南省、香港特别行政区、澳门特别行政区）；
-                        // 西南（重庆市、四川省、贵州省、云南省、西藏自治区）；
-                        // 西北（陕西省、甘肃省、青海省、宁夏回族自治区、新疆维吾尔自治区） -->
-                        <div class="header">
-                            <h4 class="title">仓库货物信息</h4>
-                            <p class="category">发往各地区物流占比</p>
-                        </div>
-                        <div class="content">
-                            <canvas class="ct-chart" id="polar-chart" height="212"></canvas>
-                            <!-- <canvas class="ct-chart" id="myChart4" height="250"></canvas> -->
-                            <div class="footer">
-                                <div class="legend">
-                                    <i class="fa fa-circle" style="color:#2ecc71"></i> 东北
-                                    <i class="fa fa-circle" style="color:#3498db"></i> 华东
-                                    <i class="fa fa-circle" style="color:#95a5a6"></i> 华北
-                                    <i class="fa fa-circle" style="color:#9b59b6"></i> 华中
-                                    <i class="fa fa-circle" style="color:#f1c40f"></i> 华南
-                                    <i class="fa fa-circle" style="color:#e74c3c"></i> 西南
-                                    <i class="fa fa-circle" style="color:#34495e"></i> 西北
-                                </div>
-                                <hr>
-                                <div class="stats">
-                                    <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <!--&lt;!&ndash; //发往各地区的物流占比 饼状图-->
+                        <!--// 东北（黑龙江省、吉林省、辽宁省）；-->
+                        <!--// 华东（上海市、江苏省、浙江省、安徽省、福建省、江西省、山东省、台湾省）；-->
+                        <!--// 华北（北京市、天津市、山西省、河北省、内蒙古自治区）；-->
+                        <!--// 华中（河南省、湖北省、湖南省）；-->
+                        <!--// 华南（广东省、广西壮族自治区、海南省、香港特别行政区、澳门特别行政区）；-->
+                        <!--// 西南（重庆市、四川省、贵州省、云南省、西藏自治区）；-->
+                        <!--// 西北（陕西省、甘肃省、青海省、宁夏回族自治区、新疆维吾尔自治区） &ndash;&gt;-->
+                        <!--<div class="header">-->
+                            <!--<h4 class="title">仓库货物信息</h4>-->
+                            <!--<p class="category">发往各地区物流占比</p>-->
+                        <!--</div>-->
+                        <!--<div class="content">-->
+                            <!--<canvas class="ct-chart" id="polar-chart" height="212"></canvas>-->
+                            <!--&lt;!&ndash; <canvas class="ct-chart" id="myChart4" height="250"></canvas> &ndash;&gt;-->
+                            <!--<div class="footer">-->
+                                <!--<div class="legend">-->
+                                    <!--<i class="fa fa-circle" style="color:#2ecc71"></i> 东北-->
+                                    <!--<i class="fa fa-circle" style="color:#3498db"></i> 华东-->
+                                    <!--<i class="fa fa-circle" style="color:#95a5a6"></i> 华北-->
+                                    <!--<i class="fa fa-circle" style="color:#9b59b6"></i> 华中-->
+                                    <!--<i class="fa fa-circle" style="color:#f1c40f"></i> 华南-->
+                                    <!--<i class="fa fa-circle" style="color:#e74c3c"></i> 西南-->
+                                    <!--<i class="fa fa-circle" style="color:#34495e"></i> 西北-->
+                                <!--</div>-->
+                                <!--<hr>-->
+                                <!--<div class="stats">-->
+                                    <!--<i class="fa fa-clock-o"></i> Campaign sent 2 days ago-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
             <!--***** REPORT-4 *****-->
             <!-- <div class="row" id="report4">
@@ -518,5 +518,142 @@
     <!--Core Javascript -->
     <script src="/static/js/mychart.js"></script>
 </body>
+<script th:inline="javascript">
+    th:text="${(session.subStatement.sumVolume/session.admin.station.warehouseCapacity==0?1:session.subStatement.sumVolume/session.admin.station.warehouseCapacity)*100}+'%'"
+    var sumVolume = [[${session.subStatement.sumVolume}]]
+    var warehouseCapacity = [[${session.admin.station.warehouseCapacity}]]
+    var orderCount = [[${session.subStatement.orderCount}]]
+    var sendOrderCount = [[${session.subStatement.sendOrderCount}]]
+    var deliveryOrderCount = [[${session.subStatement.deliveryOrderCount}]]
+    var warningOrderCount = [[${session.subStatement.warningOrderCount}]]
+    var percent1 = sumVolume/warehouseCapacity
 
+    if(percent1==0){
+        $("#sumVolume").html("1%")
+        $("#sumVolume1").attr("style","width:1%;height:6px")
+    }else if(percent1>1){
+        $("#sumVolume").html("100%")
+        $("#sumVolume1").attr("style","width:100%;height:6px")
+    }else{
+        $("#sumVolume").html(percent1*100+"%")
+        $("#sumVolume1").attr("style","width:"+percent1*100+"%;height:6px")
+        $("#sumVolume2").html("预计还可存放"+orderCount/percent1+"件")
+    }
+
+    var percent2
+    var precent3
+    var precent4
+    if(orderCount>0){
+        percent2 = sendOrderCount/orderCount
+        precent3 = deliveryOrderCount/orderCount
+        precent4 = warningOrderCount/orderCount
+    }else{
+        percent2 = 0
+        precent3 = 0
+        precent4 = 0
+    }
+    $("#sendOrder").html(percent2*100+"%")
+    $("#sendOrder1").attr("style","width:"+percent2*100+"%;height:6px")
+    $("#deliveryOrder").html(precent3*100+"%")
+    $("#deliveryOrder1").attr("style","width:"+precent3*100+"%;height:6px")
+    $("#warningOrder").html(precent4*100+"%")
+    $("#warningOrder1").attr("style","width:"+precent4*100+"%;height:6px")
+
+
+</script>
+<script>
+    //昨日成交额柱状图
+    new Chart(document.getElementById("myChart1").getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ["17", "18", "19", "20", "21", "22"],
+            datasets: [{
+                label: '',
+                type: 'bar',
+                //柱状图高度
+                data: [1212, 1598, 3665, 5475, 2096, 3348],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: ''
+            }
+        }
+    });
+
+    //当月交易金额
+    new Chart(document.getElementById("myChart2"), {
+        type: 'line',
+        data: {
+            labels: [8,9,10,11,12],
+            datasets: [{
+                data: [18236,19920,20120,23020,24780],
+                label: '',
+                borderColor: "#3e95cd",
+                fill: false
+            }
+            ]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: ''
+            }
+        }
+    });
+
+    //发往各地区的物流占比 饼状图
+    // 东北（黑龙江省、吉林省、辽宁省）；
+    // 华东（上海市、江苏省、浙江省、安徽省、福建省、江西省、山东省、台湾省）；
+    // 华北（北京市、天津市、山西省、河北省、内蒙古自治区）；
+    // 华中（河南省、湖北省、湖南省）；
+    // 华南（广东省、广西壮族自治区、海南省、香港特别行政区、澳门特别行政区）；
+    // 西南（重庆市、四川省、贵州省、云南省、西藏自治区）；
+    // 西北（陕西省、甘肃省、青海省、宁夏回族自治区、新疆维吾尔自治区）
+    new Chart(document.getElementById("myChart3").getContext('2d'), {
+        type: 'polarArea',
+        data: {
+            labels: ["东北", "华东", "华北", "华中", "华南", "西南", "西北"],
+            datasets: [{
+                backgroundColor: [
+                    "#2ecc71",
+                    "#3498db",
+                    "#95a5a6",
+                    "#9b59b6",
+                    "#f1c40f",
+                    "#e74c3c",
+                    "#34495e"
+                ],
+                data: [12, 19, 13, 17, 18, 14, 7]
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: ''
+            }
+        }
+    });
+</script>
 </html>
