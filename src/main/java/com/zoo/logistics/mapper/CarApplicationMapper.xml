@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zoo.logistics.mapper.CarApplicationMapper" >
+  <resultMap id="BaseResultMap" type="com.zoo.logistics.entity.CarApplication" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="station_id" property="stationId" jdbcType="INTEGER" />
+    <result column="route_id" property="routeId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="car_category_id" property="carCategoryId" jdbcType="INTEGER" />
+    <result column="car_count" property="carCount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, station_id, route_id, status, car_category_id, car_count
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from car_application
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from car_application
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zoo.logistics.entity.CarApplication" >
+    insert into car_application (id, station_id, route_id, 
+      status, car_category_id, car_count
+      )
+    values (#{id,jdbcType=INTEGER}, #{stationId,jdbcType=INTEGER}, #{routeId,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{carCategoryId,jdbcType=INTEGER}, #{carCount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zoo.logistics.entity.CarApplication" >
+    insert into car_application
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stationId != null" >
+        station_id,
+      </if>
+      <if test="routeId != null" >
+        route_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="carCategoryId != null" >
+        car_category_id,
+      </if>
+      <if test="carCount != null" >
+        car_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stationId != null" >
+        #{stationId,jdbcType=INTEGER},
+      </if>
+      <if test="routeId != null" >
+        #{routeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="carCategoryId != null" >
+        #{carCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="carCount != null" >
+        #{carCount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zoo.logistics.entity.CarApplication" >
+    update car_application
+    <set >
+      <if test="stationId != null" >
+        station_id = #{stationId,jdbcType=INTEGER},
+      </if>
+      <if test="routeId != null" >
+        route_id = #{routeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="carCategoryId != null" >
+        car_category_id = #{carCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="carCount != null" >
+        car_count = #{carCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zoo.logistics.entity.CarApplication" >
+    update car_application
+    set station_id = #{stationId,jdbcType=INTEGER},
+      route_id = #{routeId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      car_category_id = #{carCategoryId,jdbcType=INTEGER},
+      car_count = #{carCount,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

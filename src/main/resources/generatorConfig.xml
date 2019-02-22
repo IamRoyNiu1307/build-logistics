@@ -57,7 +57,7 @@
                <!--enableSelectByExample="false" selectByExampleQueryId="false" >-->
             <!--<property name="useActualColumnNames" value="false"/>-->
         <!--</table>-->
-        <table tableName="station"
+        <table tableName="exception_category"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"

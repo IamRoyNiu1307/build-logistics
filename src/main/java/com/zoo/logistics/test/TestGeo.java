@@ -15,7 +15,7 @@ import java.util.TreeSet;
 public class TestGeo {
     @Test
     public void testGeo(){
-        String location = Geo.geo("郑州二七塔");
+        String location = Geo.geo("广东省/深圳市/深圳市世界之窗");
         System.out.println(location);
     }
     @Test
