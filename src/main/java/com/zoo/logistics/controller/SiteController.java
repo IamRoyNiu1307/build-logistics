@@ -2,6 +2,7 @@ package com.zoo.logistics.controller;
 
 
 import com.google.gson.Gson;
+import com.zoo.logistics.api.ReGeo;
 import com.zoo.logistics.entity.Station;
 import com.zoo.logistics.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,18 +120,22 @@ public class SiteController {
         System.out.println("stationName=====" + stationName);
 
         //获取到站点对象的Address属性
-        String stationAddress = stationName.substring(0, stationName.length() - 3);
-        System.out.println("stationAddress====" + stationAddress);
+        //String stationAddress = stationName.substring(0, stationName.length() - 3);
+        //System.out.println("stationAddress====" + stationAddress);
 
         //获取到站点对象的province属性
-        String province = stationAddress.substring(0, 3);
-        System.out.println("province===" + province);
+        //String province = stationAddress.substring(0, 3);
+        //System.out.println("province===" + province);
 
 
-        String city = "";
-        if (stationAddress.length() > 7) {//省级总站点无城市选项
-            city = stationAddress.substring(4, stationAddress.length() - 1);
-        }
+//        String city = "";
+//        if (stationAddress.length() > 5) {//省级总站点无城市选项
+//            city = stationAddress.substring(3, stationAddress.length() - 1);
+//        }
+
+        Map reGeoMap = ReGeo.reGeo(station.getPosLng(), station.getPosLat());
+        String province = reGeoMap.get("province").toString();
+        String city = reGeoMap.get("city").toString();
 
         System.out.println("city====" + city);
 
@@ -162,6 +167,8 @@ public class SiteController {
 
         //执行删除操作
         siteService.deleteSiteById(id);
+
+        //删除相关路线
 
         //列表获取最新的所有的站点信息
         List<Station> stations = siteService.listAllStationPaging(request);

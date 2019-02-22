@@ -30,8 +30,8 @@ public class ClassDetailService {
 
        //路线详细信息
         int RouteId = carApplication.getRouteId();
-        String startStationName =  carApplication.getRoute().getStartstation().getStationName();
-        String endStationName = carApplication.getRoute().getEndstation().getStationName();
+        String startStationName =  carApplication.getRoute().getStartStation().getStationName();
+        String endStationName = carApplication.getRoute().getEndStation().getStationName();
 
         //申请车辆类型
         String carCategory = carApplication.getCarCategory().getName();

@@ -55,8 +55,8 @@ public class CarController {
         //添加路线操作
         for (Car car:cars) {
             Route route = pathService.selectByPrimaryKey(car.getRouteId());
-            String startStationName =  route.getStartstation().getStationName();
-            String endStationName = route.getEndstation().getStationName();
+            String startStationName =  route.getStartStation().getStationName();
+            String endStationName = route.getEndStation().getStationName();
 
             String pathdetails = startStationName+"    --------->    "+endStationName;
 

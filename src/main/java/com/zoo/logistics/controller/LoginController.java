@@ -72,15 +72,17 @@ public class LoginController {
             request.getSession().setAttribute("admin", result);
 
             //获取登录的用户的级别
-            int level = result.getStation().getLevel();
+            int level = result.getLevel();
 
             //级别1，跳转向总站
-            if (level == 1) {
+            if (level == 9) {
                 //在spring-servlet.xml中配置了Thymeleaf视图解析器，Thymeleaf会将返回的字符串拼接上解析器中的前缀和后缀
                 return "index-master";//会被解析成 /templates/index-master.html
 
             } else {
                 //级别2，跳转向分站的站点
+                Map subStatement = orderService.getSubStatement(result.getStationId());
+                request.getSession().setAttribute("subStatement", subStatement);
                 return "index";
             }
 
@@ -90,8 +92,13 @@ public class LoginController {
         }
     }
 
+    @RequestMapping("/index-master")
+    public String toIndexMasterPage() {
+        return "index-master";
+    }
+
     @RequestMapping("/index")
     public String toIndexPage() {
-        return "index-master";
+        return "index";
     }
 }

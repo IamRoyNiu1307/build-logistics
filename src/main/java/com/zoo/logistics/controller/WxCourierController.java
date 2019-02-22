@@ -2,6 +2,7 @@ package com.zoo.logistics.controller;
 
 import com.zoo.logistics.entity.Order;
 import com.zoo.logistics.entity.OrderAmount;
+import com.zoo.logistics.service.LogService;
 import com.zoo.logistics.service.MissionService;
 import com.zoo.logistics.service.OrderAmountService;
 import com.zoo.logistics.service.OrderService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +27,8 @@ public class WxCourierController {
     private OrderService orderService;
     @Autowired
     private OrderAmountService orderAmountService;
+    @Autowired
+    private LogService logService;
 
     /**
      * 快递员获取揽件/配送任务
@@ -73,7 +77,15 @@ public class WxCourierController {
     @RequestMapping("/finishMission")
     public Map finishMission(@RequestBody String orderId){
         Map map = new HashMap();
+        Order order = orderService.selectByOrderId(orderId);
         missionService.updateMissionStatus(orderId);
+        order.setStatusId(5);
+        order.setCurrentStation(0);
+        order.setFinishDate(new Date());
+        //更新状态
+        orderService.update(order);
+        //更新日志
+        logService.insertLog(order.getOrderId(),"订单已配送");
         map.put("status",1);
         return map;
     }

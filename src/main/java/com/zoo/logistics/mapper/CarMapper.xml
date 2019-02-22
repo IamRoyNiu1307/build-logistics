@@ -16,12 +16,7 @@
   <sql id="Car_List" >
     car.id, car.license_number, route_id, car_status, car_category_id
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from car
-    where id = #{id,jdbcType=INTEGER}
-  </select>
+
   <select id="selectByEquipmentReceiptId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Car_List" />
@@ -40,7 +35,6 @@
     from car,route
     where car.route_id=route.id and car.car_status = 1 and start_station_id = #{stationId} or car.route_id=route.id and car.car_status = 3 and end_station_id = #{stationId}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
 
     <!--查询表中数量-->
     <select id="CarCount" resultType="int">
@@ -101,7 +95,7 @@
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from car
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+    </delete>
 
     <!--插入数据-->
     <insert id="insert" parameterType="com.zoo.logistics.entity.Car">
