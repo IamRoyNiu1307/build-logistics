@@ -140,7 +140,7 @@
                                     <td style="padding-top: 5px;padding-bottom: 5px">
                                         <a th:href="@{deleteRoute(id=${route.id})}" onclick="return deleteRoute()"
                                            class="deleteCar btn btn-default btn-xs"
-                                           style="text-align:left;margin-right: 0px;margin-bottom: 0px;height: 25px;padding-top: 0px;margin-top: -10px ">delete</a>
+                                           style="text-align:left;margin-right: 0px;margin-bottom: 0px;height: 25px;padding-top: 0px;margin-top: -10px ">删除</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -487,14 +487,14 @@
 
         //起始地非空验证
         if ($("#path-start-station-num").val() == "") {
-            // alert("车牌号为空");
+            // alert("起始点为空");
             $("#path-start-station-num").attr("style", "border-color:#FF5252");
             flag = false;
         }
 
         //结束点非空验证
         if ($("#path-end-station-num").val() == "") {
-            // alert("车牌号错误");
+            // alert("结束点为空错误");
             $("#path-end-station-num").attr("style", "border-color:#FF5252");
             flag = false;
         }

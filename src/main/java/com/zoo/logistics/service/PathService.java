@@ -23,7 +23,10 @@ public class PathService {
     @Autowired
     public StationMapper stationMapper;
 
-    //返回表中的数据总量
+    /**
+     * 返回表中的数据总数量
+     * @return int
+     */
     public int CarCount() {
         int count = routeMapper.RouteCount();
         System.out.println("路线数量" + count);
@@ -31,8 +34,10 @@ public class PathService {
         return count;
     }
 
-
-    //返回路线列表（所有的）
+    /**
+     * 返回表中所有的路线列表
+     * @return List
+     */
     public List<Route> listAll() {
 
         //调用mapper从数据库中读取所有的数据
@@ -42,12 +47,21 @@ public class PathService {
         return routeList;
     }
 
+    /**
+     * 根据路线ID查询对应的路线信息
+     * @param id
+     * @return Route对象
+     */
     public Route selectByPrimaryKey(int id){
         Route route=routeMapper.selectByPrimaryKey(id);
         return  route;
     }
 
-    //分页返回所有的路线的列表
+    /**
+     * 分页返回所有的路线信息列表
+     * @param request
+     * @return List
+     */
     public List<Route> listAllPaging(HttpServletRequest request) {
         // 设置页面初始化的值
         int start = 0;
@@ -91,7 +105,13 @@ public class PathService {
 
     }
 
-    //根据起始地查询路线信息
+    /**
+     *  根据起始地查询对应的路线信息列表并分页
+     * @param startarea
+     * @param request
+     * @return List
+     *
+     */
     public List<Route> ListAllByStartArea(String startarea, HttpServletRequest request) {
 
         System.out.println("根据起始地查询02");
@@ -162,7 +182,12 @@ public class PathService {
 
     }
 
-    //根据目的地查询路线信息
+    /**
+     * 根据目的地查询对应的路线信息列表
+     * @param endarea
+     * @param request
+     * @return List
+     */
     public List<Route> ListAllByEndArea(String endarea, HttpServletRequest request) {
 
         System.out.println("根据目的地查询02");
@@ -233,9 +258,13 @@ public class PathService {
 
     }
 
-
-
-    //根据起始地和目的地查询路线信息
+    /**
+     * 根据起始地和目的地查询指定的路线信息列表
+     * @param startarea
+     * @param endarea
+     * @param request
+     * @return List
+     */
     public List<Route> listByRoutePaging(String startarea, String endarea, HttpServletRequest request) {
 
         System.out.println("根据路线查询02");
@@ -243,16 +272,6 @@ public class PathService {
         List<Station> stations1 = stationMapper.selectByStationName(startarea);
         List<Station> stations2 = stationMapper.selectByStationName(endarea);
 
-//        //定义一个集合存放所有符合查询条件的站点的id
-//        Map<String, List> stationId = new HashMap<String, List>();
-//
-//        //将站点的id存放进集合中
-//        stationId.put("startstationId", stations1);
-//        stationId.put("endstationId", stations2);
-//
-//        for (String key : stationId.keySet()) {
-//            System.out.println("key==" + key + ",val===" + stationId.get(key));
-//        }
 
         //根据站点的id查询对应的路线(获取数量时需要)
         List<Route> routes =  routeMapper.selectByRoute(stations1, stations2);
@@ -304,13 +323,19 @@ public class PathService {
         return routeList;
     }
 
-
-    //根据索引值删除对应的信息
+    /**
+     * 根据指定的ID删除对应的路线信息
+     * @param id
+     */
     public void deleteRouteById(int id) {
         routeMapper.deleteByPrimaryKey(id);
     }
 
-    //添加对应的信息
+
+    /**
+     * 添加对应的路线信息
+     * @param route
+     */
     public void addRoute(Route route) {
 
         System.out.println("执行插入操作----插入新路线");
@@ -318,7 +343,15 @@ public class PathService {
     }
 
 
-    //查询对应的路线是否存在
+
+    /**
+     * 查询对应的路线是否存在
+     * @param start
+     * @param end
+     * @param request
+     * @return 存在-true/不存在-false
+     *
+     */
     public boolean RouteExist(int start, int end, HttpServletRequest request){
 
         Route route = new Route();

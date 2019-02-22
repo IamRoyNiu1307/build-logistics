@@ -2,29 +2,24 @@ package com.zoo.logistics.entity;
 
 import java.io.Serializable;
 
-public class Car implements Serializable {
-
-    //车辆id
+public class CarApplication implements Serializable {
     private Integer id;
 
-    //车牌号码
-    private String licenseNumber;
+    private Integer stationId;
 
-    //线路id
     private Integer routeId;
 
-    //路线详情
-    private String pathdetails;
+    private Integer status;
 
-    //车辆状态id
-    private Integer carStatus;
-
-    //车辆种类id
     private Integer carCategoryId;
 
-    //车辆种类实体类
+    private Integer carCount;
+
+    private Station station;
+
     private CarCategory carCategory;
 
+    private Route route;
 
     private static final long serialVersionUID = 1L;
 
@@ -36,12 +31,12 @@ public class Car implements Serializable {
         this.id = id;
     }
 
-    public String getLicenseNumber() {
-        return licenseNumber;
+    public Integer getStationId() {
+        return stationId;
     }
 
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber == null ? null : licenseNumber.trim();
+    public void setStationId(Integer stationId) {
+        this.stationId = stationId;
     }
 
     public Integer getRouteId() {
@@ -52,12 +47,12 @@ public class Car implements Serializable {
         this.routeId = routeId;
     }
 
-    public Integer getCarStatus() {
-        return carStatus;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setCarStatus(Integer carStatus) {
-        this.carStatus = carStatus;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Integer getCarCategoryId() {
@@ -68,6 +63,22 @@ public class Car implements Serializable {
         this.carCategoryId = carCategoryId;
     }
 
+    public Integer getCarCount() {
+        return carCount;
+    }
+
+    public void setCarCount(Integer carCount) {
+        this.carCount = carCount;
+    }
+
+    public Station getStation() {
+        return station;
+    }
+
+    public void setStation(Station station) {
+        this.station = station;
+    }
+
     public CarCategory getCarCategory() {
         return carCategory;
     }
@@ -76,24 +87,26 @@ public class Car implements Serializable {
         this.carCategory = carCategory;
     }
 
-    public String getPathdetails() {
-        return pathdetails;
+    public Route getRoute() {
+        return route;
     }
 
-    public void setPathdetails(String pathdetails) {
-        this.pathdetails = pathdetails;
+    public void setRoute(Route route) {
+        this.route = route;
     }
 
     @Override
     public String toString() {
-        return "Car{" +
+        return "CarApplication{" +
                 "id=" + id +
-                ", licenseNumber='" + licenseNumber + '\'' +
+                ", stationId=" + stationId +
                 ", routeId=" + routeId +
-                ", pathdetails='" + pathdetails + '\'' +
-                ", carStatus=" + carStatus +
+                ", status=" + status +
                 ", carCategoryId=" + carCategoryId +
+                ", carCount=" + carCount +
+                ", station=" + station +
                 ", carCategory=" + carCategory +
+                ", route=" + route +
                 '}';
     }
 }

@@ -137,6 +137,7 @@
                                 <th>车辆编号</th>
                                 <th>车牌号</th>
                                 <th>车辆类型</th>
+                                <th>所属线路</th>
                                 <th>当前状态</th>
                                 <th>淘汰车辆</th>
                             </tr>
@@ -150,29 +151,31 @@
                                 <td th:if="${car.carCategoryId==2}">中型车</td>
                                 <td th:if="${car.carCategoryId==3}">小型车</td>
 
+                                <td th:text="${car.pathdetails}"></td>
+
                                 <td th:if="${car.carStatus==1||car.carStatus==3}">空闲</td>
                                 <td th:if="${car.carStatus==2||car.carStatus==4}">工作中</td>
                                 <td th:if="${car.carStatus==9}">维修中</td>
 
+
+
                                 <td style="padding-top: 5px;padding-bottom: 5px">
                                     <a th:href="@{deleteCar(id=${car.id})}" onclick="return deleteCar()"
                                        class="deleteCar btn btn-default btn-xs"
-                                       style="text-align:left;margin-right: 0px;margin-bottom: 0px;height: 25px;padding-top: 0px;margin-top: -10px ">delete</a>
+                                       style="text-align:left;margin-right: 0px;margin-bottom: 0px;height: 25px;padding-top: 0px;margin-top: -10px ">删除</a>
                                 </td>
                             </tr>
                             </tbody>
 
                             <script>
 
+                                //删除车辆信息前的提示信息
                                 function deleteCar() {
                                     var flag = confirm("确定要删除此车辆的信息吗?");
 
                                     return flag;
                                 }
 
-                                // if (flag == true){
-                                //     $(this).attr("href"," @{deleteCar(id=${car.id})}")
-                                // }
 
 
                             </script>
@@ -594,15 +597,58 @@
 
         var text = $("#License-plate-registration").val();
         var url = "/checkLicenseNum";
-        var args = {"context": text};
+        var args = {"context": text,"time":new Date()};
 
-        $("#testNum").load(url, args);
+        $.ajax({
+            type:"POST",
+            url:url,
+            data:"context="+text,
+            success:function (verification) {
+                // alert(verification);
+                if (verification == 1){
+                    $("#testNum").html("<font color=\"green\" size=\"3px\">验证通过！</font>");
+                    $("#License-plate-registration").attr("style", "border-color:lime");
+                } else if (verification=="2"){
+                    $("#testNum").html("<font color=\"red\" size=\"3px\">已存在！</font>");
+                    $("#License-plate-registration").attr("style", "border-color:#FF5252");
+                } else if (verification == "3"){
+                    $("#testNum").html("<font color=\"red\" size=\"3px\">格式错误！</font>");
+                    $("#License-plate-registration").attr("style", "border-color:#FF5252");
+                } else {
+                    $("#testNum").html("");
+                    $("#License-plate-registration").attr("style", "1px solid rgba(0,0,0,.15)");
+                }
+            }
+        });
 
-        if ($("#testNum").html() != "<font color=\"green\" size=\"3px\">验证通过！</font>") {
-            $("#License-plate-registration").attr("style", "border-color:#FF5252");
-        }else {
-            $("#License-plate-registration").attr("style", "border-color:lime");
-        }
+
+        // $("#testNum").load(url, args,function (verification) {
+        //
+        //     alert(verification);
+        //     if (verification == "1"){
+        //         $(this).innerHTML("<font color=\"green\" size=\"3px\">验证通过！</font>");
+        //         $("#License-plate-registration").attr("style", "border-color:lime");
+        //     } else if (verification=="2"){
+        //         $(this).html("<font color=\"red\" size=\"3px\">已存在！</font>");
+        //         $("#License-plate-registration").attr("style", "border-color:#FF5252");
+        //     } else if (verification == "3"){
+        //         $(this).innerText("<font color=\\\"red\\\" size=\\\"3px\\\">格式错误！</font>");
+        //         $("#License-plate-registration").attr("style", "border-color:#FF5252");
+        //     } else {
+        //         $(this).text("no");
+        //         $("#License-plate-registration").attr("style", "1px solid rgba(0,0,0,.15)");
+        //     }
+        //
+        //
+        // });
+
+        // if ($("#testNum").html() == "<font color=\"green\" size=\"3px\">验证通过！</font>") {
+        //     alert("正确")
+        //     $("#License-plate-registration").attr("style", "border-color:lime");
+        // }else {
+        //     alert("错误")
+        //     $("#License-plate-registration").attr("style", "border-color:#FF5252");
+        // }
     }
 
 

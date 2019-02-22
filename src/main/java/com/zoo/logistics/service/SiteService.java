@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * 站点service
+ */
 @Service
 public class SiteService {
     @Autowired
@@ -20,8 +23,12 @@ public class SiteService {
     @Autowired
     public CitiesMapper citiesMapper;
 
-
-    //根据id返回查询
+    /**
+     * 根据指定的ID查询对应的站点
+     * @param request
+     * @param id
+     * @return Station对象
+     */
     public Station FindStationByID(HttpServletRequest request,int id){
 
         Station station = stationMapper.selectByPrimaryKey(id);
@@ -29,14 +36,22 @@ public class SiteService {
 
     }
 
+    /**
+     * 获取所有的站点信息
+     * @param request
+     * @return List
+     */
     public List<Station> listAllStation(HttpServletRequest request){
         List<Station> stationList = stationMapper.selectAll();
 
         return stationList;
     }
 
-
-    //分页返回所有的站点的列表
+    /**
+     * 分页返回所有的站点信息列表并分页
+     * @param request
+     * @return List
+     */
     public List<Station> listAllStationPaging(HttpServletRequest request) {
         // 设置页面初始化的值
         int start = 0;
@@ -78,9 +93,12 @@ public class SiteService {
         return stationList;
     }
 
-
-    //查询对应城市的所有的站点
-    //分页
+    /**
+     * 根据城市名称查询城市内所有的站点并分页
+     * @param request
+     * @param cityname
+     * @return List
+     */
     public List<Station> listSiteByCityNamePaging(HttpServletRequest request,String cityname) {
 
         // 设置页面初始化的值
@@ -126,12 +144,20 @@ public class SiteService {
         return stationList;
     }
 
-    //根据索引值删除对应的信息
+    /**
+     * 根据指定的ID删除对应的站点信息
+     * @param id
+     */
     public void deleteSiteById(int id) {
         stationMapper.deleteByPrimaryKey(id);
     }
 
-    //数据库中执行修改操作
+
+    /**
+     * 执行更新（修改）操作
+     * @param station
+     *
+     */
     public void updateSiteInfo(Station station){
         stationMapper.updateByPrimaryKeySelective(station);
     }

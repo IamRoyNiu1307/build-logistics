@@ -52,4 +52,10 @@ public interface CarMapper {
 
     //返回表中一共有多少数据
     int CarCount();
+
+    //查询表中所有符合条件的车辆-车辆状态（int carStatus）
+    List<Car> selectByCategoryStatus(Map map);
+
+    //查询表中所有符合条件的车辆-车辆状态（int carStatus）并分页
+    List<Car> selectByCategoryStatus(Map map,RowBounds rowBounds);
 }

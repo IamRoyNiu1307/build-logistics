@@ -24,15 +24,24 @@ public class AdminController {
     public AdminService adminService;
 
 
-    //获取并设置相关的页面
+    /**
+     *  获取并设置相关的页面
+     * @param request
+     * @param response
+     * @return 跳转的页面
+     * <p>
+     *
+     */
     @RequestMapping("/adminManage")
     public String toPage1(HttpServletRequest request, HttpServletResponse response) {
 
-        System.out.println("进入控制器");
-        //获取所有的信息并分页
+        //System.out.println("进入控制器");
+
+
+        //获取所有的后台用户信息并分页
         List<Admin> adminList = adminService.listAllPaging(request);
 
-        //设置页面上的相关属性
+        //设置页面上需要的相关属性
         request.setAttribute("admins", adminList);
         request.setAttribute("adminindex", "/adminManage");
 
@@ -41,13 +50,21 @@ public class AdminController {
     }
 
 
-    //ajax获取指定ID对应的信息
+    /**
+     * 获取要更新的用户信息，ajax获取指定ID的对应信息
+     * @param request
+     * @param tempMap
+     * @return map
+     * @throws IOException
+     */
     @ResponseBody
     @RequestMapping("/queryAdmin")
     public Map querySite(HttpServletRequest request, @RequestBody Map tempMap) throws IOException {
+
         System.out.println("获取要更新的用户信息！");
 
         Map map = new HashMap();
+
 
         //获取从页面上传来的id信息
         String id = tempMap.get("id").toString();
@@ -56,6 +73,7 @@ public class AdminController {
         Admin admin = adminService.selectByPrimaryKey(Integer.parseInt(id));
 
         System.out.println(admin);
+
 
         //将用户的所有的信息放进map中，传回页面
         map.put("id", admin.getId());
@@ -69,7 +87,13 @@ public class AdminController {
     }
 
 
-    //更新用户信息
+    /**
+     * 更新用户信息
+     * @param request
+     * @param response
+     * @return 显示用户信息的主页面
+     *
+     */
     @RequestMapping("/updateAdmin")
     public String UpdateAdmin(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("更新用户信息！");
@@ -102,10 +126,19 @@ public class AdminController {
 
     }
 
-    //删除指定的用户的信息
+
+    /**
+     * 删除指定的用户的信息
+     * @param request
+     * @param response
+     * @return 显示用户信息的主页面
+     *
+     */
     @RequestMapping("/deleteAdmin")
     public String DeleteAdmin(HttpServletRequest request, HttpServletResponse response) {
+
         System.out.println("删除用户信息！");
+
 
         //获取要删除的用户的id
         int id = Integer.parseInt(request.getParameter("id"));
@@ -125,11 +158,19 @@ public class AdminController {
 
     }
 
-    //查询操作
+
+    /**
+     *根据指定条件执行相关的查询操作
+     * @param request
+     * @param response
+     * @return 显示用户信息的主页面
+     *
+     */
     @RequestMapping("/selectAdmin")
     public String toPage2(HttpServletRequest request, HttpServletResponse response) {
 
-        //获取从表单提交的数据
+
+        //获取从表单提交的数据--站点名称/用户级别
         String stationName = request.getParameter("stationName");
         String level = request.getParameter("level");
 

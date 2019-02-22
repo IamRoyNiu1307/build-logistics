@@ -7,6 +7,7 @@
         <result column="route_id" property="routeId" jdbcType="INTEGER"/>
         <result column="car_status" property="carStatus" jdbcType="INTEGER"/>
         <result column="car_category_id" property="carCategoryId" jdbcType="INTEGER"/>
+
         <association property="carCategory" column="car_category_id"
                      select="com.zoo.logistics.mapper.CarCategoryMapper.selectByPrimaryKey">
 
@@ -48,7 +49,7 @@
     </select>
 
     <!--根据车辆类型查询-->
-    <select id="selectBycarCategoryId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectBycarCategoryId" resultMap="BaseResultMap"  parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from car
@@ -56,7 +57,14 @@
     </select>
 
     <!--双条件查询-->
-
+    <select id="selectByCategoryStatus" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from car
+        where car_category_id = #{carCategoryId,jdbcType=INTEGER}
+        and
+        (car_status = #{carStatus1,jdbcType=INTEGER} or car_status = #{carStatus2,jdbcType=INTEGER})
+    </select>
 
     <!--主键查询-->
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">

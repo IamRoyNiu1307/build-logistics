@@ -14,41 +14,52 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 用户service
+ */
 @Service
 public class AdminService {
+
     //自动注入userDao
     @Autowired
     private AdminMapper adminMapper;
     @Autowired
     private StationMapper stationMapper;
 
-    //检查账号密码
+    /**
+     *  检查账号密码
+     * @param admin
+     * @return admin对象
+     *
+     */
     public Admin checkAccountAndPassword(Admin admin){
+
         //实际开发的写法
         Admin result = adminMapper.checkAccount(admin);
-//        if(result!=null){
-//            //说明账号密码正确
-//            System.out.println(result.toString());
-//
-//            return result;
-//        }
-//        return null;
-        return  result;
+
+        return  result; //存在，返回一个admin对象，不存在，返回null
     }
 
 
-
-
-    //返回表中的数据总量
+    /**
+     *
+     * @return 此表中数据总量
+     *
+     *
+     */
     public int CarCount() {
+
+        //获取用户数量
         int count = adminMapper.AdminCount();
         System.out.println("后台管理员数量" + count);
 
         return count;
     }
 
-
-    //返回用户列表（所有的）
+    /**
+     *
+     * @return 返回所有的用户列表
+     */
     public List<Admin> listAll() {
 
         //调用mapper从数据库中读取所有的数据
@@ -58,13 +69,25 @@ public class AdminService {
         return adminList;
     }
 
+    /**
+     * 根据指定的ID查询对应的admin对象
+     * @param id
+     * @return admin对象
+     *
+     */
     public Admin selectByPrimaryKey(int id){
         Admin admin=adminMapper.selectByPrimaryKey(id);
         return  admin;
     }
 
-    //分页返回所有的用户的列表
+    /**
+     * 分页返回所有的用户列表信息
+     * @param request
+     * @return 所有的用户列表
+     *
+     */
     public List<Admin> listAllPaging(HttpServletRequest request) {
+
         // 设置页面初始化的值
         int start = 0;
         // 设置页面显示的个数
@@ -84,8 +107,7 @@ public class AdminService {
 
         // 计算尾页的起始值
         int total = adminMapper.AdminCount();
-        ;
-//        System.out.println("total=" + total);
+
         if (0 == total % count) {
             total = total - count;
         } else {
@@ -96,11 +118,12 @@ public class AdminService {
         pre = pre < 0 ? 0 : pre;
         next = next > total ? total : next;
 
-        // 将对应的值传递给服务器端-jsp文件中对应的参数
+        // 将对应的值传递给前台页面对应的参数
         request.setAttribute("next", next);
         request.setAttribute("pre", pre);
         request.setAttribute("total", total);
 
+        //列表分页显示出所有的用户信息
         List<Admin> adminList = adminMapper.selectAll(new RowBounds(start, count));
 
         return adminList;
@@ -109,21 +132,33 @@ public class AdminService {
 
 
 
-
-    //数据库中执行修改操作
+    /**
+     * 数据库执行更新（修改）操作
+     * @param admin
+     *
+     */
     public void updateAdminInfo(Admin admin){
         adminMapper.updateByPrimaryKeySelective(admin);
     }
 
-
-    //根据索引值删除对应的信息
+    /**
+     * 根据指定的ID删除admin对象
+     * @param id
+     *
+     */
     public void deleteAdminById(int id){
         adminMapper.deleteByPrimaryKey(id);
     }
 
 
 
-    //根据站点名称查询对应的用户
+    /**
+     * 根据站点名称查询对应的用户
+     * @param stationName
+     * @param request
+     * @return 符合条件的用户信息列表
+     *
+     */
     public List<Admin> ListAllByStationName(String stationName, HttpServletRequest request) {
 
         System.out.println("根据站点名称查询对应的用户");
@@ -187,17 +222,24 @@ public class AdminService {
         request.setAttribute("total", total);
 
 
-        //根据站点的id查询对应的用户
+        //根据站点的id查询对应的用户并分页
         List<Admin> adminList = adminMapper.selectByStationId(stationId, new RowBounds(start, count));
 
         return adminList;
 
     }
 
-    //根据级别查询对应的用户
+    /**
+     * 根据级别查询对应的用户信息列表
+     * @param level
+     * @param request
+     * @return 符合条件的用户信息列表
+     *
+     */
     public List<Admin> ListAllByLevel(String level, HttpServletRequest request) {
 
         System.out.println("根据级别查询对应的用户");
+
         //根据级别查询对应的用户(后面获取数量需要用到)
         List<Admin> admins = adminMapper.selectByLevel(Integer.parseInt(level));
 
@@ -223,8 +265,7 @@ public class AdminService {
 
         // 计算尾页的起始值
         int total = admins.size();
-        ;
-//        System.out.println("total=" + total);
+
         if (0 == total % count) {
             total = total - count;
         } else {
@@ -241,7 +282,7 @@ public class AdminService {
         request.setAttribute("total", total);
 
 
-        //根据站点的id查询对应的路线
+        //根据级别查询对应的用户信息列表并分页
         List<Admin> adminList = adminMapper.selectByLevel(Integer.parseInt(level), new RowBounds(start, count));
 
         return adminList;
@@ -249,15 +290,22 @@ public class AdminService {
     }
 
 
-
-    //根据站点名称和级别查询对应的用户
+    /**
+     * 根据站点名称和级别查询对应的用户
+     * @param stationName
+     * @param level
+     * @param request
+     * @return 符合条件的用户信息列表
+     *
+     */
     public List<Admin> listByAllPaging(String stationName, String level, HttpServletRequest request) {
 
         System.out.println("根据站点名称和级别查询对应的用户");
-        //根据起始地名字查询对应的站点信息
+
+        //根据站点名字模糊查询站点信息列表
         List<Station> stations = stationMapper.selectByStationName(stationName);
 
-        //根据站点的id查询对应的路线(获取数量时需要)
+        //根据级别查询用户信息列表
         List<Admin> admins =  adminMapper.selectByAll(stations,Integer.parseInt(level));
 
 
@@ -301,7 +349,7 @@ public class AdminService {
         request.setAttribute("total", total);
 
 
-        //根据站点的id查询对应的路线
+        //根据站点名称和级别查询对应的用户信息列表并分页
         List<Admin> adminList = adminMapper.selectByAll(stations, Integer.parseInt(level), new RowBounds(start, count));
 
         return adminList;
