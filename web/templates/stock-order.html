@@ -116,19 +116,19 @@
                                 <ul class="pagination">
                                     <li class="page-item" th:class="${prePage==0?'page-item disabled':'page-item'}">
                                         <a class="page-link"
-                                           th:href="'/order/waitedOrder/page/'+${prePage}" href="#" aria-label="Previous">
+                                           th:href="'/order/stockOrder/page/'+${prePage}" href="#" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                             <span class="sr-only">上一页</span>
                                         </a>
                                     </li>
-                                    <li class="page-item" th:if="${curPage>2}"><a class="page-link" href="#" th:href="'/order/waitedOrder/page/'+(${curPage}-2)">[[${curPage-2}]]</a></li>
-                                    <li class="page-item" th:if="${curPage>1}"><a class="page-link" href="#" th:href="'/order/waitedOrder/page/'+(${curPage}-1)">[[${curPage-1}]]</a></li>
+                                    <li class="page-item" th:if="${curPage>2}"><a class="page-link" href="#" th:href="'/order/stockOrder/page/'+(${curPage}-2)">[[${curPage-2}]]</a></li>
+                                    <li class="page-item" th:if="${curPage>1}"><a class="page-link" href="#" th:href="'/order/stockOrder/page/'+(${curPage}-1)">[[${curPage-1}]]</a></li>
                                     <li class="page-item disabled"><a class="page-link" href="#">[[${curPage}]]</a></li>
-                                    <li class="page-item" th:if="${curPage<lastPage}"><a class="page-link" href="#" th:href="'/order/waitedOrder/page/'+(${curPage}+1)">[[${curPage+1}]]</a></li>
-                                    <li class="page-item" th:if="${curPage+1<lastPage}"><a class="page-link" href="#" th:href="'/order/waitedOrder/page/'+(${curPage}+2)">[[${curPage+2}]]</a></li>
+                                    <li class="page-item" th:if="${curPage<lastPage}"><a class="page-link" href="#" th:href="'/order/stockOrder/page/'+(${curPage}+1)">[[${curPage+1}]]</a></li>
+                                    <li class="page-item" th:if="${curPage+1<lastPage}"><a class="page-link" href="#" th:href="'/order/stockOrder/page/'+(${curPage}+2)">[[${curPage+2}]]</a></li>
                                     <li class="page-item" th:class="${nextPage==0?'page-item disabled':'page-item'}">
                                         <a class="page-link"
-                                           th:href="'/order/waitedOrder/page/'+${nextPage}" href="#" aria-label="Next">
+                                           th:href="'/order/stockOrder/page/'+${nextPage}" href="#" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                             <span class="sr-only">下一页</span>
                                         </a>
@@ -171,7 +171,7 @@
     $("#searchBtn").click(function () {
         //发送一个异步请求
         $.ajax({
-            url:"/order/waitedOrderSelect",
+            url:"/order/stockOrderSelect",
             type:"post",
             data:$("#order-id").val(),
             contentType: "application/json;charset=UTF-8",

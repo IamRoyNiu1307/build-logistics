@@ -517,7 +517,21 @@
 
     <!--Core Javascript -->
     <script src="/static/js/mychart.js"></script>
+
 </body>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url:"/orderException",
+            type:"post",
+            data:$("#station-id").val(),
+            contentType: "application/json;charset=UTF-8",
+            success:function (orderExceptionCount) {
+                $(".orderExceptionCount").html(orderExceptionCount)
+            }
+        })
+    });
+</script>
 <script th:inline="javascript">
     th:text="${(session.subStatement.sumVolume/session.admin.station.warehouseCapacity==0?1:session.subStatement.sumVolume/session.admin.station.warehouseCapacity)*100}+'%'"
     var sumVolume = [[${session.subStatement.sumVolume}]]

@@ -322,6 +322,14 @@
 
 
     })
+
+</script>
+
+<script th:inline="javascript">
+    //异常单数量显示
+    $(document).ready(function () {
+        $(".orderExceptionCount").html([[${session.orderExceptionCount}]])
+    });
 </script>
 
 </html>

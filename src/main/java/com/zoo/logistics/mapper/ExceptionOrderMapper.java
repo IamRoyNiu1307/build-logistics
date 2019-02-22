@@ -2,6 +2,8 @@ package com.zoo.logistics.mapper;
 
 import com.zoo.logistics.entity.ExceptionOrder;
 
+import java.util.List;
+
 public interface ExceptionOrderMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface ExceptionOrderMapper {
     int updateByPrimaryKeySelective(ExceptionOrder record);
 
     int updateByPrimaryKey(ExceptionOrder record);
+
+    ExceptionOrder selectByOrderId(String orderId);
 }

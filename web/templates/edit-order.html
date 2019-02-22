@@ -74,12 +74,12 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="sender-name">订单号</label>
-                                    <input type="text" class="form-control" id="sender-name" aria-describedby="emailHelp"
-                                        placeholder="请输入订单号">
+                                    <label for="order-id">订单号</label>
+                                    <input type="text" class="form-control" id="order-id" aria-describedby="emailHelp"
+                                        placeholder="请输入订单号" style="min-width: 180px">
                                 </div>
                             </div>
-
+                            <div><a class="search-btn" id="searchBtn">搜索</a></div>
                         </div>
 
                         <div class="row mt-3">
@@ -89,188 +89,76 @@
                         </div>
 
                         <!-- overflow-y:Scroll;overflow-x:hidden; -->
-                        <div class="row mt-2 pre-scrollable" style="max-height: 500px;">
-                            <table class="table table-striped table-light table-responsive" style="min-height: 200px;">
+                        <div class="row mt-2 pre-scrollable" style="min-height: 500px;">
+                            <table class="table table-striped table-light table-responsive" style="min-height: 100px;">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">全选</span>
-                                            </label>
-                                        </th>
                                         <th>订单号</th>
-                                        <th>创建时间</th>
                                         <th>目的地址</th>
                                         <th>详细地址</th>
                                         <th>货物类别</th>
                                         <th>重量</th>
                                         <th>体积</th>
-                                        <th>保价</th>
                                         <th>状态</th>
-                                        <th>更新时间</th>
+                                        <th>下单时间</th>
                                         <th>操作</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="orderList">
                                     
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>201810235546887</th>
-                                        <th>2018-11-28 11:54</th>
-                                        <th>河南省/郑州市/金水区</th>
-                                        <th>文化路93号郑州大学北校区</th>
-                                        <th>衣服</th>
-                                        <th>1Kg</th>
-                                        <th>3</th>
-                                        <th>无</th>
-                                        <th>
-                                            <span class="badge badge-pill badge-info">待审核</span>
-                                        </th>
-                                        <th>2018-11-29 18:32</th>
-                                        <th>
-                                            <button name="" id="" class="btn btn-primary btn-sm" type="button">编辑</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>201810235546887</th>
-                                        <th>2018-11-29 18:32</th>
-                                        <th>河南省/郑州市/金水区</th>
-                                        <th>文化路93号郑州大学北校区</th>
-                                        <th>衣服</th>
-                                        <th>1Kg</th>
-                                        <th>3</th>
-                                        <th>无</th>
-                                        <th>
-                                            <span class="badge badge-pill badge-danger">拒收</span>
-                                        </th>
-                                        <th>2018-11-29 18:32</th>
-                                        <th>
-                                            <button name="" id="" class="btn btn-primary btn-sm" type="button">编辑</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>201810235546887</th>
-                                        <th>2018-11-29 18:32</th>
-                                        <th>河南省/郑州市/金水区</th>
-                                        <th>文化路93号郑州大学北校区</th>
-                                        <th>衣服</th>
-                                        <th>1Kg</th>
-                                        <th>3</th>
-                                        <th>无</th>
-                                        <th>
-                                            <span class="badge badge-pill badge-warning">代签收</span>
-                                        </th>
-                                        <th>2018-11-29 18:32</th>
-                                        <th>
-                                            <button name="" id="" class="btn btn-primary btn-sm" type="button">编辑</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>201810235546887</th>
-                                        <th>2018-11-29 18:32</th>
-                                        <th>河南省/郑州市/金水区</th>
-                                        <th>文化路93号郑州大学北校区</th>
-                                        <th>衣服</th>
-                                        <th>1Kg</th>
-                                        <th>3</th>
-                                        <th>无</th>
-                                        <th>
-                                            <span class="badge badge-pill badge-success">已签收</span>
-                                        </th>
-                                        <th>2018-11-29 18:32</th>
-                                        <th>
-                                            <button name="" id="" class="btn btn-primary btn-sm" type="button">编辑</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>201810235546887</th>
-                                        <th>2018-11-29 18:32</th>
-                                        <th>河南省/郑州市/金水区</th>
-                                        <th>文化路93号郑州大学北校区</th>
-                                        <th>衣服</th>
-                                        <th>1Kg</th>
-                                        <th>3</th>
-                                        <th>无</th>
-                                        <th>
-                                            <span class="badge badge-pill badge-primary">已审核</span>
-                                        </th>
-                                        <th>2018-11-29 18:32</th>
-                                        <th>
-                                            <button name="" id="" class="btn btn-primary btn-sm" type="button">编辑</button>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th>
-                                            <label class="custom-control custom-checkbox">
-                                                <input id="baojia" type="checkbox" class="custom-control-input"
-                                                    required>
-                                                <span class="custom-control-indicator"></span>
-                                                <span class="custom-control-description">&nbsp;</span>
-                                            </label>
-                                        </th>
-                                        <th>201810235546887</th>
-                                        <th>2018-11-29 18:32</th>
-                                        <th>河南省/郑州市/金水区</th>
-                                        <th>文化路93号郑州大学北校区</th>
-                                        <th>衣服</th>
-                                        <th>1Kg</th>
-                                        <th>3</th>
-                                        <th>无</th>
-                                        <th>
-                                            <span class="badge badge-pill badge-secondary">运输中</span>
-                                        </th>
-                                        <th>2018-11-29 18:32</th>
-                                        <th>
-                                            <button name="" id="" class="btn btn-primary btn-sm" type="button">编辑</button>
-                                        </th>
+                                    <tr th:if="${orderList!=null}" th:each="order:${orderList}">
+                                        <td th:text="${order.orderId}">201810235546887</td>
+                                        <td th:text="${order.receiverArea}">河南省/郑州市/金水区</td>
+                                        <td th:text="${order.receiverStreet}">文化路93号郑州大学北校区</td>
+                                        <td th:text="${order.orderCategory.name}">衣服</td>
+                                        <td th:text="${order.weight}">1Kg</td>
+                                        <td th:text="${order.volume}">3</td>
+                                        <input type="hidden" th:value="${order.senderName}" ></input>
+                                        <input type="hidden" th:value="${order.senderTel}" ></input>
+                                        <input type="hidden" th:value="${order.senderArea}" ></input>
+                                        <input type="hidden" th:value="${order.senderStreet}" ></input>
+                                        <input type="hidden" th:value="${order.receiverName}" ></input>
+                                        <input type="hidden" th:value="${order.receiverTel}" ></input>
+                                        <input type="hidden" th:value="${order.receiverArea}" ></input>
+                                        <input type="hidden" th:value="${order.receiverStreet}" ></input>
+                                        <td>
+                                            <span class="badge badge-pill badge-info">待揽件</span>
+                                        </td>
+                                        <td th:text="${order.createDate}">2018-11-29 18:32</td>
+                                        <td>
+                                            <button th:id="${order.orderId}" class="btn btn-primary btn-sm edit" type="button"
+                                                    data-toggle="modal" data-target="#editModal">编辑</button>
+                                        </td>
                                     </tr>
 
                                 </tbody>
                             </table>
                         </div>
-
+                        <div class="row" style="position: absolute;bottom: 0px">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item" th:class="${prePage==0?'page-item disabled':'page-item'}">
+                                        <a class="page-link"
+                                           th:href="'/order/editOrder/page/'+${prePage}" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">上一页</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item" th:if="${curPage>2}"><a class="page-link" href="#" th:href="'/order/editOrder/page/'+(${curPage}-2)">[[${curPage-2}]]</a></li>
+                                    <li class="page-item" th:if="${curPage>1}"><a class="page-link" href="#" th:href="'/order/editOrder/page/'+(${curPage}-1)">[[${curPage-1}]]</a></li>
+                                    <li class="page-item disabled"><a class="page-link" href="#">[[${curPage}]]</a></li>
+                                    <li class="page-item" th:if="${curPage<lastPage}"><a class="page-link" href="#" th:href="'/order/editOrder/page/'+(${curPage}+1)">[[${curPage+1}]]</a></li>
+                                    <li class="page-item" th:if="${curPage+1<lastPage}"><a class="page-link" href="#" th:href="'/order/editOrder/page/'+(${curPage}+2)">[[${curPage+2}]]</a></li>
+                                    <li class="page-item" th:class="${nextPage==0?'page-item disabled':'page-item'}">
+                                        <a class="page-link"
+                                           th:href="'/order/editOrder/page/'+${nextPage}" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">下一页</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
 
 
                     </div>
@@ -282,7 +170,86 @@
         </div>
 
     </div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10000">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    订单修改
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                </button>
+            </div>
+            <div class="modal-body pre-scrollable" style="max-height:600px">
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <h4 id="licenseNumber" style="border-bottom: 1px solid #ddd;">订单信息</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="hidden" id="orderId">
+                        <div class="form-group">
+                            <label for="sender-name">寄件人姓名</label>
+                            <input type="text" class="form-control" id="sender-name" name="senderName" aria-describedby="emailHelp"
+                                   placeholder="寄件人姓名">
+                        </div>
+                        <div class="form-group">
+                            <label for="sender-tel">联系电话</label>
+                            <input type="text" class="form-control" id="sender-tel" name="senderTel" aria-describedby="emailHelp"
+                                   placeholder="寄件人电话">
+                        </div>
+                        <div class="form-group">
+                            <label for="sender-area">寄件地址</label>
+                            <input id="sender-area" name="senderArea" class="form-control" readonly type="text" value="河南省/郑州市/金水区"
+                                   data-toggle="city-picker">
+                        </div>
+                        <div class="form-group">
+                            <label for="sender-street">街道</label>
+                            <input type="text" class="form-control" id="sender-street" name="senderStreet" aria-describedby="emailHelp"
+                                   placeholder="填写详细地址">
+                        </div>
 
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="receiver-name">收件人姓名</label>
+                            <input type="text" class="form-control" id="receiver-name" name="receiverName" aria-describedby="emailHelp"
+                                   placeholder="寄件人姓名">
+                        </div>
+                        <div class="form-group">
+                            <label for="receiver-tel">联系电话</label>
+                            <input type="text" class="form-control" id="receiver-tel" name="receiverTel" aria-describedby="emailHelp"
+                                   placeholder="寄件人电话">
+                        </div>
+                        <div class="form-group">
+                            <label for="receiver-area">收件地址</label>
+                            <input id="receiver-area" name="receiverArea" class="form-control" readonly type="text" value="河南省/郑州市/金水区"
+                                   data-toggle="city-picker">
+                        </div>
+                        <div class="form-group">
+                            <label for="receiver-street">街道</label>
+                            <input type="text" class="form-control" id="receiver-street" name="receiverStreet" aria-describedby="emailHelp"
+                                   placeholder="填写详细地址">
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button id="toedit" type="button" class="btn btn-success">
+                    修改
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
     <!--Global Javascript -->
     <script src="/static/js/jquery.min.js"></script>
@@ -301,13 +268,124 @@
     <script src="/static/js/mychart.js"></script>
 </body>
 <script>
-    $("#baojia").on("click", function () {
-        if ($(this).prop("checked")) {
-            $(".baojia").prop("hidden", false)
-        } else {
-            $(".baojia").prop("hidden", "hidden")
-        }
+    var orderId="";
+    //点击编辑时触发的事件
+    $("body").on("click",".edit",function () {
+        //获取点击对象的id
+        orderId=$(this)[0].id
+        //获取需要修改的信息
+        var sendName=$(this).parents("tr").children("input:eq(0)").val()
+        var sendTel=$(this).parents("tr").children("input:eq(1)").val()
+        var senderArea=$(this).parents("tr").children("input:eq(2)").val()
+        var senderStreet=$(this).parents("tr").children("input:eq(3)").val()
+        var receiverName=$(this).parents("tr").children("input:eq(4)").val()
+        var receiverTel=$(this).parents("tr").children("input:eq(5)").val()
+        var receiverArea=$(this).parents("tr").children("input:eq(6)").val()
+        var receiverStreet=$(this).parents("tr").children("input:eq(7)").val()
+        //将需要修改的信息赋值到模态窗中
+        $("#orderId").val(orderId)
+        $("#sender-name").val(sendName)
+        $("#sender-tel").val(sendTel)
+        $("#sender-area").val(senderArea)
+        $("#sender-street").val(senderStreet)
+        $("#receiver-name").val(receiverName)
+        $("#receiver-tel").val(receiverTel)
+        $("#receiver-area").val(receiverArea)
+        $("#receiver-street").val(receiverStreet)
+        $("#receiver-area").citypicker("reset");
+        $("#receiver-area").citypicker("destroy");
+        //修改默认的citypicker
+        var  area =receiverArea.split("/")
+        $("#receiver-area").citypicker({
+            province: area[0],
+            city:area[1],
+            district: area[2]
+        })
+        $(".city-picker-span").attr("style", "width:350px");
+        $(".city-picker-dropdown").attr("style", "left: 0px;top: auto;width: 350px;");
     })
+    // 页面加载完成后修改city-picker的样式
+    $(function () {
+        $(".city-picker-span").attr("style", "width:350px");
+        $(".city-picker-dropdown").attr("style", "left: 0px;top: auto;width: 350px;");
+    }
+    );
+    //点击模态窗中的修改是触发的事件
+    $("#toedit").click(function () {
+        //将模态框中的数据存入jason对象中
+        var datas={
+            "orderId":$("#orderId").val(),
+            "sendName":$("#sender-name").val(),
+            "sendTel":$("#sender-tel").val(),
+            "senderArea":$("#sender-area").val(),
+            "senderStreet":$("#sender-street").val(),
+            "receiverName":$("#receiver-name").val(),
+            "receiverTel":$("#receiver-tel").val(),
+            "receiverArea":$("#receiver-area").val(),
+            "receiverStreet":$("#receiver-street").val()
+        };
+        //发送异步请求  对模态窗中的数据进行修改后提交
+        $.ajax({
+            url:"/order/edit",
+            type:"post",
+            data:JSON.stringify(datas),
+            contentType: "application/json;charset=UTF-8",
+            success:function (map) {
+                if(map.status==1){
+                    alert(map.msg)
+                    location.reload()
+                }else {
+                    alert(map.msg)
+                }
+            },
+            error:function (map) {
+            }
+        })
+    })
+    //点击搜索按钮时触发的事件
+    $("#searchBtn").click(function () {
+        //发送一个异步请求
+        $.ajax({
+            url:"/order/select",
+            type:"post",
+            data:$("#order-id").val(),
+            contentType: "application/json;charset=UTF-8",
+            success:function (map) {
+                if(map.status==1){
+                    //清空搜索前的数据
+                    $("#orderList").html("");
+                    //在orderList中添加搜索返回的数据
+                    $("#orderList").append("<tr>\n"+
+                                            "<td>"+map.order.orderId+"</td>\n"+
+                                            "<td>"+map.order.receiverArea+"</td>\n"+
+                                            "<td>"+map.order.receiverStreet+"</td>\n"+
+                                            "<td>"+map.order.orderCategory.name+"</td>\n"+
+                                            "<td>"+map.order.weight+"</td>\n"+
+                                            "<td>"+map.order.volume+"</td>\n"+
+                                            "<input type='hidden' value='"+map.order.senderName+"'></input>\n"+
+                                            "<input type='hidden' value='"+map.order.senderTel+"' ></input>\n"+
+                                            "<input type='hidden' value='"+map.order.senderArea+"' ></input>\n"+
+                                            "<input type='hidden' value='"+map.order.senderStreet+"' ></input>\n"+
+                                            "<input type='hidden' value='"+map.order.receiverName+"' ></input>\n"+
+                                            "<input type='hidden' value='"+map.order.receiverTel+"' ></input>\n"+
+                                            "<input type='hidden' value='"+map.order.receiverArea+"' ></input>\n"+
+                                            "<input type='hidden' value='"+map.order.receiverStreet+"' ></input>\n"+
+                                            "<td><span class='badge badge-pill badge-info'>待揽件</span></td>\n"+
+                                            "<td>"+map.order.createDate+"</td>\n"+
+                                            "<td><button id='"+map.order.orderId+"' class='btn btn-primary btn-sm edit' type='button'data-toggle='modal' data-target='#editModal'>编辑</button></td>\n"
+                    )
+                    alert(map.msg);
+                }else {
+                    //错误
+                    alert(map.msg)
+                }
+            },
+            error:function (map) {
+                alert(JSON.stringify(map))
+            }
+        })
+    })
+
 </script>
 
 </html>

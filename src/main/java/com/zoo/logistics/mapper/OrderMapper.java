@@ -38,4 +38,16 @@ public interface OrderMapper {
     Integer selectDeliveryOrderCountByStationId(int stationId);
 
     Integer selectWarningOrderCountByStationId(int stationId);
+
+    //---------------------------------------------------------------------
+    //查询状态为待揽件的订单
+    List<Order> selectByStatusId(int stationId);
+    //查询异常单
+    List<Order> selectOrderExceptionByStationId(int stationId);
+    //查询已登记处理的异常单
+    List<Order> selectExceptionOrderByStationId(int stationId);
+    //查询本站状态为已入库的订单
+    List<Order> selectWaitedOrder(int stationId);
+    //查询本站和终点站相同并且在本站中的状态为入库的订单
+    List<Order> selectStockOrder(int stationId);
 }

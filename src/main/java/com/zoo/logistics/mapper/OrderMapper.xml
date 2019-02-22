@@ -26,6 +26,7 @@
     <association property="orderCategory" column="category_id" select="com.zoo.logistics.mapper.OrderCategoryMapper.selectByPrimaryKey"></association>
     <association property="status" column="status_id" select="com.zoo.logistics.mapper.StatusMapper.selectByPrimaryKey"></association>
     <association property="lastLog" column="order_id" select="com.zoo.logistics.mapper.LogMapper.selectLastLogByOrderId"></association>
+    <association property="exceptionOrder" column="order_id" select="com.zoo.logistics.mapper.ExceptionOrderMapper.selectByOrderId"></association>
   </resultMap>
   <sql id="Base_Column_List" >
     `order`.id, order_id, sender_name, sender_tel, sender_area, sender_street, receiver_name,
@@ -89,6 +90,44 @@
     from `order`
     where creater_account = #{createrAccount}
     ORDER BY `order`.order_id desc
+  </select>
+<!--查询本站的待揽件订单-->
+  <select id="selectByStatusId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from `order`
+    where status_id = 1 and current_station = #{stationId}
+    ORDER BY `order`.order_id desc
+  </select>
+  <!--查询本站的已入库订单-->
+  <select id="selectWaitedOrder" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from `order`
+    where status_id = 2 and current_station = #{stationId}
+    ORDER BY `order`.order_id desc
+  </select>
+  <!--查询终点站是本站并且当前站是本站的已入库订单-->
+  <select id="selectStockOrder" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from `order`
+    where status_id = 2 and end_station = #{stationId} and current_station = #{stationId}
+    ORDER BY `order`.order_id desc
+  </select>
+<!--查询本站的异常单-->
+  <select id="selectOrderExceptionByStationId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from `order`
+    where status_id = 9 and current_station = #{stationId}
+  </select>
+  <!--查询本站的异常处理单-->
+  <select id="selectExceptionOrderByStationId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from `order`
+    where status_id = 10 and current_station = #{stationId}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `order`

@@ -9,6 +9,8 @@ public class ExceptionOrder implements Serializable {
 
     private Integer exceptionCategoryId;
 
+    private ExceptionCategory exceptionCategory;
+
     private Float compensate;
 
     private static final long serialVersionUID = 1L;
@@ -35,6 +37,14 @@ public class ExceptionOrder implements Serializable {
 
     public void setExceptionCategoryId(Integer exceptionCategoryId) {
         this.exceptionCategoryId = exceptionCategoryId;
+    }
+
+    public ExceptionCategory getExceptionCategory() {
+        return exceptionCategory;
+    }
+
+    public void setExceptionCategory(ExceptionCategory exceptionCategory) {
+        this.exceptionCategory = exceptionCategory;
     }
 
     public Float getCompensate() {

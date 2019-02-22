@@ -55,6 +55,16 @@ public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private ExceptionOrder exceptionOrder;
+
+    public ExceptionOrder getExceptionOrder() {
+        return exceptionOrder;
+    }
+
+    public void setExceptionOrder(ExceptionOrder exceptionOrder) {
+        this.exceptionOrder = exceptionOrder;
+    }
+
     public Log getLastLog() {
         return lastLog;
     }
@@ -242,8 +252,15 @@ public class Order implements Serializable {
         this.createDate = createDate;
     }
 
-    public Date getFinishDate() {
-        return finishDate;
+    public String getFinishDate() {
+
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        if (finishDate == null){
+            return null;
+        }
+        return sdf.format(finishDate);
     }
 
     public void setFinishDate(Date finishDate) {

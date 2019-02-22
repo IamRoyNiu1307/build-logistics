@@ -6,6 +6,7 @@
     <result column="order_id" property="orderId" jdbcType="VARCHAR" />
     <result column="exception_category_id" property="exceptionCategoryId" jdbcType="INTEGER" />
     <result column="compensate" property="compensate" jdbcType="REAL" />
+    <association property="exceptionCategory" column="exception_category_id" select="com.zoo.logistics.mapper.ExceptionCategoryMapper.selectByPrimaryKey"></association>
   </resultMap>
   <sql id="Base_Column_List" >
     id, order_id, exception_category_id, compensate
@@ -15,6 +16,13 @@
     <include refid="Base_Column_List" />
     from exception_order
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <!--根据订单编号查询异常处理单-->
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from exception_order
+    where order_id = #{orderId}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from exception_order

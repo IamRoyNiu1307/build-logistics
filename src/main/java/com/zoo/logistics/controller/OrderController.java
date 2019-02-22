@@ -5,6 +5,11 @@ import com.zoo.logistics.entity.Admin;
 import com.zoo.logistics.entity.EquipmentReceipt;
 import com.zoo.logistics.entity.Order;
 import com.zoo.logistics.service.*;
+import com.zoo.logistics.service.CarService;
+import com.zoo.logistics.service.EquipmentReceiptService;
+import com.zoo.logistics.service.LogService;
+import com.zoo.logistics.service.OrderService;
+import javafx.scene.control.Alert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +37,7 @@ public class OrderController {
 
     @RequestMapping("/createOrder")
     public String tocreateOrderPage(HttpServletResponse response){
+
         return "create-order";
     }
 
@@ -189,6 +195,242 @@ public class OrderController {
         return "success";
     }
 
+    //--------------------------------------------------------------
+
+    /**
+     * 点击订单修改时跳转到的页面及数据的分页
+     * @param curPage 当前页数
+     * @param map 返回的数据存储在map中
+     * @param request
+     * @return 跳转页面
+     */
+    @RequestMapping(value = "/editOrder/page/{curPage}")
+    public String toeditOrderPage(@PathVariable(value = "curPage") int curPage,
+                                  Map map, HttpServletRequest request){
+        //每页显示的数据行数
+        int limit = 8;
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        System.out.println("req get:"+request.getSession().getAttribute("admin"));
+
+        //获取所有状态为待揽件的订单
+        PageInfo orderinfo=orderService.selectByStatusId(admin.getStationId(),curPage,limit);
+        map.put("orderList",orderinfo.getList());
+        map.put("prePage",orderinfo.getPrePage());
+        map.put("nextPage",orderinfo.getNextPage());
+        map.put("curPage",curPage);
+        map.put("firstPage",orderinfo.getFirstPage());
+        map.put("lastPage",orderinfo.getLastPage());
+        System.out.println(admin.getStationId());
+        return "edit-order";
+    }
+
+    /**
+     * 接收要修改的数据,对数据库中的数据进行修改
+     * @param map
+     * @param request
+     * @return 修改结果
+     */
+    @ResponseBody
+    @RequestMapping(value = "/edit")
+    public Map edit(@RequestBody Map map,HttpServletRequest request){
+        Map resultMap=new HashMap();
+        String orderid=map.get("orderId").toString();
+        Order order = orderService.selectByOrderId(orderid);
+        order.setSenderName(map.get("sendName").toString());
+        order.setSenderTel(map.get("sendTel").toString());
+        order.setSenderArea(map.get("senderArea").toString());
+        order.setSenderStreet(map.get("senderStreet").toString());
+        order.setReceiverName(map.get("receiverName").toString());
+        order.setReceiverTel(map.get("receiverTel").toString());
+        order.setReceiverArea(map.get("receiverArea").toString());
+        order.setReceiverStreet(map.get("receiverStreet").toString());
+        orderService.update(order);
+        resultMap.put("status",1);
+        resultMap.put("msg","提交成功");
+
+        return resultMap;
+    }
+
+    /**
+     * 根据订单编号进行搜索
+     * @param orderid 订单编号
+     * @param request
+     * @return 带有order的map
+     */
+    @ResponseBody
+    @RequestMapping(value = "/select")
+    public Map select(@RequestBody String orderid,HttpServletRequest request,HttpServletResponse response)throws IOException {
+        System.out.println("进入查询");
+        System.out.println(orderid);
+
+        Map resultMap=new HashMap();
+        //根据订单号查询订单
+        Order order = orderService.selectByOrderId(orderid);
+        System.out.println(order);
+        //判断是否查询到订单
+        if(order!=null){
+            //判断订单当前站点是否为本站点
+            Admin admin = (Admin) request.getSession().getAttribute("admin");
+            if(order.getCurrentStation()==admin.getStationId()){
+                //判断该订单状态是否为“待揽件”
+                if(order.getStatusId()==1){
+                    System.out.println("查询成功");
+                    resultMap.put("status",1);
+                    resultMap.put("msg","查询成功");
+                    resultMap.put("order",order);
+                }else {
+                    System.out.println("查询失败");
+                    resultMap.put("status",0);
+                    resultMap.put("msg","查询失败,不是待揽件订单");
+                }
+            }else {
+                System.out.println("查询失败2");
+                resultMap.put("status",0);
+                resultMap.put("msg","查询失败,不是本站订单");
+            }
+        }else {
+            resultMap.put("status",0);
+            resultMap.put("msg","查询失败,订单号错误");
+        }
+
+//        PrintWriter writer = response.getWriter();
+//        writer.print(resultMap);
+
+
+        return resultMap;
+    }
+
+    /**
+     * 点击待发订单查询时进行的页面跳转以及数据的分页处理
+     * @param curPage
+     * @param map
+     * @param request
+     * @return 跳转页面
+     */
+    @RequestMapping(value = "/waitedOrder/page/{curPage}")
+    public String towaitedOrderPage(@PathVariable(value = "curPage") int curPage,
+                                  Map map, HttpServletRequest request){
+        //每页显示的数据行数
+        int limit = 8;
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        System.out.println("req get:"+request.getSession().getAttribute("admin"));
+
+        //获取所有状态为待揽件的订单
+        PageInfo orderinfo=orderService.selectWaitedOrder(admin.getStationId(),curPage,limit);
+        map.put("orderList",orderinfo.getList());
+        map.put("prePage",orderinfo.getPrePage());
+        map.put("nextPage",orderinfo.getNextPage());
+        map.put("curPage",curPage);
+        map.put("firstPage",orderinfo.getFirstPage());
+        map.put("lastPage",orderinfo.getLastPage());
+        System.out.println(admin.getStationId());
+        return "waited-order";
+    }
+
+    /**
+     * 根据订单编号查询状态为“已入库的订单”
+     * @param orderid 订单编号
+     * @param request
+     * @return
+     */
+
+    @ResponseBody
+    @RequestMapping(value = "/waitedOrderSelect")
+    public Map selectWaitedOrder(@RequestBody String orderid,HttpServletRequest request){
+        Map resultMap=new HashMap();
+        //根据订单编号查询订单
+        Order order = orderService.selectByOrderId(orderid);
+        if(order!=null){
+            //判断该订单是否是本站订单
+            Admin admin = (Admin) request.getSession().getAttribute("admin");
+            if(order.getCurrentStation()==admin.getStationId()){
+                //判断该订单状态是否为已入库
+                if(order.getStatusId()==2){
+                    resultMap.put("status",1);
+                    resultMap.put("msg","查询成功");
+                    resultMap.put("order",order);
+                }else {
+                    resultMap.put("status",0);
+                    resultMap.put("msg","查询失败,该订单不是代发订单");
+                }
+            }else {
+                resultMap.put("status",0);
+                resultMap.put("msg","查询失败,订单不属于本站");
+            }
+        }else {
+            resultMap.put("status",0);
+            resultMap.put("msg","查询失败,订单号错误");
+        }
+        return resultMap;
+    }
+
+    /**
+     * 点击库存订单查询时进行的页面跳转及分页处理
+     * @param curPage
+     * @param map
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/stockOrder/page/{curPage}")
+    public String toStockOrderPage(@PathVariable(value = "curPage") int curPage,
+                                    Map map, HttpServletRequest request){
+        //每页显示的数据行数
+        int limit = 6;
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+
+        //获取所有状态为待揽件的订单
+        PageInfo orderinfo=orderService.selectStockOrder(admin.getStationId(),curPage,limit);
+        map.put("orderList",orderinfo.getList());
+        map.put("prePage",orderinfo.getPrePage());
+        map.put("nextPage",orderinfo.getNextPage());
+        map.put("curPage",curPage);
+        map.put("firstPage",orderinfo.getFirstPage());
+        map.put("lastPage",orderinfo.getLastPage());
+        System.out.println(admin.getStationId());
+        return "stock-order";
+    }
+
+    /**
+     * 查询待配送库存订单
+     * @param orderid
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/stockOrderSelect")
+    public Map selectStockOrder(@RequestBody String orderid,HttpServletRequest request){
+        Map resultMap=new HashMap();
+        //根据订单编号查询订单
+        Order order = orderService.selectByOrderId(orderid);
+        if(order!=null){
+            //判断该订单是否是本站订单
+            Admin admin = (Admin) request.getSession().getAttribute("admin");
+            if(order.getCurrentStation()==admin.getStationId()){
+                //判断该订单终点站是不是本站
+                if(order.getEndStation()==admin.getStationId()){
+                    //判断该订单状态是否为已入库
+                    if(order.getStatusId()==2){
+                        resultMap.put("status",1);
+                        resultMap.put("msg","查询成功");
+                        resultMap.put("order",order);
+                    }else {
+                        resultMap.put("status",0);
+                        resultMap.put("msg","查询失败,该订单不是已入库订单");
+                    }
+                }else {
+                    resultMap.put("status",0);
+                    resultMap.put("msg","查询失败,该订单不属于本站库存订单");
+                }
+            }else {
+                resultMap.put("status",0);
+                resultMap.put("msg","查询失败,订单不属于本站");
+            }
+        }else {
+            resultMap.put("status",0);
+            resultMap.put("msg","查询失败,订单号错误");
+        }
+        return resultMap;
+    }
     @RequestMapping("/takeOrder/page/{curPage}")
     public String toTakeOrderPage(@PathVariable(value = "curPage") int curPage,Map map,HttpServletRequest request){
 

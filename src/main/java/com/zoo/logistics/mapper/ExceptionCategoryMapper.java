@@ -2,6 +2,8 @@ package com.zoo.logistics.mapper;
 
 import com.zoo.logistics.entity.ExceptionCategory;
 
+import java.util.List;
+
 public interface ExceptionCategoryMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,7 @@ public interface ExceptionCategoryMapper {
     int updateByPrimaryKeySelective(ExceptionCategory record);
 
     int updateByPrimaryKey(ExceptionCategory record);
+
+    List<ExceptionCategory> selectAllCategory();
+
 }
