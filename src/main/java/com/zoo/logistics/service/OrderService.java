@@ -1,5 +1,7 @@
 package com.zoo.logistics.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zoo.logistics.api.Distance;
 import com.zoo.logistics.api.Geo;
 import com.zoo.logistics.entity.Log;
@@ -8,6 +10,7 @@ import com.zoo.logistics.entity.Station;
 import com.zoo.logistics.mapper.LogMapper;
 import com.zoo.logistics.mapper.OrderMapper;
 import com.zoo.logistics.mapper.StationMapper;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -171,5 +174,81 @@ public class OrderService {
         return orderMapper.selectByCreaterAccount(createrAccount);
     }
 
+//------------------------------------------------------------------
 
+
+    /**
+     * 查询当前站点下所有状态为“待揽件”的订单
+     * @param stationId 站点id
+     * @param pageNum 分页的当前页码
+     * @param pageSize 每页的数据数
+     * @return 当前站点下状态为“待揽件”的所有订单
+     */
+    public PageInfo selectByStatusId(int stationId, int pageNum, int pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<Order> allOrderInfo=orderMapper.selectByStatusId(stationId);
+        PageInfo pageInfo=new PageInfo(allOrderInfo);
+        return pageInfo;
+    }
+
+    /**
+     * 查询当前站点下所有状态为“已入库”的订单
+     * @param stationId 当前站点Id
+     * @param pageNum
+     * @param pageSize
+     * @return 当前站点下状态为“已入库”的所有订单
+     */
+    public PageInfo selectWaitedOrder(int stationId, int pageNum, int pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<Order> allOrderInfo=orderMapper.selectWaitedOrder(stationId);
+        PageInfo pageInfo=new PageInfo(allOrderInfo);
+        return pageInfo;
+    }
+
+    /**
+     * 查询终点站是本站的并且当前站是本站的状态为“已入库”的所有订单
+     * @param stationId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public PageInfo selectStockOrder(int stationId, int pageNum, int pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<Order> allOrderInfo=orderMapper.selectStockOrder(stationId);
+        PageInfo pageInfo=new PageInfo(allOrderInfo);
+        return pageInfo;
+    }
+
+
+    /**
+     * 查询当前站点下所有状态为“异常”的订单(用来显示侧边栏的异常单个数)
+     * @param stationId 站点Id
+     * @return 当前站点下状态位“异常”的所有订单
+     */
+    public List<Order> selectOrderExceptionByStationId (int stationId){
+        List<Order> orderList = orderMapper.selectOrderExceptionByStationId(stationId);
+        return orderList;
+    }
+
+    /**
+     * 查询当前站点下所有状态为“异常”的订单并进行分页处理
+     * @param stationId 当前站点
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public PageInfo selectOrderExceptionByStationIdWithPageInfo(int stationId, int pageNum, int pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<Order> allOrderInfo=orderMapper.selectOrderExceptionByStationId(stationId);
+        PageInfo pageInfo=new PageInfo(allOrderInfo);
+        return pageInfo;
+    }
+
+    /**
+     * 更改异常单信息
+     * @param order
+     */
+    public void updateExceptionOrder(Order order){
+        orderMapper.updateByPrimaryKeySelective(order);
+    }
 }

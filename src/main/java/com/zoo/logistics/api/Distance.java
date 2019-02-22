@@ -18,7 +18,7 @@ public class Distance {
      * @return 最近的站点
      */
     public static Station getNearestStation(List<Station> stationList,String location){
-        TreeSet<Station> stationSet = new TreeSet<>();
+        TreeSet<Station> stationSet = new TreeSet<Station>();
 
         String posStr = "";
 

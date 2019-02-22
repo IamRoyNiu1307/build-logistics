@@ -517,6 +517,20 @@
 
     <!--Core Javascript -->
     <script src="/static/js/mychart.js"></script>
+
 </body>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url:"/orderException",
+            type:"post",
+            data:$("#station-id").val(),
+            contentType: "application/json;charset=UTF-8",
+            success:function (orderExceptionCount) {
+                $(".orderExceptionCount").html(orderExceptionCount)
+            }
+        })
+    });
+</script>
 
 </html>

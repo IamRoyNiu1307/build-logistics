@@ -24,18 +24,22 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+
 <nav id="sidebar" class="side-navbar">
     <div class="sidebar-header d-flex align-items-center">
         <div class="avatar"><img src="/static/img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
         <div class="title">
             <h1 class="h4" th:text="${session.admin.station.stationName}">郑州中转站</h1>
             <h5 class="h4" th:text="${session.admin.account}"></h5>
+            <input id="station-id" type="hidden" th:value="${session.admin.station.id}" >
         </div>
     </div>
     <hr>
     <!-- 菜单栏-->
     <ul class="list-unstyled">
+        <!--<li class="active "> <a href="/index"><i class="icon-home" onclick="click1()"></i>首页</a></li>-->
         <li class="active "> <a href="/index"><i class="icon-home"></i>首页</a></li>
+
         <li class="active "> <a href="/consignment/page/1"><i class="icon-paper-airplane"></i>发货</a></li>
         <li class="active mb-2"> <a href="/order/putin"><i class="icon-check"></i>入库</a></li>
 
@@ -44,14 +48,14 @@
             <ul id="order" class="collapse list-unstyled">
                 <li><a href="/order/createOrder">创建订单</a></li>
                 <li><a href="batch-create.html">批量下单</a></li>
-                <li><a href="check-order.html">订单审核</a></li>
-                <li><a href="edit-order.html">订单修改</a></li>
+                <li><a href="/order/checkOrder">订单审核</a></li>
+                <li><a href="/order/editOrder/page/1">订单修改</a></li>
             </ul>
         </li>
         <li><a href="#deliver" aria-expanded="false" data-toggle="collapse"> <i class="icon-paper-airplane"></i>订单发货
         </a>
             <ul id="deliver" class="collapse list-unstyled">
-                <li><a href="waited-order.html">待发订单查询</a></li>
+                <li><a href="/order/waitedOrder/page/1">待发订单查询</a></li>
                 <li><a href="email.html">加开班次申请</a></li>
                 <li><a href="media.html">紧急订单提醒</a></li>
                 <li><a href="invoice.html">班次查询</a></li>
@@ -66,10 +70,10 @@
             </ul>
         </li>
         <li><a href="#exception-orders" aria-expanded="false" data-toggle="collapse"> <i class="icon-padnote"></i>订单异常处理
-            <span class="badge badge-pill badge-danger">3</span></a>
+            <span class="badge badge-pill badge-danger orderExceptionCount" id="orderExceptionCount1">3</span></a>
             <ul id="exception-orders" class="collapse list-unstyled">
-                <li><a href="calendar.html">订单异常处理登记</a></li>
-                <li><a href="email.html">订单异常处理查询<span class="badge badge-pill badge-danger">3</span></a></li>
+                <li><a href="/exceptionOrderRegister/page/1">订单异常处理登记<span class="badge badge-pill badge-danger orderExceptionCount" id="orderExceptionCount2">3</span></a></li>
+                <li><a href="/exceptionOrderRegisterSelect/page/1">订单异常处理查询</a></li>
             </ul>
         </li>
 
@@ -84,19 +88,22 @@
         <li><a href="#distribution" aria-expanded="false" data-toggle="collapse"> <i class="icon-list-1"></i>货物配送
         </a>
             <ul id="distribution" class="collapse list-unstyled">
-                <li><a href="repertory.html">库存订单查询</a></li>
+                <li><a href="/order/stockOrder/page/1">库存订单查询</a></li>
                 <li><a href="email.html">订单确认</a></li>
             </ul>
         </li>
         <li><a href="#local-info" aria-expanded="false" data-toggle="collapse"> <i class="icon-user"></i>本地信息设置
         </a>
             <ul id="local-info" class="collapse list-unstyled">
-                <li><a href="calendar.html">中转线路选择</a></li>
+                <li><a href="exception-order-register.html">中转线路选择</a></li>
                 <li><a href="email.html">配送价格申报</a></li>
             </ul>
         </li>
 
     </ul>
 </nav>
+
 </body>
+
+
 </html>

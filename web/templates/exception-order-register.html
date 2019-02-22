@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <title>Bootstrap Admin Template </title>
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+    
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/font-icon-style.css">
+    <link rel="stylesheet" href="/static/css/style.default.css" id="theme-stylesheet">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+</head>
+
+<body> 
+
+<!--====================================================
+                         头部栏
+======================================================-->        
+    <header class="header">
+        <!--引入侧边栏;传入参数-->
+        <div th:replace="topbar::#topbar"></div>
+    </header>
+
+<!--====================================================
+                        页面
+======================================================-->
+    <div class="page-content d-flex align-items-stretch">
+        <!--***** 左侧导航栏 *****-->
+        <!-- 用户栏 -->
+        <!--引入侧边栏;传入参数-->
+        <div th:replace="sidebar::#sidebar"></div>
+        <div class="content-inner chart-cont">
+
+            <!--***** FORM LAYOUTS *****-->
+            <div class="row">
+                <div class="col-md-12">
+
+                    <!--***** 异常单信息 *****-->
+                    <div class="card form" id="form1">
+                        <div class="card-header">
+                            <h3><i class="fa fa-archive"></i>订单异常处理登记</h3>
+                        </div>
+                        <br>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <h4 style="border-bottom: 1px solid #ddd;">异常单查询</h4>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="order-id">订单号</label>
+                                    <input type="text" class="form-control" id="order-id" aria-describedby="emailHelp"
+                                           placeholder="请输入订单号" style="min-width: 180px">
+                                </div>
+                            </div>
+                            <div><a class="search-btn" id="searchBtn">搜索</a></div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <h4 style="border-bottom: 1px solid #ddd;">订单信息</h4>
+                            </div>
+                        </div>
+
+                        <!-- overflow-y:Scroll;overflow-x:hidden; -->
+                        <div class="row mt-2 pre-scrollable" style="min-height: 500px;">
+                            <table class="table  table-light table-responsive" style="min-height: 100px;">
+                                <thead>
+                                <tr>
+                                    <th>订单号</th>
+                                    <th>货物类别</th>
+                                    <th>重量(KG)</th>
+                                    <th>体积(m³)</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="orderList">
+
+                                <tr th:if="${orderList!=null}" th:each="order:${orderList}">
+                                    <td th:text="${order.orderId}">201810235546887</td>
+                                    <td th:text="${order.orderCategory.name}">衣服</td>
+                                    <td th:text="${order.weight}">1Kg</td>
+                                    <td th:text="${order.volume}">3</td>
+                                    <td>
+                                        <button th:id="${order.orderId}" class="btn btn-primary btn-sm register" type="button"
+                                                data-toggle="modal" data-target="#editModal">登记</button>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row" style="position: absolute;bottom: 0px">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item" th:class="${prePage==0?'page-item disabled':'page-item'}">
+                                        <a class="page-link"
+                                           th:href="'/exceptionOrderRegister/page/'+${prePage}" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">上一页</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item" th:if="${curPage>2}"><a class="page-link" href="#" th:href="'/exceptionOrderRegister/page/'+(${curPage}-2)">[[${curPage-2}]]</a></li>
+                                    <li class="page-item" th:if="${curPage>1}"><a class="page-link" href="#" th:href="'/exceptionOrderRegister/page/'+(${curPage}-1)">[[${curPage-1}]]</a></li>
+                                    <li class="page-item disabled"><a class="page-link" href="#">[[${curPage}]]</a></li>
+                                    <li class="page-item" th:if="${curPage<lastPage}"><a class="page-link" href="#" th:href="'/exceptionOrderRegister/page/'+(${curPage}+1)">[[${curPage+1}]]</a></li>
+                                    <li class="page-item" th:if="${curPage+1<lastPage}"><a class="page-link" href="#" th:href="'/exceptionOrderRegister/page/'+(${curPage}+2)">[[${curPage+2}]]</a></li>
+                                    <li class="page-item" th:class="${nextPage==0?'page-item disabled':'page-item'}">
+                                        <a class="page-link"
+                                           th:href="'/exceptionOrderRegister/page/'+${nextPage}" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">下一页</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10000">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    异常单处理登记
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                </button>
+            </div>
+            <div class="modal-body pre-scrollable" style="max-height:600px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table style="width: 100%;text-align: center;vertical-align: middle">
+                            <tr style="line-height: 50px">
+                                <td><label for="orderId">订单编号</label></td>
+                                <td><input type="text" class="form-control" readonly id="orderId" name="orderId" aria-describedby="emailHelp"
+                                           placeholder="订单编号"></td>
+                            </tr>
+                            <tr  style="line-height: 50px">
+                                <td><label for="category">物品类型</label></td>
+                                <td><input type="text" class="form-control" readonly id="category" name="category" aria-describedby="emailHelp"
+                                           placeholder="物品类型"></td>
+                            </tr>
+                            <tr  style="line-height: 50px">
+                                <td><label for="weight">重量(KG)</label></td>
+                                <td><input type="text" class="form-control" readonly id="weight" name="weight" aria-describedby="emailHelp"
+                                           placeholder="重量"></td>
+                            </tr>
+                            <tr  style="line-height: 50px">
+                            <td><label for="volume">体积(m³)</label></td>
+                            <td><input type="text" class="form-control" readonly id="volume" name="volume" aria-describedby="emailHelp"
+                                           placeholder="体积"></td>
+                            </tr>
+                            <tr  style="line-height: 50px">
+                                <td><label for="exception-category">异常原因</label></td>
+                                <td><select class="form-control"  id="exception-category" name="exception-category">
+                                    <option th:if="${exceptionCategoryList!=null}" th:each="exceptionCategory:${exceptionCategoryList}" th:value="${exceptionCategory.id}" th:text="${exceptionCategory.exceptionName}"></option>
+                                </select></td>
+                            </tr>
+                            <tr  style="line-height: 50px">
+                                <td><label for="compensate">赔付金额</label></td>
+                                <td><input type="text" class="form-control"  id="compensate" name="compensate" aria-describedby="emailHelp"
+                                           placeholder="赔付金额">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button id="toedit" type="button" class="btn btn-success">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+    <!--Global Javascript -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/popper/popper.min.js"></script>
+    <script src="/static/js/tether.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
+    <script src="/static/js/jquery.validate.min.js"></script>
+    <script src="/static/js/chart.min.js"></script>
+    <script src="/static/js/front.js"></script>
+
+    <!--Core Javascript -->
+
+    <script>
+        var orderId="";
+        //点击登记时触发的事件
+        $("body").on("click",".register",function () {
+            //获取点击对象的id
+            orderId=$(this)[0].id
+            //获取异常单的信息
+            var category=$(this).parents("tr").children("td:eq(1)").text()
+            var weight=$(this).parents("tr").children("td:eq(2)").text()
+            var volume=$(this).parents("tr").children("td:eq(3)").text()
+            //将信息填充到模态窗中
+            $("#orderId").val(orderId)
+            $("#category").val(category)
+            $("#weight").val(weight)
+            $("#volume").val(volume)
+        })
+    </script>
+    <script>
+        //点击提交时触发的事件
+        $("#toedit").click(function () {
+            //将模态窗的数据传入jason对象中
+            var datas={
+                "orderId":$("#orderId").val(),
+                "exceptionCategoryId":$("#exception-category").val(),
+                "compensate":$("#compensate").val()
+            };
+            //发送异步请求
+            $.ajax({
+                url:"/exceptionOrderRegister/edit",
+                type:"post",
+                data:JSON.stringify(datas),
+                contentType: "application/json;charset=UTF-8",
+                success:function (map) {
+                    if(map.status==1){
+                        alert(map.msg)
+                        location.reload()
+                    }else {
+                        alert(map.msg)
+                    }
+                },
+                error:function (map) {
+                }
+
+        })
+        })
+        //点击搜索按钮时触发的事件
+        $("#searchBtn").click(function () {
+            //发送一个异步请求
+            $.ajax({
+                url: "/exceptionOrderRegister/select",
+                type: "post",
+                data: $("#order-id").val(),
+                contentType: "application/json;charset=UTF-8",
+                success:function (map) {
+                    if(map.status==1){
+                        //清空搜索前的数据
+                        $("#orderList").html("");
+                        //在orderList中添加搜索返回的数据
+                        $("#orderList").append("<tr>\n"+
+                            "<td>"+map.order.orderId+"</td>\n"+
+                            "<td>"+map.order.orderCategory.name+"</td>\n"+
+                            "<td>"+map.order.weight+"</td>\n"+
+                            "<td>"+map.order.volume+"</td>\n"+
+                            "<td><button id='"+map.order.orderId+"' class='btn btn-primary btn-sm edit' type='button'data-toggle='modal' data-target='#editModal'>编辑</button></td>\n")
+
+                    alert(map.msg)
+                    } else {
+                    alert(map.msg)
+        }
+        },
+            error:function (map) {
+                alert(JSON.stringify(map))
+            }
+
+            })
+        })
+    </script>
+</body>
+<script th:inline="javascript">
+    //异常单数量显示
+    $(document).ready(function () {
+        $(".orderExceptionCount").html([[${session.orderExceptionCount}]])
+    });
+</script>
+</html>

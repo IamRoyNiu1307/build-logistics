@@ -1,6 +1,7 @@
 package com.zoo.logistics.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Order implements Serializable {
@@ -42,7 +43,7 @@ public class Order implements Serializable {
 
     private String createrAccount;
 
-//    private Date createDate;
+    private String createDate;
 
     private Date finishDate;
 
@@ -53,6 +54,16 @@ public class Order implements Serializable {
     private Log lastLog;
 
     private static final long serialVersionUID = 1L;
+
+    private ExceptionOrder exceptionOrder;
+
+    public ExceptionOrder getExceptionOrder() {
+        return exceptionOrder;
+    }
+
+    public void setExceptionOrder(ExceptionOrder exceptionOrder) {
+        this.exceptionOrder = exceptionOrder;
+    }
 
     public Log getLastLog() {
         return lastLog;
@@ -230,16 +241,26 @@ public class Order implements Serializable {
         this.createrAccount = createrAccount == null ? null : createrAccount.trim();
     }
 
-//    public Date getCreateDate() {
-//        return createDate;
-//    }
-//
-//    public void setCreateDate(Date createDate) {
-//        this.createDate = createDate;
-//    }
+    public String getCreateDate() {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date=new Date(Long.valueOf(orderId));
+        String createDate=sdf.format(date);
+        return createDate;
+    }
 
-    public Date getFinishDate() {
-        return finishDate;
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getFinishDate() {
+
+
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+            if (finishDate == null){
+                return null;
+            }
+            return sdf.format(finishDate);
     }
 
     public void setFinishDate(Date finishDate) {

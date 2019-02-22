@@ -45,7 +45,9 @@ public class LoginController {
         if(result!=null){
             request.getSession().setAttribute("admin",result);
             //在spring-servlet.xml中配置了Thymeleaf视图解析器，Thymeleaf会将返回的字符串拼接上解析器中的前缀和后缀
-            return "redirect:/index";
+            return "index";
+            //
+            // return "sidebar";
         }else {
             return "login";//会被解析成 /templates/login.html
         }
